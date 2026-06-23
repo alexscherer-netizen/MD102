@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MD-102 Lernzentrale · Endpoint Administrator</title>
+<meta name="description" content="Offizielle Lernseite zur Microsoft-Prüfung MD-102 (Endpoint Administrator), Stand 28. April 2026.">
+<meta name="theme-color" content="#0a0e14">
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22MD-102%20Lernzentrale%22%2C%22short_name%22%3A%22MD-102%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230a0e14%22%2C%22theme_color%22%3A%22%230a0e14%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%253D%2522http%253A%252F%252Fwww.w3.org%252F2000%252Fsvg%2522%2520viewBox%253D%25220%25200%2520192%2520192%2522%253E%253Crect%2520width%253D%2522192%2522%2520height%253D%2522192%2522%2520rx%253D%252236%2522%2520fill%253D%2522%25230a0e14%2522%252F%253E%253Ctext%2520x%253D%252296%2522%2520y%253D%2522118%2522%2520font-family%253D%2522Segoe%2520UI%252Csans-serif%2522%2520font-size%253D%252264%2522%2520font-weight%253D%2522800%2522%2520fill%253D%2522%252300d4aa%2522%2520text-anchor%253D%2522middle%2522%253EMD%253C%252Ftext%253E%253C%252Fsvg%253E%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='36' fill='%230a0e14'/%3E%3Ctext x='96' y='118' font-family='Segoe UI,sans-serif' font-size='64' font-weight='800' fill='%2300d4aa' text-anchor='middle'%3EMD%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='36' fill='%230a0e14'/%3E%3Ctext x='96' y='118' font-family='Segoe UI,sans-serif' font-size='64' font-weight='800' fill='%2300d4aa' text-anchor='middle'%3EMD%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#0a0e14; --bg2:#0f1620; --panel:#121a26; --panel2:#16202e;
+  --line:#1e2c3d; --line2:#2a3d54;
+  --text:#e4ecf4; --muted:#8497ac; --dim:#5f7185;
+  --accent:#00d4aa; --accent2:#1b9aff; --warn:#ffb454;
+  --new:#3fd17a; --update:#a87ee8; --fix:#ff9d54;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:"Segoe UI",system-ui,-apple-system,sans-serif;
+  line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent2);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1060px;margin:0 auto;padding:0 18px}
+
+/* Header */
+header.top{
+  position:sticky;top:0;z-index:50;
+  background:rgba(10,14,20,.88);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.topbar{display:flex;align-items:center;gap:14px;padding:12px 18px;max-width:1060px;margin:0 auto;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:.5px}
+.logo{
+  width:40px;height:40px;border-radius:10px;flex:0 0 auto;
+  background:linear-gradient(135deg,#062a26,#0a3d35);
+  border:1px solid var(--line2);
+  display:grid;place-items:center;color:var(--accent);font-weight:800;font-size:15px;
+}
+.brand small{display:block;font-weight:500;color:var(--muted);font-size:11px;letter-spacing:.3px}
+.search{
+  margin-left:auto;flex:1 1 220px;max-width:340px;position:relative;
+}
+.search input{
+  width:100%;background:var(--panel);border:1px solid var(--line2);
+  color:var(--text);padding:9px 12px 9px 34px;border-radius:9px;font-size:14px;outline:none;
+}
+.search input:focus{border-color:var(--accent)}
+.search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:15px;height:15px;fill:var(--muted)}
+
+/* Hero */
+.hero{padding:54px 0 30px;border-bottom:1px solid var(--line);
+  background:radial-gradient(900px 380px at 78% -10%,rgba(0,212,170,.10),transparent 60%);}
+.eyebrow{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:700}
+.hero h1{font-size:clamp(30px,6vw,52px);line-height:1.05;font-weight:800;margin:14px 0 8px;letter-spacing:-1px}
+.hero h1 span{color:var(--accent)}
+.hero .lead{color:var(--muted);font-size:17px;max-width:640px}
+.facts{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.fact{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px 16px;min-width:120px}
+.fact b{display:block;font-size:21px;color:var(--text)}
+.fact span{font-size:12px;color:var(--muted)}
+.src-note{margin-top:20px;font-size:12.5px;color:var(--dim,#5f7185)}
+.src-note a{color:var(--muted)}
+
+/* Sections */
+section{padding:40px 0;border-bottom:1px solid var(--line)}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+.sec-head h2{font-size:25px;font-weight:800;letter-spacing:-.5px}
+.sec-head .pct{margin-left:auto;font-weight:700;color:var(--accent);font-size:14px;
+  border:1px solid var(--line2);padding:3px 11px;border-radius:20px;background:var(--panel)}
+.sec-sub{color:var(--muted);font-size:14.5px;margin-bottom:22px;max-width:720px}
+
+/* Domain cards */
+.domain{
+  background:linear-gradient(180deg,var(--panel),var(--bg2));
+  border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:16px;
+}
+.domain>.dh{
+  display:flex;align-items:center;gap:14px;padding:18px 20px;cursor:pointer;
+  user-select:none;transition:background .15s;
+}
+.domain>.dh:hover{background:var(--panel2)}
+.dnum{
+  width:42px;height:42px;flex:0 0 auto;border-radius:11px;display:grid;place-items:center;
+  font-weight:800;font-size:17px;color:var(--bg);
+  background:linear-gradient(135deg,var(--accent),#06b894);
+}
+.dh .dt{flex:1;min-width:0}
+.dh .dt b{font-size:17px;display:block}
+.dh .dt small{color:var(--muted);font-size:12.5px}
+.dweight{font-weight:700;color:var(--accent);font-size:14px;white-space:nowrap;margin-right:6px}
+.chev{width:20px;height:20px;fill:var(--muted);transition:transform .2s;flex:0 0 auto}
+.domain.open .chev{transform:rotate(180deg)}
+.dbody{display:none;padding:4px 20px 20px}
+.domain.open .dbody{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+
+.subgroup{border-top:1px solid var(--line);padding:16px 0 4px}
+.subgroup:first-child{border-top:none;padding-top:10px}
+.subgroup h4{font-size:15px;color:var(--accent2);margin-bottom:10px;font-weight:700;
+  display:flex;align-items:center;gap:8px}
+.subgroup h4::before{content:"";width:7px;height:7px;border-radius:2px;background:var(--accent2);flex:0 0 auto}
+.skills{list-style:none;display:grid;gap:7px}
+.skills li{
+  display:flex;gap:11px;align-items:flex-start;
+  background:var(--bg2);border:1px solid var(--line);border-radius:9px;
+  padding:9px 13px;font-size:14px;transition:border-color .15s;
+}
+.skills li:hover{border-color:var(--line2)}
+.skills li.done{opacity:.55}
+.skills li.done .lbl{text-decoration:line-through}
+.ck{
+  width:19px;height:19px;flex:0 0 auto;margin-top:1px;border-radius:5px;
+  border:1.6px solid var(--line2);cursor:pointer;display:grid;place-items:center;transition:.15s;
+}
+.ck.on{background:var(--accent);border-color:var(--accent)}
+.ck svg{width:12px;height:12px;fill:var(--bg);opacity:0;transition:.15s}
+.ck.on svg{opacity:1}
+.lbl{cursor:pointer;flex:1}
+
+/* progress */
+.prog-card{background:var(--panel);border:1px solid var(--line2);border-radius:14px;padding:18px 20px;
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:24px}
+.ring{--p:0;width:64px;height:64px;border-radius:50%;flex:0 0 auto;
+  background:conic-gradient(var(--accent) calc(var(--p)*1%),var(--line) 0);
+  display:grid;place-items:center;position:relative}
+.ring::after{content:"";position:absolute;inset:6px;border-radius:50%;background:var(--panel)}
+.ring b{position:relative;z-index:1;font-size:15px}
+.prog-card .pt{flex:1;min-width:160px}
+.prog-card .pt b{font-size:16px}
+.prog-card .pt p{color:var(--muted);font-size:13px}
+.btn-reset{background:var(--panel2);border:1px solid var(--line2);color:var(--muted);
+  padding:8px 14px;border-radius:8px;cursor:pointer;font-size:13px}
+.btn-reset:hover{color:var(--text);border-color:var(--accent)}
+
+/* resources */
+.res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:13px}
+.res{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px 17px;transition:.15s}
+.res:hover{border-color:var(--accent);transform:translateY(-2px)}
+.res .rt{font-weight:700;font-size:15px;margin-bottom:5px;display:flex;align-items:center;gap:8px}
+.res .rt .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex:0 0 auto}
+.res p{color:var(--muted);font-size:13px;margin-bottom:10px}
+.res a{font-size:13px;font-weight:600}
+.badge-off{font-size:10px;letter-spacing:.5px;background:rgba(0,212,170,.13);color:var(--accent);
+  padding:2px 7px;border-radius:5px;border:1px solid var(--line2);font-weight:700;text-transform:uppercase}
+
+/* facts table */
+.kv{display:grid;grid-template-columns:auto 1fr;gap:0;border:1px solid var(--line);border-radius:13px;overflow:hidden}
+.kv>div{padding:11px 16px;border-top:1px solid var(--line);font-size:14px}
+.kv>div:nth-child(-n+2){border-top:none}
+.kv .k{background:var(--panel);color:var(--muted);font-weight:600;white-space:nowrap}
+.kv .v{background:var(--bg2)}
+
+/* changelog */
+.cl{display:grid;gap:12px}
+.cl-item{background:var(--panel);border:1px solid var(--line);border-left-width:3px;border-radius:10px;padding:13px 16px}
+.cl-item.new{border-left-color:var(--new)}
+.cl-item.update{border-left-color:var(--update)}
+.cl-item.fix{border-left-color:var(--fix)}
+.cl-top{display:flex;align-items:center;gap:10px;margin-bottom:5px;flex-wrap:wrap}
+.cl-badge{font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.cl-badge.new{background:rgba(63,209,122,.15);color:var(--new)}
+.cl-badge.update{background:rgba(168,126,232,.15);color:var(--update)}
+.cl-badge.fix{background:rgba(255,157,84,.15);color:var(--fix)}
+.cl-date{font-size:12px;color:var(--muted)}
+.cl-item .clt{font-weight:700;font-size:14.5px}
+.cl-item ul{margin:6px 0 0 18px;color:var(--muted);font-size:13px}
+
+/* exam mode */
+.exam-card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line2);
+  border-radius:16px;padding:22px;text-align:center}
+.ex-row{display:flex;gap:14px;flex-wrap:wrap;text-align:left}
+.ex-field{flex:1 1 180px;display:flex;flex-direction:column;gap:6px}
+.ex-field span{font-size:12.5px;color:var(--muted);font-weight:600}
+.ex-field select{background:var(--bg2);border:1px solid var(--line2);color:var(--text);
+  padding:10px 12px;border-radius:9px;font-size:14px;outline:none;cursor:pointer}
+.ex-field select:focus{border-color:var(--accent)}
+.ex-actions{display:flex;align-items:center;gap:14px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#06b894);color:#04130f;border:none;
+  font-weight:800;font-size:14.5px;padding:12px 24px;border-radius:10px;cursor:pointer;transition:.15s}
+.btn-primary:hover:not(:disabled){filter:brightness(1.08);transform:translateY(-1px)}
+.btn-primary:disabled{opacity:.4;cursor:not-allowed}
+.btn-ghost{background:var(--panel2);border:1px solid var(--line2);color:var(--muted);
+  font-size:14px;padding:11px 18px;border-radius:10px;cursor:pointer}
+.btn-ghost:hover{color:var(--text);border-color:var(--accent)}
+.ex-hint{font-size:12.5px;color:var(--muted)}
+.spinner{width:38px;height:38px;border:3px solid var(--line2);border-top-color:var(--accent);
+  border-radius:50%;margin:6px auto 14px;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.quiz-bar{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.quiz-bar span{font-size:13px;color:var(--muted);font-weight:700;white-space:nowrap}
+#qscore{color:var(--accent)}
+.qprog{flex:1;height:7px;background:var(--line);border-radius:5px;overflow:hidden}
+#qprogfill{height:100%;width:0;background:linear-gradient(90deg,var(--accent2),var(--accent));transition:width .3s}
+.qarea{text-align:left}
+#qtext{font-size:18px;font-weight:700;line-height:1.45;margin-bottom:16px}
+.qopts{display:grid;gap:10px}
+.qopt{display:flex;gap:12px;align-items:flex-start;background:var(--bg2);border:1.5px solid var(--line2);
+  border-radius:11px;padding:13px 15px;cursor:pointer;font-size:14.5px;text-align:left;transition:.15s;color:var(--text)}
+.qopt:hover:not(.locked){border-color:var(--accent2)}
+.qopt .key{width:24px;height:24px;flex:0 0 auto;border-radius:6px;background:var(--panel);border:1px solid var(--line2);
+  display:grid;place-items:center;font-weight:800;font-size:13px;color:var(--muted)}
+.qopt.correct{border-color:var(--new);background:rgba(63,209,122,.10)}
+.qopt.correct .key{background:var(--new);color:#04130f;border-color:var(--new)}
+.qopt.wrong{border-color:var(--fix);background:rgba(255,157,84,.10)}
+.qopt.wrong .key{background:var(--fix);color:#1a0d02;border-color:var(--fix)}
+.qopt.locked{cursor:default}
+.qexpl{display:none;text-align:left;margin-top:16px;padding:14px 16px;background:var(--panel);
+  border:1px solid var(--line2);border-left:3px solid var(--accent2);border-radius:10px;font-size:13.5px;color:var(--muted)}
+.qexpl.show{display:block;animation:fade .25s ease}
+.qexpl b{color:var(--accent2)}
+.res-ring{--p:0;width:96px;height:96px;border-radius:50%;margin:4px auto 16px;
+  background:conic-gradient(var(--accent) calc(var(--p)*1%),var(--line) 0);display:grid;place-items:center;position:relative}
+.res-ring::after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--bg2)}
+.res-ring b{position:relative;z-index:1;font-size:24px;font-weight:800}
+#resHead{font-size:22px;font-weight:800;margin-bottom:4px}
+#resSub{color:var(--muted);font-size:14.5px}
+.res-break{display:grid;gap:8px;max-width:440px;margin:20px auto 0;text-align:left}
+.rb-item{display:flex;align-items:center;gap:10px;font-size:13px;background:var(--bg2);
+  border:1px solid var(--line);border-radius:8px;padding:9px 13px}
+.rb-item .rb-bar{flex:1;height:6px;background:var(--line);border-radius:4px;overflow:hidden}
+.rb-item .rb-bar i{display:block;height:100%;background:var(--accent)}
+.rb-item .rb-n{color:var(--muted);white-space:nowrap;font-weight:600}
+.review-box{text-align:left;margin-top:22px;display:grid;gap:14px}
+.rv{background:var(--bg2);border:1px solid var(--line);border-radius:11px;padding:14px 16px}
+.rv .rvq{font-weight:700;font-size:14.5px;margin-bottom:8px}
+.rv .rvline{font-size:13.5px;margin:3px 0;display:flex;gap:8px}
+.rv .ok{color:var(--new)}.rv .no{color:var(--fix)}
+.rv .rve{font-size:12.5px;color:var(--muted);margin-top:7px;padding-top:7px;border-top:1px dashed var(--line2)}
+
+/* footer / impressum / paypal */
+footer{padding:36px 0 60px}
+.foot-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.imp h3{font-size:14px;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px}
+.imp p{color:var(--muted);font-size:13.5px;line-height:1.8}
+.paypal{display:inline-flex;align-items:center;gap:9px;background:#0070ba;color:#fff;
+  padding:11px 18px;border-radius:10px;font-weight:700;font-size:14px;margin-top:6px}
+.paypal:hover{background:#005a96;text-decoration:none}
+.paypal svg{width:18px;height:18px;fill:#fff}
+.disc{margin-top:26px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--dim,#5f7185);line-height:1.7}
+@media(max-width:680px){.foot-grid{grid-template-columns:1fr}.topbar{padding:10px 14px}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">MD</div>
+      <div>MD-102 Lernzentrale<small>Microsoft 365 Endpoint Administrator</small></div>
+    </div>
+    <div class="search">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 10-.7.7l.27.28v.79l5 5 1.5-1.5-5-5zm-6 0A4.5 4.5 0 1114 9.5 4.5 4.5 0 019.5 14z"/></svg>
+      <input id="q" type="search" placeholder="Lernziel suchen…" autocomplete="off">
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Microsoft Certification · Associate</div>
+    <h1>Prüfung <span>MD-102</span><br>Endpoint Administrator</h1>
+    <p class="lead">Strukturierte Lernseite nach dem offiziellen „Skills measured"-Katalog von Microsoft. Alle Lernziele sind abhakbar — dein Fortschritt wird lokal im Browser gespeichert.</p>
+    <div class="facts">
+      <div class="fact"><b>~60</b><span>Fragen</span></div>
+      <div class="fact"><b>700</b><span>Punkte zum Bestehen</span></div>
+      <div class="fact"><b>100 Min.</b><span>Bearbeitungszeit*</span></div>
+      <div class="fact"><b>4</b><span>Themenbereiche</span></div>
+    </div>
+    <p class="src-note">Inhaltsstand: <strong>28. April 2026</strong>. Quelle: offizieller <a href="https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/md-102" target="_blank" rel="noopener">MD-102 Study Guide auf Microsoft Learn</a>. *Zeit/Fragenzahl können von Microsoft jederzeit angepasst werden — vor der Anmeldung auf der Prüfungsseite prüfen.</p>
+  </div>
+</div>
+
+<section id="ueberblick">
+  <div class="wrap">
+    <div class="sec-head"><h2>Auf einen Blick</h2></div>
+    <p class="sec-sub">Du verwaltest Geräte und Client-Anwendungen in einem Microsoft-365-Tenant mit Microsoft Intune — inklusive Identität, Sicherheit, Zugriff, Richtlinien, Updates und Apps für Endpunkte.</p>
+    <div class="kv">
+      <div class="k">Zertifizierung</div><div class="v">Microsoft 365 Certified: Endpoint Administrator Associate</div>
+      <div class="k">Rolle</div><div class="v">Endpoint Administrator (Geräte- & App-Verwaltung im M365-Tenant)</div>
+      <div class="k">Kerntechnologien</div><div class="v">Microsoft Intune (Suite), Windows Autopilot, Windows 365, Microsoft Entra ID, Microsoft Defender for Endpoint, Microsoft Security Copilot, Azure Virtual Desktop</div>
+      <div class="k">Voraussetzung</div><div class="v">Erfahrung mit Entra ID & M365 (inkl. Intune) sowie Deployment/Konfiguration von Windows- und Nicht-Windows-Geräten</div>
+      <div class="k">Vorgänger</div><div class="v">Ersetzt die früheren Prüfungen MD-100 + MD-101</div>
+    </div>
+  </div>
+</section>
+
+<section id="fortschritt">
+  <div class="wrap">
+    <div class="prog-card">
+      <div class="ring" id="ring" style="--p:0"><b id="ringpct">0%</b></div>
+      <div class="pt">
+        <b id="progtext">0 von 0 Lernzielen erledigt</b>
+        <p>Klick die Kästchen in den Themenbereichen an. Gespeichert wird automatisch auf diesem Gerät.</p>
+      </div>
+      <button class="btn-reset" id="reset">Zurücksetzen</button>
+    </div>
+  </div>
+</section>
+
+<section id="lernziele">
+  <div class="wrap">
+    <div class="sec-head"><h2>Lernziele nach Themenbereichen</h2></div>
+    <p class="sec-sub">Gewichtungen in Klammern entsprechen dem Anteil an der Prüfung. Tippe auf einen Bereich, um die Lernziele auszuklappen.</p>
+    <div id="domains"></div>
+  </div>
+</section>
+
+<section id="pruefung">
+  <div class="wrap">
+    <div class="sec-head"><h2>Prüfungsmodus</h2></div>
+    <p class="sec-sub">Übe im Multiple-Choice-Format mit 118 geprüften Fragen, komplett offline.</p>
+
+    <!-- Setup -->
+    <div id="examSetup" class="exam-card">
+      <div class="ex-row">
+        <label class="ex-field">
+          <span>Themenbereich</span>
+          <select id="examScope">
+            <option value="all">Alle Bereiche (gemischt)</option>
+            <option value="0">1 · Infrastruktur vorbereiten</option>
+            <option value="1">2 · Geräte verwalten & warten</option>
+            <option value="2">3 · Anwendungen verwalten</option>
+            <option value="3">4 · Geräte schützen</option>
+          </select>
+        </label>
+        <label class="ex-field">
+          <span>Anzahl Fragen</span>
+          <select id="examCount">
+            <option>5</option><option selected>10</option><option>15</option><option>20</option><option>30</option><option>40</option><option>50</option>
+          </select>
+        </label>
+      </div>
+      <div class="ex-actions">
+        <button class="btn-primary" id="examStart">Prüfung starten</button>
+        <span class="ex-hint" id="examHint"></span>
+      </div>
+    </div>
+
+    <!-- Quiz -->
+    <div id="examQuiz" class="exam-card" style="display:none">
+      <div class="quiz-bar">
+        <span id="qpos">Frage 1</span>
+        <div class="qprog"><div id="qprogfill"></div></div>
+        <span id="qscore">0 ✓</span>
+      </div>
+      <div class="qarea" id="qarea"><h3 id="qtext"></h3><div id="qopts" class="qopts"></div></div>
+      <div class="qexpl" id="qexpl"></div>
+      <div class="ex-actions">
+        <button class="btn-ghost" id="examQuit">Abbrechen</button>
+        <button class="btn-primary" id="examNext" disabled>Weiter</button>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div id="examResult" class="exam-card" style="display:none">
+      <div class="res-ring" id="resRing"><b id="resPct">0%</b></div>
+      <h3 id="resHead"></h3>
+      <p id="resSub"></p>
+      <div id="resBreak" class="res-break"></div>
+      <div class="ex-actions">
+        <button class="btn-ghost" id="examReview">Antworten ansehen</button>
+        <button class="btn-primary" id="examAgain">Neue Prüfung</button>
+      </div>
+      <div id="reviewBox" class="review-box" style="display:none"></div>
+    </div>
+  </div>
+</section>
+
+<section id="ressourcen">
+  <div class="wrap">
+    <div class="sec-head"><h2>Offizielle Lernressourcen</h2></div>
+    <p class="sec-sub">Direkt von Microsoft Learn — verifizierte Originalquellen, keine Drittanbieter-„Braindumps".</p>
+    <div class="res-grid" id="resgrid"></div>
+  </div>
+</section>
+
+<section id="changelog">
+  <div class="wrap">
+    <div class="sec-head"><h2>Changelog</h2></div>
+    <p class="sec-sub">Änderungen an dieser Lernseite und am Prüfungsstand.</p>
+    <div class="cl" id="cl"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="imp">
+        <h3>Impressum</h3>
+        <p>
+          Alexander Scherer<br>
+          Mertensstraße 18, 13587 Berlin<br>
+          E-Mail: <a href="mailto:info@alexander-scherer.com">info@alexander-scherer.com</a><br>
+          Kleingewerbe Fotograf · Kleinunternehmer gem. §19 UStG
+        </p>
+      </div>
+      <div class="imp">
+        <h3>Projekt unterstützen</h3>
+        <p>Diese Lernseite ist kostenlos. Wenn sie dir hilft, freue ich mich über einen Kaffee.</p>
+        <a class="paypal" href="https://paypal.me/AlexanderGlauche" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M7.08 21.34l.46-2.9.4-2.52h2.42c4.1 0 7.04-1.66 7.86-6.32.03-.16.05-.31.07-.46.3-1.95-.01-3.27-1.04-4.45C16.6 3.18 14.86 2.66 12.6 2.66H6.2c-.46 0-.86.34-.93.8L2.6 21.05c-.05.34.21.65.56.65h3.46l.46-.36z"/></svg>
+          Mit PayPal spenden
+        </a>
+      </div>
+    </div>
+    <p class="disc">
+      Hinweis: Diese Seite ist ein privates, nicht-kommerzielles Lernprojekt und steht in keiner Verbindung zur Microsoft Corporation. „Microsoft", „MD-102", „Intune", „Entra", „Windows" und „Defender" sind Marken der Microsoft-Unternehmensgruppe. Die Lernziele sind dem offiziellen Microsoft-Study-Guide entnommen (Stand 28.04.2026); maßgeblich für die Prüfung ist stets die aktuelle Version auf
+      <a href="https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/md-102" target="_blank" rel="noopener">learn.microsoft.com</a>. Ohne Gewähr auf Vollständigkeit oder Aktualität.
+    </p>
+  </div>
+</footer>
+
+<script>
+/* ====== Offizieller Lernziel-Katalog (Quelle: Microsoft Learn MD-102 Study Guide, Stand 28.04.2026) ====== */
+const DOMAINS = [
+  {
+    n:1, title:"Infrastruktur für Geräte vorbereiten", weight:"25–30 %",
+    sub:"Add infrastructure for devices",
+    groups:[
+      { h:"Geräte zu Microsoft Entra ID hinzufügen", items:[
+        "Passenden Geräte-Join-Typ auswählen (Entra join / hybrid / register)",
+        "Geräte zu Microsoft Entra ID joinen",
+        "Geräte in Microsoft Entra ID registrieren (register)",
+        "Gruppen für Geräte in Microsoft Entra ID planen und implementieren"
+      ]},
+      { h:"Geräte in Microsoft Intune enrollen", items:[
+        "Enrollment-Einstellungen konfigurieren",
+        "Automatische Enrollment für Windows sowie Bulk-Enrollment für iOS/iPadOS und Android konfigurieren",
+        "Enrollment-Profile für Android konfigurieren: fully managed, dedicated, corporate owned, work profile"
+      ]},
+      { h:"Identität und Compliance implementieren", items:[
+        "Rollen in Intune verwalten",
+        "Compliance-Richtlinien für alle unterstützten Plattformen per Intune implementieren",
+        "Entra Conditional-Access-Richtlinien mit Compliance-Status-Anforderung implementieren",
+        "Windows Hello for Business konfigurieren",
+        "Windows LAPS (Local Administrator Password Solution) implementieren und verwalten",
+        "Mitgliedschaft lokaler Gruppen auf Windows-Geräten per Intune verwalten"
+      ]}
+    ]
+  },
+  {
+    n:2, title:"Geräte verwalten und warten", weight:"30–35 %",
+    sub:"Manage and maintain devices",
+    groups:[
+      { h:"Windows-Clients mit Cloud-Tools bereitstellen und upgraden", items:[
+        "Zwischen Windows Autopilot und Provisioning Packages wählen",
+        "Einen Windows-Autopilot-Deployment-Modus auswählen",
+        "Geräte-Namensvorlage (device name template) anwenden",
+        "Windows-Client-Deployment per Windows Autopilot umsetzen",
+        "Enrollment Status Page (ESP) erstellen",
+        "Provisioning Packages planen und implementieren",
+        "Geräte-Upgrades auf Windows 11 planen und umsetzen",
+        "Ein Windows 365 Cloud-PC-Deployment implementieren"
+      ]},
+      { h:"Gerätekonfigurationsprofile planen und implementieren", items:[
+        "Konfigurationsprofile für Windows erstellen, inkl. Import von ADMX-Dateien",
+        "Konfigurationsprofile für Android erstellen",
+        "Konfigurationsprofile für iOS/iPadOS erstellen",
+        "Konfigurationsprofile für macOS erstellen",
+        "Konfigurationsprofile für Windows 11 Enterprise Multi-Session erstellen",
+        "Ein Profil per Filter (filters) targeten"
+      ]},
+      { h:"Intune-Suite-Add-on-Funktionen implementieren", items:[
+        "Endpoint Privilege Management konfigurieren",
+        "Apps über den Enterprise App Catalog verwalten",
+        "Microsoft Intune Advanced Analytics implementieren",
+        "Microsoft Intune Remote Help konfigurieren",
+        "Anwendungsfälle für Microsoft Cloud PKI identifizieren",
+        "Microsoft Tunnel for Mobile Application Management implementieren"
+      ]},
+      { h:"Remote-Aktionen auf Geräten ausführen", items:[
+        "Geräte syncen, neu starten, retire oder wipe",
+        "Bulk-Remote-Aktionen ausführen",
+        "Microsoft Defender Antivirus Security Intelligence aktualisieren",
+        "BitLocker-Wiederherstellungsschlüssel rotieren",
+        "Eine Device Query per KQL ausführen"
+      ]}
+    ]
+  },
+  {
+    n:3, title:"Anwendungen verwalten", weight:"15–20 %",
+    sub:"Manage applications",
+    groups:[
+      { h:"Apps bereitstellen und aktualisieren", items:[
+        "Anwendungen für das Deployment per Intune vorbereiten",
+        "Apps per Intune bereitstellen",
+        "Microsoft 365 Apps per Intune bereitstellen",
+        "Richtlinien für Office-Apps konfigurieren",
+        "Microsoft 365 Apps im Rahmen eines Autopilot-Deployments per ODT oder OCT bereitstellen",
+        "Microsoft 365 Apps über das Microsoft 365 Apps Admin Center verwalten",
+        "Apps aus plattformspezifischen App-Stores per Intune bereitstellen"
+      ]},
+      { h:"App-Protection- und App-Configuration-Richtlinien planen und implementieren", items:[
+        "App-Protection-Richtlinien (APP/MAM) planen und implementieren",
+        "Entra Conditional Access für App-Protection-Richtlinien implementieren",
+        "App-Configuration-Richtlinien für managed apps und managed devices planen und implementieren"
+      ]}
+    ]
+  },
+  {
+    n:4, title:"Geräte schützen", weight:"15–20 %",
+    sub:"Protect devices",
+    groups:[
+      { h:"Endpoint-Sicherheit konfigurieren", items:[
+        "Antivirus-Richtlinien erstellen",
+        "Disk-Encryption-Richtlinien erstellen (BitLocker / FileVault)",
+        "Firewall-Richtlinien erstellen",
+        "Attack-Surface-Reduction-(ASR-)Richtlinien konfigurieren",
+        "Security Baselines planen und implementieren",
+        "Intune mit Microsoft Defender for Endpoint integrieren",
+        "Geräte in Microsoft Defender for Endpoint onboarden"
+      ]},
+      { h:"Geräte-Updates per Intune verwalten", items:[
+        "Geräte-Updates planen",
+        "Update Rings per Intune erstellen und verwalten",
+        "Update-Richtlinien per Intune erstellen und verwalten (inkl. iOS/iPadOS und macOS)",
+        "Android-Updates per Konfigurationsprofil oder FOTA-Deployment verwalten",
+        "Windows-Client Delivery Optimization per Intune konfigurieren",
+        "Updates monitoren"
+      ]}
+    ]
+  }
+];
+
+const RESOURCES = [
+  {t:"Offizieller Study Guide",off:true,p:"Vollständiger „Skills measured“-Katalog, Updates & Änderungsprotokoll.",href:"https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/md-102",a:"Zum Study Guide"},
+  {t:"Prüfungsseite MD-102",off:true,p:"Anmeldung, Preis, Sprachen, Zeit & aktuelle Rahmenbedingungen.",href:"https://learn.microsoft.com/en-us/credentials/certifications/exams/md-102",a:"Zur Prüfungsseite"},
+  {t:"Kostenlose Practice Assessment",off:true,p:"Offizieller Übungstest direkt auf Microsoft Learn, 100 Min.",href:"https://learn.microsoft.com/en-us/credentials/certifications/exams/md-102/practice/assessment?assessment-type=practice&assessmentId=76",a:"Übungstest starten"},
+  {t:"Zertifizierungspfad",off:true,p:"Voraussetzungen, Erneuerung und Überblick zur Associate-Zertifizierung.",href:"https://learn.microsoft.com/en-us/credentials/certifications/m365-endpoint-administrator",a:"Pfad ansehen"},
+  {t:"Microsoft Intune Doku",off:true,p:"Referenz zum Kern-Tool der gesamten Prüfung.",href:"https://learn.microsoft.com/en-us/mem/intune/",a:"Intune-Doku"},
+  {t:"Windows Autopilot Doku",off:true,p:"Deployment-Modi, ESP, Provisioning & mehr.",href:"https://learn.microsoft.com/en-us/mem/autopilot/",a:"Autopilot-Doku"},
+  {t:"Windows-Sicherheit",off:true,p:"BitLocker, ASR, Defender, Security Baselines.",href:"https://learn.microsoft.com/en-us/windows/security/",a:"Security-Doku"},
+  {t:"Exam Readiness Zone",off:true,p:"Video-Reihe von Microsoft zur Prüfungsvorbereitung.",href:"https://learn.microsoft.com/en-us/shows/exam-readiness-zone/",a:"Videos ansehen"},
+  {t:"Exam-Sandbox",off:true,p:"Prüfungsumgebung & Fragetypen vorab ausprobieren.",href:"https://aka.ms/examdemo",a:"Sandbox öffnen"}
+];
+
+/* CHANGELOG — bei jeder Änderung neuen Eintrag OBEN einfügen */
+const CHANGELOG = [
+  { date:"Jun 2026", badge:"update", title:"118 Fragen — Verschlüsselung & Apple-Verwaltung", items:[
+    "13 neue geprüfte Fragen ergänzt (jetzt 118 gesamt), weiterhin viele Praxis-Szenarien",
+    "Neue Themen: BitLocker (Silent/XTS-AES), FileVault auf macOS, Apple MDM Push Certificate, VPP-Token, Managed Apple ID, Settings Catalog",
+    "Alle neuen Fragen gegen Microsoft-Learn-Quellen verifiziert; Antwortpositionen weiterhin gleichmäßig gemischt"
+  ]},
+  { date:"Jun 2026", badge:"update", title:"105 Fragen inkl. Praxis-Szenarien", items:[
+    "15 neue geprüfte Fragen ergänzt (jetzt 105 gesamt), darunter szenariobasierte Praxisfälle",
+    "Neue Themen: Windows 365 (Enterprise/Business/Frontline) vs. AVD, Defender-for-Endpoint-Onboarding & Risikostufen, Conditional-Access-Grant-Controls",
+    "Alle neuen Fragen gegen Microsoft-Learn-Quellen verifiziert; Antwortpositionen weiterhin gleichmäßig gemischt"
+  ]},
+  { date:"Jun 2026", badge:"update", title:"KI-Option entfernt", items:[
+    "Prüfungsmodus nutzt ausschließlich den geprüften Offline-Fragenpool (90 Fragen)",
+    "Quelle-Auswahl und KI-Hinweise entfernt — schlankere, eindeutige Oberfläche"
+  ]},
+  { date:"Jun 2026", badge:"update", title:"90 Fragen + Antwortpositionen werden gemischt", items:[
+    "18 neue geprüfte Fragen ergänzt (jetzt 90 gesamt), u. a. Enrollment-Restrictions, Co-Management, Compliance-Aktionen & Grace Period",
+    "Antwortoptionen werden bei jedem Start zufällig gemischt — die richtige Antwort steht nun gleichmäßig auf A/B/C/D statt fast immer an gleicher Stelle",
+    "Bis zu 50 Fragen pro Durchlauf wählbar; alle neuen Fragen gegen Microsoft-Learn-Quellen verifiziert"
+  ]},
+  { date:"Jun 2026", badge:"update", title:"Fragenpool auf 72 Fragen erweitert", items:[
+    "22 neue Fragen ergänzt (18/21/15/18 je Bereich), Schwerpunkt Intune-Suite-Add-ons, Win32-Packaging & Windows Hello for Business",
+    "Alle neuen Fragen gegen Microsoft-Learn-Quellen geprüft (EPM, Cloud PKI, Remote Help, Tunnel for MAM, Content Prep Tool, WHfB-Trust-Modelle u. a.)",
+    "Bis zu 40 Fragen pro Durchlauf wählbar"
+  ]},
+  { date:"Jun 2026", badge:"update", title:"Fragenpool erweitert & faktengeprüft", items:[
+    "Offline-Fragenpool auf 50 Fragen ausgebaut (13/14/10/13 je Bereich) — Seite ist jetzt ohne KI vollwertig",
+    "Alle Fragen gegen die offizielle Microsoft-Learn-Dokumentation geprüft (Autopilot-Modi, LAPS, ASR, Compliance vs. Baseline u. a.)",
+    "Fragenpool ist neue Standardquelle; keine Wiederholungen mehr innerhalb einer Prüfung"
+  ]},
+  { date:"Jun 2026", badge:"new", title:"Prüfungsmodus hinzugefügt", items:[
+    "Multiple-Choice-Quiz nach Themenbereich, 5–20 Fragen wählbar",
+    "Sofort-Feedback mit Erklärung pro Frage",
+    "Sofort-Feedback mit Erklärung, Fortschrittsbalken, Auswertung pro Bereich & Antwort-Review (70 % Bestehensgrenze)"
+  ]},
+  { date:"Jun 2026", badge:"fix", title:"Script-Fehler behoben", items:[
+    "Anführungszeichen in einem Ressourcen-Text schloss versehentlich den JS-String — korrigiert, Seite lädt wieder fehlerfrei"
+  ]},
+  { date:"Jun 2026", badge:"new", title:"Erste Version der MD-102 Lernzentrale", items:[
+    "Vollständiger offizieller Lernziel-Katalog (Stand 28.04.2026), 4 Themenbereiche",
+    "Abhakbare Lernziele mit lokalem Fortschritt + Fortschrittsring",
+    "Live-Suche, offizielle Microsoft-Ressourcen, PWA-Support, Impressum, PayPal"
+  ]}
+];
+
+/* ====== Render ====== */
+const $=s=>document.querySelector(s);
+const KEY="md102_done_v1";
+let done = JSON.parse(localStorage.getItem(KEY)||"{}");
+let total=0;
+DOMAINS.forEach(d=>d.groups.forEach(g=>total+=g.items.length));
+
+function id(di,gi,ii){return `d${di}g${gi}i${ii}`}
+
+function renderDomains(){
+  const root=$("#domains");root.innerHTML="";
+  DOMAINS.forEach((d,di)=>{
+    const dn=document.createElement("div");dn.className="domain";dn.dataset.di=di;
+    let inner=`<div class="dh" role="button" tabindex="0" aria-expanded="false">
+      <div class="dnum">${d.n}</div>
+      <div class="dt"><b>${d.title}</b><small>${d.sub}</small></div>
+      <span class="dweight">${d.weight}</span>
+      <svg class="chev" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+    </div><div class="dbody">`;
+    d.groups.forEach((g,gi)=>{
+      inner+=`<div class="subgroup"><h4>${g.h}</h4><ul class="skills">`;
+      g.items.forEach((it,ii)=>{
+        const k=id(di,gi,ii);const on=done[k];
+        inner+=`<li class="${on?'done':''}" data-k="${k}" data-txt="${it.toLowerCase()}">
+          <span class="ck ${on?'on':''}" role="checkbox" aria-checked="${on?'true':'false'}">
+            <svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5L4 14.2l5 5 11-11-1.5-1.5z"/></svg>
+          </span><span class="lbl">${it}</span></li>`;
+      });
+      inner+=`</ul></div>`;
+    });
+    inner+=`</div>`;dn.innerHTML=inner;root.appendChild(dn);
+  });
+  bind();
+  updateProgress();
+}
+
+function bind(){
+  document.querySelectorAll(".dh").forEach(h=>{
+    const toggle=()=>{const d=h.parentElement;d.classList.toggle("open");
+      h.setAttribute("aria-expanded",d.classList.contains("open"));};
+    h.addEventListener("click",toggle);
+    h.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();toggle();}});
+  });
+  document.querySelectorAll(".skills li").forEach(li=>{
+    const k=li.dataset.k;
+    const flip=()=>{
+      done[k]=!done[k];
+      if(!done[k])delete done[k];
+      localStorage.setItem(KEY,JSON.stringify(done));
+      li.classList.toggle("done",!!done[k]);
+      const ck=li.querySelector(".ck");
+      ck.classList.toggle("on",!!done[k]);
+      ck.setAttribute("aria-checked",done[k]?"true":"false");
+      updateProgress();
+    };
+    li.querySelector(".ck").addEventListener("click",e=>{e.stopPropagation();flip();});
+    li.querySelector(".lbl").addEventListener("click",flip);
+  });
+}
+
+function updateProgress(){
+  const n=Object.keys(done).length;
+  const pct=total?Math.round(n/total*100):0;
+  $("#ring").style.setProperty("--p",pct);
+  $("#ringpct").textContent=pct+"%";
+  $("#progtext").textContent=`${n} von ${total} Lernzielen erledigt`;
+}
+
+$("#reset").addEventListener("click",()=>{
+  if(confirm("Gesamten Lernfortschritt zurücksetzen?")){
+    done={};localStorage.removeItem(KEY);renderDomains();
+  }
+});
+
+/* search */
+$("#q").addEventListener("input",e=>{
+  const v=e.target.value.trim().toLowerCase();
+  document.querySelectorAll(".domain").forEach(d=>{
+    let anyVisible=false;
+    d.querySelectorAll(".subgroup").forEach(sg=>{
+      let groupVisible=false;
+      sg.querySelectorAll("li").forEach(li=>{
+        const match=!v||li.dataset.txt.includes(v);
+        li.style.display=match?"":"none";
+        if(match)groupVisible=true;
+      });
+      sg.style.display=groupVisible?"":"none";
+      if(groupVisible)anyVisible=true;
+    });
+    d.style.display=anyVisible?"":"none";
+    if(v&&anyVisible)d.classList.add("open");
+    if(!v)d.classList.remove("open");
+  });
+});
+
+/* resources */
+function renderRes(){
+  const g=$("#resgrid");
+  g.innerHTML=RESOURCES.map(r=>`<div class="res">
+    <div class="rt"><span class="dot"></span>${r.t} ${r.off?'<span class="badge-off">Offiziell</span>':''}</div>
+    <p>${r.p}</p>
+    <a href="${r.href}" target="_blank" rel="noopener">${r.a} →</a>
+  </div>`).join("");
+}
+
+/* changelog */
+function renderCL(){
+  $("#cl").innerHTML=CHANGELOG.map(c=>`<div class="cl-item ${c.badge}">
+    <div class="cl-top"><span class="cl-badge ${c.badge}">${c.badge}</span><span class="cl-date">${c.date}</span></div>
+    <div class="clt">${c.title}</div>
+    <ul>${c.items.map(i=>`<li>${i}</li>`).join("")}</ul>
+  </div>`).join("");
+}
+
+/* ====== Prüfungsmodus ====== */
+/* Statischer Fallback-Fragenpool (pro Domain). Antwort-Index 0-basiert. */
+const POOL = [
+[ // Domain 0 — Infrastruktur vorbereiten
+  {q:"Ein Unternehmen möchte firmeneigene Windows-Geräte vollständig in der Cloud verwalten, komplett ohne lokales Active Directory. Welcher Join-Typ ist passend?",o:["Microsoft Entra hybrid join","Microsoft Entra join","Microsoft Entra registered","Workgroup join"],a:1,e:"Entra join ist der reine Cloud-Join für firmeneigene Geräte ohne on-prem AD. Hybrid join setzt ein lokales AD voraus; registered ist v. a. für BYOD."},
+  {q:"Ein Mitarbeiter möchte mit seinem privaten iPhone (BYOD) auf E-Mails zugreifen, ohne das Gerät der Firma voll zu unterstellen. Welcher Identitätszustand ist typisch?",o:["Microsoft Entra joined","Microsoft Entra registered","Microsoft Entra hybrid joined","Domain joined"],a:1,e:"Entra registered (Workplace Join) ist der typische Zustand für persönliche/BYOD-Geräte: Identität wird registriert, das Gerät bleibt aber im Besitz des Nutzers."},
+  {q:"Wie aktivierst du, dass sich Windows-Geräte beim Beitritt zu Entra ID automatisch in Intune einschreiben?",o:["Bulk Enrollment Token erstellen","Automatic Enrollment (MDM-Scope) in Entra konfigurieren","Provisioning Package verteilen","Apple Enrollment Profile anlegen"],a:1,e:"Über die automatische MDM-Einschreibung (MDM user scope in Entra) werden Windows-Geräte beim Join automatisch in Intune aufgenommen."},
+  {q:"Welche Enrollment-Profile bietet Android Enterprise für firmeneigene Geräte? (beste Antwort)",o:["Nur work profile","Fully managed, dedicated und corporate-owned work profile","Nur supervised mode","DEP und VPP"],a:1,e:"Der MD-102-Katalog nennt für Android genau diese firmeneigenen Profile: fully managed, dedicated und corporate owned work profile."},
+  {q:"Für welchen Anwendungsfall ist ein Android-'dedicated device' (COSU) Enrollment-Profil gedacht?",o:["Persönliches Gerät eines Mitarbeiters","Kiosk-/Single-Use-Gerät ohne Nutzerkonto","Gerät mit getrenntem Privat- und Arbeitsbereich","macOS-Tablet"],a:1,e:"Dedicated devices (COSU) sind firmeneigene Geräte für einen einzelnen Zweck, z. B. Kiosk oder Lager-Scanner, ohne persönliche Nutzeranmeldung."},
+  {q:"Eine Conditional-Access-Richtlinie soll Zugriff nur von Geräten erlauben, die als konform gelten. Was ist die Voraussetzung?",o:["Geräte müssen in Intune per Compliance-Richtlinie bewertet sein","Geräte müssen lokal in der Domäne sein","BitLocker muss deaktiviert sein","Geräte brauchen eine öffentliche IP"],a:0,e:"Die Grant-Control 'Require device to be marked as compliant' braucht Intune-Compliance-Richtlinien, die den Compliance-Status an Entra liefern."},
+  {q:"Welche Intune-Lösung verwaltet und rotiert automatisch das lokale Administrator-Passwort auf Windows-Geräten?",o:["Windows Hello for Business","Windows LAPS","BitLocker","Credential Guard"],a:1,e:"Windows LAPS (Local Administrator Password Solution) sichert und rotiert das lokale Admin-Passwort; per Intune-Account-Protection-Richtlinie verwaltbar."},
+  {q:"Auf welchen Geräten wird Windows LAPS unterstützt?",o:["Nur auf Workgroup-Geräten","Microsoft Entra joined oder hybrid joined (nicht registered)","Nur auf Entra registered Geräten","Auf allen Geräten inkl. iOS"],a:1,e:"LAPS unterstützt Entra joined und hybrid joined Geräte. Entra registered (BYOD) wird nicht unterstützt."},
+  {q:"Wohin kann ein nur-Entra-joined Gerät sein LAPS-Passwort sichern?",o:["Nur ins lokale Active Directory","Nach Microsoft Entra ID","Sowohl Entra ID als auch lokales AD gleichzeitig","Gar nicht"],a:1,e:"Reine Entra-joined Geräte sichern ausschließlich nach Entra ID. Eine gleichzeitige Sicherung in Entra und AD ist nicht möglich."},
+  {q:"Was ermöglicht Windows Hello for Business primär?",o:["Laufwerksverschlüsselung","Passwortlose, mehrstufige Anmeldung mit Biometrie oder PIN","Patch-Management","App-Bereitstellung"],a:1,e:"Windows Hello for Business ersetzt Passwörter durch eine starke, an das Gerät gebundene zweistufige Anmeldung (Biometrie/PIN + Schlüssel)."},
+  {q:"Du möchtest, dass eine Intune-Compliance-Richtlinie nur für bestimmte Geräte gilt, die sich anhand von Eigenschaften automatisch füllen. Was nutzt du?",o:["Statische Sicherheitsgruppe","Dynamische Geräte-Gruppe in Entra ID","Scope Tag","Filter-Profil"],a:1,e:"Dynamische Gruppen in Entra ID befüllen sich automatisch über Regeln (z. B. Geräteattribute) und eignen sich für Zuweisungen an Geräte."},
+  {q:"Womit verwaltest du in Intune, welche Administratoren welche Aufgaben (z. B. nur Helpdesk) ausführen dürfen?",o:["Conditional Access","Intune-Rollen (RBAC)","Compliance-Richtlinien","Update Rings"],a:1,e:"Intune nutzt rollenbasierte Zugriffssteuerung (RBAC) mit eingebauten und benutzerdefinierten Rollen, z. B. Help Desk Operator oder Endpoint Security Manager."},
+  {q:"Wie schreibst du viele iOS-Geräte gleichzeitig firmeneigen ein, automatisiert ab Werk/Reseller?",o:["Bulk-Enrollment über Apple Automated Device Enrollment (ADE/DEP)","Manuelles Company-Portal je Gerät","Provisioning Package","Hybrid Join"],a:0,e:"Apple Automated Device Enrollment (früher DEP) erlaubt firmeneigenes Bulk-Enrollment von iOS/iPadOS direkt aus Apple Business Manager."},
+  {q:"Welches Windows-Hello-for-Business-Vertrauensmodell ist für Hybrid-Umgebungen empfohlen, weil es keine PKI benötigt?",o:["Certificate trust","Key trust","Cloud Kerberos trust","Workgroup trust"],a:2,e:"Cloud Kerberos trust ist das empfohlene Hybrid-Modell: Es nutzt Microsoft Entra Kerberos, braucht keine PKI und keinen Public-Key-Sync zwischen Entra und AD."},
+  {q:"Welches WHfB-Vertrauensmodell erfordert eine Enterprise-PKI samt Certificate Registration Authority?",o:["Cloud Kerberos trust","Key trust","Certificate trust","Cloud-only"],a:2,e:"Certificate trust setzt eine Enterprise-PKI und eine Certificate Registration Authority (CRA) voraus, da es Authentifizierungszertifikate an Nutzer ausstellt."},
+  {q:"Welche zwei Geräte-Identitätszustände unterstützt Windows LAPS?",o:["Nur Entra registered","Entra joined und hybrid joined","Nur Workgroup","Alle inkl. iOS/Android"],a:1,e:"Windows LAPS unterstützt Entra joined und hybrid joined Geräte; Entra registered (BYOD) wird nicht unterstützt."},
+  {q:"Wie verhinderst du, dass beim Beitritt zu Entra ID alle Nutzer automatisch lokale Administratoren auf ihren Windows-Geräten werden?",o:["Über die Geräteeinstellungen für lokale Administratoren in Entra/Intune","Über Delivery Optimization","Über einen Update Ring","Über ein Provisioning Package"],a:0,e:"Über die Verwaltung lokaler Gruppen (z. B. Intune-Account-Protection bzw. Entra-Geräteeinstellungen) steuerst du, wer lokaler Admin wird."},
+  {q:"Ein Gerät soll nur dann auf Firmen-Apps zugreifen, wenn es konform ist. Welche zwei Komponenten arbeiten dafür zusammen?",o:["Security Baseline und Update Ring","Intune-Compliance-Richtlinie und Entra Conditional Access","App-Configuration und Delivery Optimization","ASR und BitLocker"],a:1,e:"Die Compliance-Richtlinie liefert den Status, Conditional Access erzwingt darauf aufbauend den Zugriff nur für konforme Geräte."},
+  {q:"Du willst verhindern, dass Nutzer Geräte einer bestimmten Plattform (z. B. private Android-Geräte) überhaupt einschreiben. Was nutzt du?",o:["Compliance-Richtlinie","Conditional Access","Eine Geräteplattform-Enrollment-Restriction","Eine Security Baseline"],a:2,e:"Geräteplattform-Einschränkungen (device platform restrictions) blockieren das Enrollment nach Plattform, Version, Hersteller oder Besitzform."},
+  {q:"Wie begrenzt du, wie viele Geräte ein einzelner Nutzer in Intune einschreiben darf?",o:["Über eine Compliance-Richtlinie","Über ein Konfigurationsprofil","Über eine Device-Limit-Restriction","Über Delivery Optimization"],a:2,e:"Device-Limit-Restrictions begrenzen die Anzahl der Geräte pro Nutzer (bis zu 15); darüber hinausgehende Enrollments werden blockiert."},
+  {q:"In der automatischen Windows-Einschreibung sind für einen Nutzer sowohl MDM- als auch MAM-User-Scope aktiviert. Was passiert?",o:["Das Gerät wird voll in Intune eingeschrieben (MDM)","Der MAM-Scope hat Vorrang; das Gerät wird nicht voll eingeschrieben","Beide Scopes greifen gleichzeitig","Das Enrollment schlägt fehl"],a:1,e:"Sind beide aktiviert, hat der MAM-User-Scope Vorrang: Das Gerät wird nicht per MDM eingeschrieben/verwaltet, nur die Apps werden geschützt."},
+  {q:"Womit schränkst du ein, dass bestimmte Intune-Admins nur die für sie relevanten Objekte (z. B. nur einer Region) sehen und verwalten?",o:["Conditional Access","Compliance-Richtlinien","Filter","Scope Tags (mit RBAC)"],a:3,e:"Scope Tags in Kombination mit RBAC begrenzen die Sichtbarkeit und Verwaltung von Objekten auf bestimmte Admin-Gruppen (distributed IT)."},
+  {q:"Du musst vor der Übergabe an Mitarbeiter bis zu 1.000 Mobilgeräte vorab einschreiben und konfigurieren. Welches Konto eignet sich?",o:["Ein normales Nutzerkonto","Das Device Enrollment Manager (DEM)-Konto","Ein Gastkonto","Das Global-Admin-Konto"],a:1,e:"Ein DEM-Konto kann bis zu 1.000 Geräte einschreiben und ist für die Vorbereitung von Geräten vor der Verteilung gedacht (nicht mit Apple ADE kompatibel)."},
+  {q:"Szenario: Ein Außendienstler verbindet sein privates Windows-Notebook über 'Auf Arbeit oder Schule zugreifen' mit dem Firmenkonto. Welcher Identitätszustand entsteht typischerweise?",o:["Microsoft Entra hybrid joined","Domain joined","Microsoft Entra registered","Self-deployed"],a:2,e:"Das Anbinden eines privaten Geräts über die Einstellungen-App registriert es (Entra registered) — es wird identitätsseitig bekannt, bleibt aber im Besitz des Nutzers."},
+  {q:"Szenario: Eine Klinik betreibt 40 gemeinsam genutzte Tablets im Schichtbetrieb, die kein persönliches Nutzerkonto brauchen. Welches Android-Enrollment passt am besten?",o:["Work profile (BYOD)","Personally-owned mit Arbeitsprofil","Dedicated device (COSU)","Microsoft Entra registered"],a:2,e:"Android dedicated devices (COSU) sind firmeneigene Single-Use-/Kiosk-Geräte ohne persönliche Anmeldung — ideal für gemeinsam genutzte Schicht-Tablets."},
+  {q:"Szenario: Du willst, dass nur firmeneigene Windows-Geräte automatisch beim Entra-Join in Intune landen, private aber nicht. Welche Kombination greift?",o:["Nur Conditional Access","Automatische Einschreibung plus Enrollment-Restriction für private Geräte","Nur eine Compliance-Richtlinie","Nur ein Konfigurationsprofil"],a:1,e:"Die automatische MDM-Einschreibung sorgt für das Onboarding; eine Geräteplattform-Restriction kann private (personal) Windows-Geräte vom Enrollment ausschließen."},
+  {q:"Was ist die Grundvoraussetzung, damit Intune iOS/iPadOS- und macOS-Geräte überhaupt verwalten kann?",o:["Ein Windows-Server vor Ort","Eine Security Baseline","Ein gültiges Apple MDM Push Certificate","Ein Update Ring"],a:2,e:"Apple verlangt ein in Intune hinterlegtes, gültiges MDM Push Certificate (APNs); ohne dieses Zertifikat lassen sich keine Apple-Geräte einschreiben oder verwalten."},
+  {q:"Womit kaufst und verteilst du Apps und Bücher firmenweit über Apple Business Manager in Intune?",o:["Mit einem Provisioning Package","Mit einem ADE-Profil","Mit einem Apple VPP-Token (Apps und Bücher)","Mit Delivery Optimization"],a:2,e:"Der Apple VPP-Token (Volume Purchase Program) verbindet Apple Business Manager mit Intune und synchronisiert eingekaufte Apps/Bücher zur Verteilung."},
+  {q:"Welche Art von Apple-ID solltest du für das MDM Push Certificate und Apple Business Manager verwenden?",o:["Eine persönliche Apple-ID eines Admins","Eine Managed Apple ID der Organisation","Gar keine","Die Apple-ID des Geräteherstellers"],a:1,e:"Empfohlen ist eine Managed Apple ID aus Apple Business/School Manager — eine persönliche Apple-ID kann beim Personalwechsel verloren gehen und die Verwaltung gefährden."}
+],
+[ // Domain 1 — Geräte verwalten und warten
+  {q:"Ein neues Gerät wird direkt an den Mitarbeiter geliefert und soll von ihm selbst mit Firmen-Anmeldung eingerichtet werden. Welcher Autopilot-Modus passt?",o:["Self-Deploying mode","User-Driven mode","Existing devices","Autopilot Reset"],a:1,e:"User-Driven richtet das Gerät beim ersten Anmelden des Nutzers mit dessen Entra-Anmeldedaten ein. Es unterstützt sowohl Entra join als auch hybrid join."},
+  {q:"Ein Kiosk- bzw. Shared-Gerät soll ohne jede Nutzeranmeldung vollautomatisch provisioniert werden. Welcher Autopilot-Modus ist gedacht?",o:["User-Driven mode","Self-Deploying mode","Pre-provisioning","Hybrid join"],a:1,e:"Self-Deploying mode benötigt keine Nutzeranmeldung und eignet sich für Kiosk/Shared-Geräte. Er unterstützt ausschließlich Entra join und setzt TPM 2.0 voraus."},
+  {q:"Welche Aussage zu Autopilot Self-Deploying mode ist korrekt?",o:["Unterstützt Entra hybrid join","Funktioniert auf virtuellen Maschinen","Unterstützt nur Entra join und benötigt TPM 2.0","Erfordert immer eine Nutzeranmeldung"],a:2,e:"Self-Deploying mode unterstützt nur Entra join, nutzt TPM-2.0-Attestation und funktioniert daher nicht auf VMs ohne unterstütztes TPM."},
+  {q:"Wie heißt der Autopilot-Vorgang, bei dem IT/OEM das Gerät vorab mit Apps und Richtlinien bestückt (früher 'White Glove'), damit der Nutzer es schnell fertig erhält?",o:["Self-Deploying mode","Pre-provisioning (Pre-provisioned deployment)","Autopilot Reset","Provisioning Package"],a:1,e:"Pre-provisioning (ehemals White Glove) führt die Technikerphase vorab aus; der Endnutzer durchläuft danach nur noch eine verkürzte Einrichtung."},
+  {q:"Wofür dient die Enrollment Status Page (ESP) bei Autopilot?",o:["Sie zeigt den Geräte-Standort","Sie blockiert den Desktop-Zugriff, bis Apps/Profile angewendet sind","Sie rotiert BitLocker-Schlüssel","Sie erstellt Provisioning Packages"],a:1,e:"Die ESP zeigt den Provisioning-Fortschritt und kann den Zugriff blockieren, bis konfigurierte Apps, Zertifikate und Profile angewendet wurden."},
+  {q:"Für ein kleines Szenario ohne Autopilot willst du ein bereits laufendes Windows-Gerät schnell per Datei umkonfigurieren und einschreiben. Was nutzt du?",o:["Provisioning Package (PPKG)","Security Baseline","Update Ring","Conditional Access"],a:0,e:"Provisioning Packages (.ppkg, erstellt mit Windows Configuration Designer) konfigurieren bestehende Geräte ohne Neuinstallation. Der Katalog lässt dich zwischen Autopilot und PPKG wählen."},
+  {q:"Du willst eigene ADMX-basierte Richtlinien (z. B. von Drittanbieter-Apps) auf Windows verteilen. Welches Intune-Feature nutzt du?",o:["Compliance-Richtlinie","Gerätekonfigurationsprofil mit ADMX-Import","App-Protection-Richtlinie","Update Ring"],a:1,e:"Über ein Konfigurationsprofil lassen sich importierte ADMX-Vorlagen verteilen, z. B. als administrative Vorlagen oder im Settings Catalog."},
+  {q:"Wie schränkst du ein, dass ein Konfigurationsprofil zusätzlich zur Gruppenzuweisung nur auf bestimmte OS-Versionen oder Modelle wirkt?",o:["Über Scope Tags","Über Filter (filters)","Über Rollen","Über Delivery Optimization"],a:1,e:"Filter targeten ein Profil dynamisch nach Eigenschaften wie OS-Version, Modell oder Ownership, ergänzend zur Gruppenzuweisung."},
+  {q:"Für welches Szenario erstellst du ein Konfigurationsprofil vom Typ 'Windows 11 Enterprise multi-session'?",o:["Einzelnutzer-Laptop","Azure Virtual Desktop / Mehrbenutzer-Sitzungshosts","iPhone-Flotte","Drucker"],a:1,e:"Multi-Session-Profile richten sich an Azure-Virtual-Desktop-Hosts, auf denen mehrere Nutzer gleichzeitig in Sitzungen arbeiten."},
+  {q:"Welche Remote-Aktion entfernt nur Unternehmensdaten/Verwaltung, statt das Gerät komplett zurückzusetzen?",o:["Wipe","Retire","Restart","Sync"],a:1,e:"Retire entfernt Firmendaten und Verwaltung; persönliche Daten bleiben je nach Plattform erhalten. Wipe setzt das Gerät vollständig zurück."},
+  {q:"Du musst auf 200 Geräten gleichzeitig denselben Neustart auslösen. Was nutzt du?",o:["Einzelaktionen nacheinander","Bulk-Geräteaktionen (bulk device actions)","Ein Konfigurationsprofil","Eine Compliance-Richtlinie"],a:1,e:"Bulk Device Actions erlauben Aktionen wie Sync, Restart, Wipe oder Retire auf vielen Geräten in einem Vorgang."},
+  {q:"Womit führst du in Intune eine Echtzeit-Abfrage von Geräteeigenschaften einzelner Geräte durch?",o:["PowerShell DSC","Device Query mit KQL","Group Policy","WSUS"],a:1,e:"Device Query nutzt die Kusto Query Language (KQL), um Live-Eigenschaften eines Geräts direkt abzufragen."},
+  {q:"Welche Remote-Aktion ist sinnvoll, wenn du den Schutz vor lokal kompromittiertem Recovery-Schlüssel auffrischen willst?",o:["BitLocker-Wiederherstellungsschlüssel rotieren","Antivirus deinstallieren","Gerät aus Entra löschen","Delivery Optimization aktivieren"],a:0,e:"Über die Remote-Aktion lässt sich der BitLocker-Recovery-Key rotieren, sodass ein evtl. offengelegter alter Schlüssel ungültig wird."},
+  {q:"Was beschreibt einen Windows 365 Cloud PC am besten?",o:["Ein lokales Image-Deployment-Tool","Ein in der Cloud gehosteter, per Intune verwalteter persönlicher Windows-PC","Eine Antivirus-Engine","Ein Update-Ring"],a:1,e:"Windows 365 stellt persönliche Cloud-PCs bereit, die wie physische Endpunkte über Intune verwaltet werden."},
+  {q:"Welche Intune-Suite-Funktion lässt Standardnutzer einzelne, IT-genehmigte Apps mit Adminrechten ausführen, ohne lokale Admins zu sein?",o:["Endpoint Privilege Management (EPM)","Remote Help","Cloud PKI","Advanced Analytics"],a:0,e:"EPM ermöglicht Just-in-time-Rechteerhöhung für genehmigte Apps nach dem Least-Privilege-Prinzip, ohne dass Nutzer dauerhaft lokale Admins sind."},
+  {q:"Welche EPM-Elevationstypen gibt es u. a.?",o:["Nur automatisch","Automatisch und benutzerbestätigt (user confirmed)","Nur per GPO","Ausschließlich manuell durch IT vor Ort"],a:1,e:"EPM kennt u. a. die Typen 'Automatic' (lautlose Erhöhung) und 'User confirmed' (Nutzer wählt 'Mit erhöhten Rechten ausführen', optional mit Begründung/Authentifizierung)."},
+  {q:"Welche Intune-Suite-Funktion ist eine cloudbasierte, verwaltete Zertifizierungsstelle für Ausstellung, Erneuerung und Sperrung von Zertifikaten?",o:["Microsoft Cloud PKI","Endpoint Privilege Management","Remote Help","Microsoft Tunnel"],a:0,e:"Microsoft Cloud PKI stellt eine verwaltete CA bereit und automatisiert den Zertifikat-Lebenszyklus über Intune-Plattformen hinweg, ohne lokale PKI."},
+  {q:"Mit welcher Intune-Suite-Funktion verbindet sich der Helpdesk sicher und rollenbasiert per Fernzugriff auf Nutzergeräte?",o:["Remote Help","Cloud PKI","Advanced Analytics","Enterprise App Catalog"],a:0,e:"Remote Help bietet auditierbare, rollenbasierte Helpdesk-zu-Nutzer-Fernverbindungen mit starker Authentifizierung und Compliance-Prüfung."},
+  {q:"Wozu dient Microsoft Tunnel for Mobile Application Management (MAM)?",o:["Zur Laufwerksverschlüsselung","Per-App-VPN-Zugriff für nicht eingeschriebene iOS-/Android-Geräte","Zur Zertifikatsausstellung","Zum Patch-Management"],a:1,e:"Microsoft Tunnel for MAM bietet sicheren per-App-VPN-Zugriff auf Firmenressourcen, ohne dass die Geräte voll in Intune eingeschrieben sein müssen."},
+  {q:"Welche Intune-Suite-Funktion stellt kuratierte, vorbereitete Win32-Apps aus einem Microsoft-gehosteten Katalog bereit?",o:["Enterprise App Catalog (Enterprise Application Management)","Cloud PKI","Remote Help","Update Rings"],a:0,e:"Der Enterprise App Catalog liefert vorverpackte Win32-Apps mit fertigen Installationseinstellungen direkt aus der Intune-Konsole."},
+  {q:"Welche Intune-Suite-Funktion bietet KI-gestützte Anomalieerkennung und Einblicke in die Endpunkt-Nutzererfahrung?",o:["Advanced Analytics","Remote Help","Cloud PKI","BitLocker"],a:0,e:"Microsoft Intune Advanced Analytics liefert datengetriebene Einblicke und KI-gestützte Anomalieerkennung zur Gerätegesundheit und User Experience."},
+  {q:"Du willst bestehende Configuration-Manager-(SCCM-)Geräte gemeinsam mit Intune verwalten und Workloads aufteilen. Wie heißt das?",o:["Tenant attach","Autopilot","Co-Management","Provisioning"],a:2,e:"Co-Management verwaltet Windows-Geräte mit Configuration Manager UND Intune gleichzeitig; einzelne Workloads lassen sich zu Intune verschieben."},
+  {q:"Was ermöglicht 'Tenant attach' bei Configuration Manager?",o:["Geräte voll in Intune einschreiben","ConfigMgr-Geräte in die Intune-Konsole hochladen und dort Remote-Aktionen nutzen","BitLocker rotieren","Apps aus dem Store verteilen"],a:1,e:"Tenant attach lädt ConfigMgr-Geräte in das Intune Admin Center, ohne sie einzuschreiben, und erlaubt dort einige Remote-Aktionen."},
+  {q:"Beim Autopilot Self-Deploying mode und Pre-provisioning greifen Enrollment-Restrictions nicht wie sonst. Warum?",o:["Weil sie immer blockiert werden","Weil diese Szenarien nicht user-driven sind und die Default-Policy gilt","Weil sie kein Entra brauchen","Weil sie nur macOS betreffen"],a:1,e:"Enrollment-Restrictions gelten nur für user-driven Enrollments; bei nicht-nutzergesteuerten Szenarien (z. B. Self-Deploying) greift die Default-Policy."},
+  {q:"Welches Tool erstellt ein Provisioning Package (.ppkg) für die Massen-Einschreibung bestehender Windows-Geräte?",o:["Office Deployment Tool","Win32 Content Prep Tool","Windows Configuration Designer (WCD)","Intune Management Extension"],a:2,e:"Der Windows Configuration Designer (WCD) erzeugt Provisioning Packages (.ppkg) für Bulk-Enrollment und Vorkonfiguration."},
+  {q:"Welche Geräteaktion ist sinnvoll, wenn ein Gerät verloren ging und alle Daten sicher entfernt werden müssen?",o:["Sync","Restart","Retire","Wipe"],a:3,e:"Wipe setzt das Gerät vollständig auf Werkseinstellungen zurück und entfernt alle Daten — passend bei Verlust/Diebstahl. Retire entfernt nur Firmendaten."},
+  {q:"Szenario: 300 Schichtarbeiter brauchen je nur wenige Stunden pro Tag einen Cloud-PC, nie gleichzeitig. Welche Windows-365-Variante spart am meisten?",o:["Windows 365 Enterprise (dediziert pro Nutzer)","Windows 365 Business","Windows 365 Frontline (non-concurrent)","Azure Virtual Desktop Pooled"],a:2,e:"Windows 365 Frontline (Flex) erlaubt non-concurrent Nutzung mehrerer Mitarbeiter pro Lizenz — ideal für Schicht-/Teilzeitkräfte, die nicht gleichzeitig arbeiten."},
+  {q:"Wie werden Windows-365-Cloud-PCs für berechtigte Nutzer bereitgestellt?",o:["Admin legt jeden Cloud PC manuell an","Automatisch über Provisioning Policies bei Lizenzzuweisung","Per Provisioning Package","Über einen Update Ring"],a:1,e:"Der Windows-365-Dienst erstellt Cloud PCs automatisch, sobald ein Nutzer in der passenden Entra-Gruppe eine Lizenz erhält und eine Provisioning Policy greift."},
+  {q:"Szenario: Ein Kunde braucht echte Multi-Session-Hosts mit mehreren gleichzeitigen Nutzern pro VM. Welche Lösung ist richtig?",o:["Windows 365 Enterprise","Windows 365 Frontline","Azure Virtual Desktop (Windows 11 Enterprise multi-session)","Windows 365 Business"],a:2,e:"Multi-Session (mehrere gleichzeitige Nutzer pro VM) gibt es nur in Azure Virtual Desktop; Windows 365 ist immer single-session."},
+  {q:"Szenario: Ein OEM soll Geräte vorab mit Apps und Richtlinien bestücken, damit der Nutzer sie nahezu fertig erhält. Welcher Autopilot-Modus?",o:["Self-Deploying mode","User-Driven ohne Vorbereitung","Pre-provisioning (Pre-provisioned deployment)","Autopilot Reset"],a:2,e:"Bei Pre-provisioning führt IT/OEM die Technikerphase vorab aus; der Endnutzer durchläuft danach nur noch eine stark verkürzte Einrichtung."},
+  {q:"Welches Profilformat empfiehlt Microsoft heute für neue Windows-Konfigurationsprofile, da es Tausende CSP-/ADMX-Einstellungen durchsuchbar bündelt?",o:["Endpoint protection template","Settings Catalog","Administrative Vorlagen (klassisch)","Custom OMA-URI"],a:1,e:"Microsoft empfiehlt für neue Profile den Settings Catalog, der nahezu alle verfügbaren CSP-/ADMX-Einstellungen in einer durchsuchbaren Oberfläche bereitstellt."},
+  {q:"Szenario: Dieselbe Konfiguration soll für Windows greifen, aber nur auf firmeneigenen Geräten (nicht BYOD), zusätzlich zur Gruppenzuweisung. Was nutzt du?",o:["Einen weiteren Update Ring","Eine zweite Compliance-Richtlinie","Einen Zuweisungsfilter nach Ownership","Ein Provisioning Package"],a:2,e:"Zuweisungsfilter erlauben dynamisches Eingrenzen z. B. nach Ownership (corporate/personal), OS-Version oder Modell — ergänzend zur Gruppenzuweisung."}
+],
+[ // Domain 2 — Anwendungen verwalten
+  {q:"Wie stellst du Microsoft 365 Apps im Rahmen eines Autopilot-Deployments bereit und steuerst Sprache, Architektur und Kanal?",o:["Über ODT/OCT-Konfiguration","Über BitLocker","Über LAPS","Über Update Rings"],a:0,e:"Das Office Deployment Tool (ODT) bzw. der Office Customization Tool (OCT) erzeugt die Konfiguration für Sprache, Bit-Version und Updatekanal."},
+  {q:"Eine App-Protection-Richtlinie (APP/MAM) schützt primär was?",o:["Die Firmware des Geräts","Unternehmensdaten innerhalb verwalteter Apps","Das BIOS-Passwort","Den WLAN-Schlüssel"],a:1,e:"App-Protection-Richtlinien schützen Firmendaten auf App-Ebene (z. B. Copy/Paste-Beschränkung, Verschlüsselung, PIN) und wirken auch auf nicht verwalteten Geräten."},
+  {q:"Ein Mitarbeiter nutzt Outlook auf einem privaten, nicht eingeschriebenen Telefon. Wie schützt du Firmendaten in der App ohne MDM?",o:["Geräte-Compliance-Richtlinie","App-Protection-Richtlinie (MAM-WE)","Security Baseline","Update Ring"],a:1,e:"App-Protection (Mobile Application Management without enrollment) schützt Daten in der App, ohne dass das Gerät komplett verwaltet werden muss."},
+  {q:"Über welches Portal verwaltest du zentral Updatekanäle und Servicing-Profile der Microsoft 365 Apps?",o:["Microsoft 365 Apps Admin Center","Azure Portal","WSUS-Konsole","Defender-Portal"],a:0,e:"Das Microsoft 365 Apps Admin Center steuert Servicing-Profile, Updatekanäle und das Inventar der Office-Apps."},
+  {q:"Du willst, dass eine verwaltete App beim ersten Start bestimmte Werte (z. B. Server-URL) vorbelegt hat. Welche Richtlinie nutzt du?",o:["App-Configuration-Richtlinie","Compliance-Richtlinie","Security Baseline","Firewall-Richtlinie"],a:0,e:"App-Configuration-Richtlinien liefern Konfigurationswerte an managed apps bzw. managed devices, sodass Nutzer nichts manuell eintragen müssen."},
+  {q:"Welche Conditional-Access-Bedingung erzwingt, dass nur Apps mit App-Protection-Richtlinie auf Firmendaten zugreifen?",o:["Require app protection policy / approved client app","Require hybrid join","Block legacy authentication","Require password change"],a:0,e:"Die Grant-Control 'Require app protection policy' (bzw. 'approved client app') lässt nur geschützte Client-Apps zu."},
+  {q:"Welcher App-Typ in Intune beschreibt eine eigene, intern entwickelte Branchenanwendung (z. B. .intunewin/MSI)?",o:["Store-App","Line-of-Business-(LOB-)App","Web-Link","Built-in App"],a:1,e:"LOB-Apps sind selbst bereitgestellte Installationspakete (z. B. Win32-.intunewin oder MSI), im Gegensatz zu Store- oder Web-Apps."},
+  {q:"Wie verteilst du eine App aus einem plattformeigenen Store (z. B. Microsoft Store / Apple App Store / Google Play) über Intune?",o:["Per Provisioning Package","Als Store-App im Intune-App-Workflow","Über eine Compliance-Richtlinie","Über einen Update Ring"],a:1,e:"Intune kann Apps direkt aus den plattformspezifischen Stores referenzieren und zuweisen, ohne die Pakete selbst zu hosten."},
+  {q:"Welche Zuweisungsart erzwingt die Installation einer App auf Zielgeräten ohne Nutzerinteraktion?",o:["Available for enrolled devices","Required","Uninstall","Available with company portal"],a:1,e:"Die Zuweisung 'Required' installiert die App verpflichtend und automatisch; 'Available' stellt sie im Company Portal zur Selbstinstallation bereit."},
+  {q:"Womit schränkst du in Office-Apps z. B. das Speichern von Firmendaten in privaten Cloud-Speichern ein?",o:["Richtlinien für Office-Apps (App-Configuration/Protection)","Update Ring","BitLocker","Autopilot-Profil"],a:0,e:"Über Richtlinien für Office-Apps (App-Konfiguration und -Protection) lassen sich Datenflüsse wie 'Save As' in nicht verwaltete Speicher steuern."},
+  {q:"Mit welchem Tool bereitest du eine Win32-App für Intune vor und erzeugst eine .intunewin-Datei?",o:["Office Deployment Tool","Microsoft Win32 Content Prep Tool (IntuneWinAppUtil)","Windows Configuration Designer","BitLocker-Tool"],a:1,e:"Das Microsoft Win32 Content Prep Tool (IntuneWinAppUtil.exe) verpackt Setup-Dateien in das .intunewin-Format für den Intune-Upload."},
+  {q:"Welche Grundvoraussetzung muss eine Win32-App erfüllen, damit Intune sie bereitstellen kann?",o:["Sie muss interaktiv installieren","Sie muss eine Silent-/Unattended-Installation unterstützen","Sie muss als ZIP vorliegen","Sie darf keine MSI sein"],a:1,e:"Intune unterstützt keine interaktiven Installationen — Win32-Apps müssen ohne Nutzerinteraktion (silent) installierbar sein."},
+  {q:"Welche Information legt fest, ob Intune eine Win32-App als bereits installiert erkennt?",o:["Die Zuweisungsgruppe","Die Erkennungsregeln (detection rules)","Der Update Ring","Die Compliance-Richtlinie"],a:1,e:"Erkennungsregeln (z. B. Datei-, Registry- oder MSI-Produktcode-Prüfung) bestimmen, ob die App auf dem Gerät als installiert gilt."},
+  {q:"Über welche Komponente werden Win32-Apps und PowerShell-Skripte auf dem Client verteilt?",o:["Intune Management Extension (IME)","Delivery Optimization","Defender for Endpoint","Company Portal-Webseite"],a:0,e:"Die Intune Management Extension (IME) wird automatisch installiert, sobald einem Gerät/Nutzer eine Win32-App oder ein PowerShell-Skript zugewiesen wird."},
+  {q:"Wodurch unterscheidet sich die Zuweisung 'Available' von 'Required' bei Apps?",o:["Available installiert sofort verpflichtend","Available stellt die App im Company Portal zur Selbstinstallation bereit","Available deinstalliert die App","Es gibt keinen Unterschied"],a:1,e:"'Required' erzwingt die Installation automatisch; 'Available for enrolled devices' bietet die App im Company Portal zur freiwilligen Installation an."},
+  {q:"Wie ersetzt du in Intune eine ältere Win32-App automatisch durch eine neuere Version?",o:["Über eine Compliance-Richtlinie","Über einen Update Ring","Über App-Supersedence (Ablösung)","Über Delivery Optimization"],a:2,e:"App-Supersedence erlaubt es, eine vorhandene Win32-App durch eine neue zu aktualisieren oder zu ersetzen, inkl. Reihenfolge der Installation."},
+  {q:"Welche App-Zuweisung verhindert, dass eine Gruppe eine bestimmte App erhält, obwohl sie über eine andere Zuweisung enthalten wäre?",o:["Required-Zuweisung","Available-Zuweisung","Exclude-Zuweisung","Uninstall-Zuweisung"],a:2,e:"Mit einer 'Exclude'-Zuweisung schließt du Gruppen gezielt von einer App-Zuweisung aus, auch wenn sie anderweitig enthalten wären."},
+  {q:"Du möchtest, dass eine Win32-App erst installiert wird, nachdem eine andere App (Voraussetzung) vorhanden ist. Was nutzt du?",o:["App-Dependencies (Abhängigkeiten)","BitLocker","Update Ring","Conditional Access"],a:0,e:"Über App-Dependencies legst du fest, dass vorausgesetzte Apps zuerst installiert werden, bevor die Haupt-App folgt."},
+  {q:"Szenario: Marketing soll eine App selbst bei Bedarf installieren können, der Rest der Firma nicht. Wie zuweisen?",o:["Required an alle","Uninstall an Marketing","Available im Company Portal nur für die Marketing-Gruppe","Required an alle, Exclude für Marketing"],a:2,e:"Mit der Zuweisung 'Available' für die Marketing-Gruppe erscheint die App nur dort im Company Portal zur freiwilligen Installation."},
+  {q:"Szenario: Eine veraltete Branchen-App soll firmenweit automatisch durch die neue Version ersetzt werden, inkl. Deinstallation der alten. Was nutzt du?",o:["Einen Update Ring","Eine Compliance-Richtlinie","App-Supersedence mit Deinstallationsoption","Delivery Optimization"],a:2,e:"App-Supersedence aktualisiert oder ersetzt eine bestehende Win32-App; die Vorgängerversion kann dabei automatisch deinstalliert werden."},
+  {q:"Szenario: Auf einem privaten, nicht eingeschriebenen Android-Telefon sollen Firmendaten in Outlook geschützt sein, ohne das Gerät zu verwalten. Was setzt du ein?",o:["Geräte-Compliance-Richtlinie","App-Protection-Richtlinie (MAM ohne Enrollment)","Security Baseline","Disk-Encryption-Richtlinie"],a:1,e:"App-Protection-Richtlinien (MAM-WE) schützen Firmendaten innerhalb der App, ohne dass das Gerät voll in Intune eingeschrieben werden muss."},
+  {q:"Wie konfigurierst du, dass Intune eine Win32-App zuverlässig als installiert oder nicht installiert erkennt?",o:["Über die Zuweisungsgruppe","Über den Updatekanal","Über Erkennungsregeln (Datei/Registry/MSI-Code)","Über einen Filter"],a:2,e:"Erkennungsregeln (detection rules) prüfen z. B. Dateiexistenz, Registry-Werte oder den MSI-Produktcode, um den Installationsstatus festzustellen."},
+  {q:"Womit verteilst du ein benutzerdefiniertes Skript zur Erstkonfiguration auf eingeschriebene Windows-Geräte?",o:["Über eine Compliance-Richtlinie","Über einen Update Ring","Über ein PowerShell-Skript (per Intune Management Extension)","Über BitLocker"],a:2,e:"Intune kann PowerShell-Skripte über die Intune Management Extension (IME) auf Windows-Geräte ausrollen, z. B. für Erstkonfigurationen."},
+  {q:"Szenario: Eine App soll während des Autopilot-ESP installiert sein, bevor der Nutzer den Desktop erreicht. Wie stellst du das sicher?",o:["App als 'Available' zuweisen","App im ESP als blockierende App festlegen (Required, Geräte-Kontext)","Per Compliance-Richtlinie","Per Delivery Optimization"],a:1,e:"Im Enrollment Status Page kann die App als erforderlich (Required, Gerätekontext) konfiguriert werden, sodass der Zugriff erst nach erfolgreicher Installation freigegeben wird."}
+],
+[ // Domain 3 — Geräte schützen
+  {q:"Womit verteilst du eine von Microsoft kuratierte, versionierte Sammlung empfohlener Härtungseinstellungen für Windows?",o:["Security Baseline","Compliance-Richtlinie","Update Ring","Provisioning Package"],a:0,e:"Security Baselines sind von Microsoft vordefinierte, versionierte Einstellungssätze (z. B. >350 Settings) und werden als Einheit zugewiesen."},
+  {q:"Eine Firma fordert: Zugriff auf M365 nur von Geräten mit aktivierter BitLocker-Verschlüsselung. Welche zwei Features setzen das durch?",o:["App-Protection-Richtlinie und Conditional Access","Geräte-Compliance-Richtlinie und Conditional Access","Konfigurationsprofil und Security Baseline","Update Ring und Firewall-Richtlinie"],a:1,e:"Die Compliance-Richtlinie prüft BitLocker; Conditional Access blockiert auf Basis des Compliance-Status den Zugriff nicht-konformer Geräte."},
+  {q:"Worin unterscheiden sich Compliance-Richtlinie und Security Baseline grundsätzlich?",o:["Beide erzwingen identische Einstellungen","Compliance prüft/meldet den Zustand, Baseline/Endpoint-Security konfiguriert Einstellungen aktiv","Nur Baselines gelten für macOS","Compliance verschlüsselt das Laufwerk"],a:1,e:"Eine Compliance-Richtlinie bewertet und meldet nur den Gerätezustand; Endpoint-Security-/Baseline-Richtlinien setzen Einstellungen aktiv durch."},
+  {q:"Welche Richtlinie aktiviert und verwaltet die Laufwerksverschlüsselung?",o:["Disk-Encryption-Richtlinie (BitLocker/FileVault)","Antivirus-Richtlinie","Firewall-Richtlinie","ASR-Richtlinie"],a:0,e:"Disk-Encryption-Richtlinien steuern BitLocker auf Windows bzw. FileVault auf macOS."},
+  {q:"Wozu dienen Attack-Surface-Reduction-(ASR-)Regeln?",o:["Sie verschlüsseln Laufwerke","Sie blockieren typische Angriffsverhalten wie Office-Makros, Skripte oder USB-Code","Sie verteilen Updates","Sie schreiben Geräte ein"],a:1,e:"ASR-Regeln reduzieren die Angriffsfläche, indem sie Verhalten blockieren, das Malware häufig ausnutzt. ASR setzt Microsoft Defender Antivirus als primäre AV voraus."},
+  {q:"Welche Voraussetzung gilt für Attack-Surface-Reduction-Regeln?",o:["Drittanbieter-Antivirus als primäre AV","Microsoft Defender Antivirus als primäre AV","Deaktivierte Firewall","Entra registered Geräte"],a:1,e:"ASR-Regeln funktionieren nur, wenn Microsoft Defender Antivirus die primäre Antivirus-Lösung auf dem Gerät ist."},
+  {q:"Was ist ein empfohlener erster Schritt beim Ausrollen neuer ASR-Regeln, um Geschäftsabläufe nicht zu brechen?",o:["Direkt im Block-Modus starten","Zuerst im Audit-Modus testen, dann auf Block","Regeln nur lokal setzen","ASR komplett überspringen"],a:1,e:"Best Practice ist, ASR-Regeln zunächst im Audit-Modus zu beobachten und erst nach Auswertung auf Block umzustellen."},
+  {q:"Wie staffelst du Windows-Qualitäts- und Funktionsupdates kontrolliert an Gerätegruppen?",o:["Update Rings in Intune","Delivery Optimization deaktivieren","WSUS-GPO","BitLocker-Rotation"],a:0,e:"Update Rings definieren Aufschub, Wartungsfenster und Deadlines und verteilen Updates ringweise an Gruppen."},
+  {q:"Wozu dient Delivery Optimization in Intune?",o:["Zertifikate ausstellen","Bandbreite durch Peer-Caching von Update-/App-Inhalten sparen","Geräte verschlüsseln","Apps signieren"],a:1,e:"Delivery Optimization erlaubt Peer-to-Peer-Verteilung von Update-/App-Inhalten und entlastet so die WAN-Bandbreite."},
+  {q:"Du hast den Intune-Connector zu Microsoft Defender for Endpoint eingerichtet. Was ist der nächste Schritt für die Geräte?",o:["Geräte in Defender for Endpoint onboarden","BitLocker deaktivieren","Geräte aus Entra entfernen","Autopilot-Reset"],a:0,e:"Nach der Connector-Integration werden Geräte über ein Onboarding-Profil/-Paket in Defender for Endpoint aufgenommen, um EDR-Telemetrie zu liefern."},
+  {q:"Wofür kannst du den von Defender for Endpoint gelieferten Geräterisiko-Score in Intune nutzen?",o:["Als Bedingung in einer Compliance-Richtlinie","Zur Laufwerksverschlüsselung","Für Provisioning Packages","Für Delivery Optimization"],a:0,e:"Der Machine-Risk-Score von Defender for Endpoint kann als Compliance-Kriterium dienen, sodass riskante Geräte als nicht konform gelten."},
+  {q:"Wie verwaltest du Updates für iOS/iPadOS und macOS in Intune?",o:["Über Update Rings für Windows","Über Update-Richtlinien für iOS/iPadOS bzw. macOS","Über ASR-Regeln","Über Provisioning Packages"],a:1,e:"Für Apple-Plattformen gibt es eigene Update-Richtlinien; Update Rings sind das Windows-Pendant."},
+  {q:"Wie können Android-Geräte Firmware-Updates over-the-air erhalten?",o:["Über Windows Update Rings","Über Konfigurationsprofile oder FOTA-Deployments","Über BitLocker","Über das M365 Apps Admin Center"],a:1,e:"Android-Updates lassen sich über Konfigurationsprofile bzw. firmware-over-the-air (FOTA)-Deployments steuern."},
+  {q:"Welche Remote-Aktion aktualisiert die Schutzdefinitionen von Microsoft Defender Antivirus auf einem Gerät?",o:["BitLocker-Schlüssel rotieren","Security-Intelligence von Defender Antivirus aktualisieren","Gerät retiren","Sync"],a:1,e:"Die Geräteaktion 'Update Microsoft Defender Antivirus security intelligence' lädt die neuesten Signatur-/Definitionsdaten auf das Gerät."},
+  {q:"Welche Endpoint-Security-Richtlinie steuert ein- und ausgehenden Netzwerkverkehr auf Windows?",o:["Firewall-Richtlinie","Antivirus-Richtlinie","Disk-Encryption-Richtlinie","ASR-Richtlinie"],a:0,e:"Firewall-Richtlinien definieren Regeln für ein- und ausgehenden Datenverkehr (Windows Defender Firewall) über Endpoint Security."},
+  {q:"Was passiert, wenn eine Security Baseline und ein Konfigurationsprofil dieselbe Einstellung mit unterschiedlichen Werten setzen?",o:["Der höhere Wert gewinnt","Intune meldet einen Konflikt und wendet keinen der Werte an","Die Baseline gewinnt immer","Das Profil gewinnt immer"],a:1,e:"Bei widersprüchlichen Werten markiert Intune einen Konflikt und wendet für diese Einstellung keinen der Werte an, bis der Konflikt gelöst ist."},
+  {q:"Welche Richtlinie erstellst du, um Echtzeitschutz und Cloud-Schutz von Microsoft Defender Antivirus zentral zu konfigurieren?",o:["Antivirus-Richtlinie (Endpoint Security)","Compliance-Richtlinie","Update Ring","App-Configuration-Richtlinie"],a:0,e:"Antivirus-Richtlinien im Bereich Endpoint Security konfigurieren Defender-AV-Einstellungen wie Echtzeitschutz und cloud-delivered protection."},
+  {q:"Wozu dienen Update Rings für Windows in Intune konkret?",o:["Sie verschlüsseln Laufwerke","Sie definieren Aufschub, Wartungsfenster und Deadlines für Updates","Sie stellen Apps bereit","Sie rotieren Zertifikate"],a:1,e:"Update Rings steuern Servicing-Optionen wie Quality-/Feature-Update-Aufschub, aktive Stunden, Deadlines und Neustartverhalten je Gerätegruppe."},
+  {q:"Welche Aktion ist in jeder Compliance-Richtlinie standardmäßig enthalten und greift sofort (0 Tage)?",o:["Gerät sperren","E-Mail senden","Gerät als nicht konform markieren","Gerät zurücksetzen"],a:2,e:"'Mark device noncompliant' ist die eingebaute Standardaktion bei 0 Tagen; Conditional Access kann darauf basierend den Zugriff blockieren."},
+  {q:"Du möchtest Nutzern einige Tage Zeit geben, ein nicht-konformes Gerät zu reparieren, bevor der Zugriff blockiert wird. Wie?",o:["Durch Erhöhen der Update-Ring-Anzahl","Durch eine Grace Period in den Aktionen bei Nichtkonformität","Durch Deaktivieren von Conditional Access","Durch ein zweites Konfigurationsprofil"],a:1,e:"Über eine Grace Period (Aufschub in Tagen) bei der Aktion 'mark noncompliant' bekommen Nutzer Zeit zur Behebung, bevor CA blockiert."},
+  {q:"Welche Tenant-Einstellung solltest du bei Nutzung von Conditional Access auf 'Not compliant' setzen?",o:["Compliance-Gültigkeitsdauer","'Geräte ohne zugewiesene Compliance-Richtlinie markieren als'","Delivery Optimization","BitLocker-Methode"],a:1,e:"Microsoft empfiehlt, 'Mark devices with no compliance policy assigned as' auf 'Not compliant' zu setzen, damit nur geprüfte Geräte Zugriff erhalten."},
+  {q:"Wie testest du eine neue Conditional-Access-Richtlinie gefahrlos, bevor sie wirklich blockiert?",o:["Im Report-only-Modus","Im Audit-Modus von ASR","Über einen Update Ring","Über ein Provisioning Package"],a:0,e:"Der Report-only-Modus protokolliert, was die CA-Richtlinie tun würde, ohne tatsächlich zu blockieren — ideal zum Validieren vor dem Scharfschalten."},
+  {q:"Welche Aktion bei Nichtkonformität benachrichtigt den Nutzer aktiv über sein Geräteproblem?",o:["Gerät zurücksetzen","Gerät sperren","E-Mail an den Endnutzer senden","Gerät retiren"],a:2,e:"Die Aktion 'Send email to end user' nutzt eine Benachrichtigungsvorlage, um Nutzer über die Nichtkonformität und nötige Schritte zu informieren."},
+  {q:"Szenario: Defender for Endpoint stuft ein Gerät als 'High Risk' ein. Wie sorgst du dafür, dass es dann keinen Zugriff mehr auf Firmenressourcen hat?",o:["Direkt in Entra blockieren","Risikostufe in der Compliance-Richtlinie als Schwelle setzen, CA blockiert nicht-konforme Geräte","BitLocker deaktivieren","Einen Update Ring erstellen"],a:1,e:"Die Compliance-Richtlinie definiert die maximal erlaubte Risikostufe; übersteigt das Gerät sie, wird es nicht-konform und Conditional Access blockiert den Zugriff."},
+  {q:"Welche Risikostufen liefert Microsoft Defender for Endpoint an Intune?",o:["Niedrig, Mittel, Hoch, Kritisch","Clear, Low, Medium, High","Grün, Gelb, Rot","Stufe 1 bis 5"],a:1,e:"Defender for Endpoint klassifiziert das Geräterisiko als Clear, Low, Medium oder High; diese Stufe wird als Compliance-Kriterium genutzt."},
+  {q:"Szenario: Du willst Windows-Geräte mit möglichst wenig Aufwand in Defender for Endpoint onboarden. Was ist der einfachste Weg?",o:["Manuelles Skript je Gerät","GPO im lokalen AD","Intune-EDR-Richtlinie mit 'Auto from connector'","Onboarding per E-Mail an Nutzer"],a:2,e:"Bei Windows kann Intune nach Einrichten des Connectors das Onboarding-Paket automatisch beziehen ('Auto from connector') und per EDR-Richtlinie ausrollen."},
+  {q:"Szenario: Du rollst eine neue Conditional-Access-Richtlinie aus, willst aber niemanden versehentlich aussperren. Was tust du zuerst?",o:["Sofort scharf schalten","Im Report-only-Modus starten und Sign-in-Logs prüfen","ASR auf Block setzen","Alle Geräte wipen"],a:1,e:"Im Report-only-Modus protokolliert die CA-Richtlinie ihre Wirkung, ohne zu blockieren — so erkennst du Probleme vor dem Scharfschalten."},
+  {q:"Welche Grant-Controls in Conditional Access können den Defender-for-Endpoint-Gerätestatus nutzen? (beste Antwort)",o:["Nur 'Block access'","Require compliant device, approved client app und app protection policy","Nur MFA","Nur 'Require password change'"],a:1,e:"Defender for Endpoint kann den Gerätestatus an alle drei Grant-Controls melden: compliant device, approved client app und app protection policy."},
+  {q:"Szenario: BitLocker soll im Hintergrund ohne jede Nutzerinteraktion aktiviert werden. Welche Einstellung ist dafür inkompatibel?",o:["TPM-only-Schutz","Recovery-Key-Escrow nach Entra ID","Ein Startup-PIN beim Boot","XTS-AES 256"],a:2,e:"Silent Encryption nutzt TPM-only; ein Startup-PIN erfordert Nutzerinteraktion beim Boot und ist daher mit der stillen Aktivierung unvereinbar."},
+  {q:"Wohin werden BitLocker-Wiederherstellungsschlüssel bei Intune-verwalteten, Entra-joined Geräten gesichert?",o:["Lokal auf dem Gerät","Auf einen USB-Stick","Nach Microsoft Entra ID","In ein Provisioning Package"],a:2,e:"Intune escrowt den BitLocker-Recovery-Key automatisch nach Entra ID; die Verschlüsselung startet erst, wenn das Escrow erfolgreich war."},
+  {q:"Welche Standard-Verschlüsselung nutzt BitLocker, und welche stärkere Stufe lässt sich in Intune wählen?",o:["Standard XTS-AES 256, optional 128","Standard XTS-AES 128, optional XTS-AES 256","Immer AES-CBC 128","Nur 256-bit möglich"],a:1,e:"BitLocker nutzt standardmäßig XTS-AES 128-bit; über die Richtlinie lässt sich für stärkere Sicherheit XTS-AES 256-bit wählen."},
+  {q:"Welche Verschlüsselung verwendet FileVault auf macOS, gesteuert über Intune?",o:["Frei wählbar 128 oder 256","XTS-AES 128-bit (fix, nicht änderbar)","AES-CBC 256","BitLocker"],a:1,e:"FileVault nutzt XTS-AES 128-bit; diese Stärke ist von Apple fest vorgegeben und über Intune nicht auf 256-bit umstellbar. Es gibt nur einen Personal Recovery Key."},
+  {q:"Welche Einstellung in einer Compliance-Richtlinie blockiert per Conditional Access veraltete Betriebssysteme?",o:["Delivery Optimization","Minimale OS-Version","Update Ring","Scope Tag"],a:1,e:"Über die Regel 'minimale OS-Version' werden Geräte unterhalb der geforderten Version als nicht konform markiert; CA kann ihnen dann den Zugriff verwehren."}
+]
+];
+
+const DOMAIN_NAMES=["Infrastruktur vorbereiten","Geräte verwalten & warten","Anwendungen verwalten","Geräte schützen"];
+
+let EXAM=null; // {questions:[{q,o,a,e,domain}], idx, answers:[], score}
+
+function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+
+/* Mischt die Antwortoptionen jeder Frage und führt den korrekten Index mit,
+   damit die richtige Antwort nicht immer an derselben Position steht. */
+function shuffleOptions(questions){
+  return questions.map(q=>{
+    const correctText=q.o[q.a];
+    const opts=shuffle([...q.o]);
+    return {...q, o:opts, a:opts.indexOf(correctText)};
+  });
+}
+
+function buildPoolQuestions(scope,count){
+  let bank=[];
+  const domains = scope==="all"?[0,1,2,3]:[parseInt(scope)];
+  domains.forEach(di=>POOL[di].forEach(q=>bank.push({...q,domain:di})));
+  bank=shuffle(bank);
+  // Keine Wiederholungen: höchstens so viele wie verfügbar
+  return bank.slice(0,Math.min(count,bank.length));
+}
+
+const show=(el,on)=>{document.getElementById(el).style.display=on?"":"none";};
+
+function startExam(){
+  const scope=$("#examScope").value;
+  const count=parseInt($("#examCount").value);
+  show("examSetup",false);
+
+  const questions=buildPoolQuestions(scope,count);
+
+  EXAM={questions:shuffleOptions(questions),idx:0,answers:new Array(questions.length).fill(null),score:0};
+  show("examQuiz",true);
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const {questions,idx}=EXAM;
+  const q=questions[idx];
+  $("#qpos").textContent=`Frage ${idx+1} / ${questions.length}`;
+  $("#qscore").textContent=`${EXAM.score} ✓`;
+  $("#qprogfill").style.width=((idx)/questions.length*100)+"%";
+  $("#qtext").textContent=q.q;
+  $("#qexpl").className="qexpl";$("#qexpl").innerHTML="";
+  $("#examNext").disabled=true;
+  $("#examNext").textContent = idx===questions.length-1?"Auswerten":"Weiter";
+  const keys=["A","B","C","D"];
+  $("#qopts").innerHTML=q.o.map((opt,i)=>
+    `<button class="qopt" data-i="${i}"><span class="key">${keys[i]}</span><span>${opt}</span></button>`).join("");
+  $("#qopts").querySelectorAll(".qopt").forEach(b=>{
+    b.addEventListener("click",()=>answer(parseInt(b.dataset.i)));
+  });
+}
+
+function answer(choice){
+  const {questions,idx}=EXAM;
+  if(EXAM.answers[idx]!==null) return;
+  const q=questions[idx];
+  EXAM.answers[idx]=choice;
+  const correct=q.a;
+  if(choice===correct)EXAM.score++;
+  $("#qopts").querySelectorAll(".qopt").forEach(b=>{
+    const i=parseInt(b.dataset.i);b.classList.add("locked");
+    if(i===correct)b.classList.add("correct");
+    else if(i===choice)b.classList.add("wrong");
+  });
+  const exp=$("#qexpl");
+  exp.innerHTML=`<b>${choice===correct?"Richtig":"Falsch"}.</b> ${q.e||""}`;
+  exp.className="qexpl show";
+  $("#qscore").textContent=`${EXAM.score} ✓`;
+  $("#examNext").disabled=false;
+}
+
+function nextQuestion(){
+  if(EXAM.idx<EXAM.questions.length-1){EXAM.idx++;renderQuestion();}
+  else finishExam();
+}
+
+function finishExam(){
+  show("examQuiz",false);
+  const {questions,score}=EXAM;
+  const pct=Math.round(score/questions.length*100);
+  show("examResult",true);
+  $("#resRing").style.setProperty("--p",pct);
+  $("#resPct").textContent=pct+"%";
+  const pass=pct>=70;
+  $("#resHead").textContent=pass?"Bestanden 🎉":"Noch nicht bestanden";
+  $("#resHead").style.color=pass?"var(--new)":"var(--warn)";
+  $("#resSub").textContent=`${score} von ${questions.length} richtig · Richtwert zum Bestehen: 70 %`;
+  // Aufschlüsselung nach Domain
+  const byDom={};
+  questions.forEach((q,i)=>{
+    const d=q.domain??0;
+    byDom[d]=byDom[d]||{c:0,t:0};
+    byDom[d].t++;
+    if(EXAM.answers[i]===q.a)byDom[d].c++;
+  });
+  $("#resBreak").innerHTML=Object.keys(byDom).map(d=>{
+    const o=byDom[d];const p=Math.round(o.c/o.t*100);
+    return `<div class="rb-item"><span style="flex:0 0 150px">${DOMAIN_NAMES[d]}</span>
+      <div class="rb-bar"><i style="width:${p}%"></i></div>
+      <span class="rb-n">${o.c}/${o.t}</span></div>`;
+  }).join("");
+  // Review
+  $("#reviewBox").style.display="none";
+  $("#reviewBox").innerHTML=questions.map((q,i)=>{
+    const keys=["A","B","C","D"];const ua=EXAM.answers[i];
+    return `<div class="rv"><div class="rvq">${i+1}. ${q.q}</div>
+      <div class="rvline ${ua===q.a?'ok':'no'}">${ua===q.a?'✓':'✗'} Deine Antwort: ${ua!=null?keys[ua]+") "+q.o[ua]:"—"}</div>
+      ${ua!==q.a?`<div class="rvline ok">✓ Richtig: ${keys[q.a]}) ${q.o[q.a]}</div>`:""}
+      <div class="rve">${q.e||""}</div></div>`;
+  }).join("");
+}
+
+function resetExam(){
+  show("examResult",false);show("examQuiz",false);
+  show("examSetup",true);EXAM=null;
+  document.getElementById("pruefung").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+$("#examStart").addEventListener("click",startExam);
+$("#examNext").addEventListener("click",nextQuestion);
+$("#examQuit").addEventListener("click",()=>{if(confirm("Prüfung abbrechen?"))resetExam();});
+$("#examAgain").addEventListener("click",resetExam);
+$("#examReview").addEventListener("click",()=>{
+  const b=$("#reviewBox");const open=b.style.display!=="none";
+  b.style.display=open?"none":"grid";
+  $("#examReview").textContent=open?"Antworten ansehen":"Antworten ausblenden";
+});
+
+renderDomains();renderRes();renderCL();
+/* erstes Domain offen */
+document.querySelector(".domain")?.classList.add("open");
+document.querySelector(".dh")?.setAttribute("aria-expanded","true");
+$("#examHint").textContent='118 geprüfte Fragen, viele mit Praxis-Szenarien, komplett offline.';
+</script>
+</body>
+</html>
