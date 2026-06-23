@@ -263,7 +263,7 @@ footer{padding:36px 0 60px}
 
 <div class="hero">
   <div class="wrap">
-    <div class="eyebrow">Microsoft Certification · Associate</div>
+    <div class="eyebrow">Prüfungsvorbereitung · IT</div>
     <h1>Prüfung <span>MD-102</span><br>Endpoint Administrator</h1>
     <p class="lead">Strukturierte Lernseite nach dem offiziellen „Skills measured"-Katalog von Microsoft. Alle Lernziele sind abhakbar — dein Fortschritt wird lokal im Browser gespeichert.</p>
     <div class="facts">
@@ -314,7 +314,7 @@ footer{padding:36px 0 60px}
 <section id="pruefung">
   <div class="wrap">
     <div class="sec-head"><h2>Prüfungsmodus</h2></div>
-    <p class="sec-sub">Übe im Multiple-Choice-Format mit 118 geprüften Fragen, komplett offline.</p>
+    <p class="sec-sub">Übe im Multiple-Choice-Format mit 130 geprüften Fragen, komplett offline.</p>
 
     <!-- Setup -->
     <div id="examSetup" class="exam-card">
@@ -542,6 +542,11 @@ const RESOURCES = [
 
 /* CHANGELOG — bei jeder Änderung neuen Eintrag OBEN einfügen */
 const CHANGELOG = [
+  { date:"Jun 2026", badge:"update", title:"130 Fragen — Zertifikate, WLAN/VPN & Updates", items:[
+    "12 neue geprüfte Fragen ergänzt (jetzt 130 gesamt), weiterhin viele Praxis-Szenarien",
+    "Neue Themen: SCEP/PKCS/Imported-Zertifikate, Trusted Root, EAP-TLS-WLAN, VPN-Identitätszertifikate, Feature-/Quality-/Driver-Updates, Expedite",
+    "Alle neuen Fragen gegen Microsoft-Learn-Quellen verifiziert; Antwortpositionen weiterhin gleichmäßig gemischt"
+  ]},
   { date:"Jun 2026", badge:"update", title:"118 Fragen — Verschlüsselung & Apple-Verwaltung", items:[
     "13 neue geprüfte Fragen ergänzt (jetzt 118 gesamt), weiterhin viele Praxis-Szenarien",
     "Neue Themen: BitLocker (Silent/XTS-AES), FileVault auf macOS, Apple MDM Push Certificate, VPP-Token, Managed Apple ID, Settings Catalog",
@@ -732,7 +737,9 @@ const POOL = [
   {q:"Szenario: Du willst, dass nur firmeneigene Windows-Geräte automatisch beim Entra-Join in Intune landen, private aber nicht. Welche Kombination greift?",o:["Nur Conditional Access","Automatische Einschreibung plus Enrollment-Restriction für private Geräte","Nur eine Compliance-Richtlinie","Nur ein Konfigurationsprofil"],a:1,e:"Die automatische MDM-Einschreibung sorgt für das Onboarding; eine Geräteplattform-Restriction kann private (personal) Windows-Geräte vom Enrollment ausschließen."},
   {q:"Was ist die Grundvoraussetzung, damit Intune iOS/iPadOS- und macOS-Geräte überhaupt verwalten kann?",o:["Ein Windows-Server vor Ort","Eine Security Baseline","Ein gültiges Apple MDM Push Certificate","Ein Update Ring"],a:2,e:"Apple verlangt ein in Intune hinterlegtes, gültiges MDM Push Certificate (APNs); ohne dieses Zertifikat lassen sich keine Apple-Geräte einschreiben oder verwalten."},
   {q:"Womit kaufst und verteilst du Apps und Bücher firmenweit über Apple Business Manager in Intune?",o:["Mit einem Provisioning Package","Mit einem ADE-Profil","Mit einem Apple VPP-Token (Apps und Bücher)","Mit Delivery Optimization"],a:2,e:"Der Apple VPP-Token (Volume Purchase Program) verbindet Apple Business Manager mit Intune und synchronisiert eingekaufte Apps/Bücher zur Verteilung."},
-  {q:"Welche Art von Apple-ID solltest du für das MDM Push Certificate und Apple Business Manager verwenden?",o:["Eine persönliche Apple-ID eines Admins","Eine Managed Apple ID der Organisation","Gar keine","Die Apple-ID des Geräteherstellers"],a:1,e:"Empfohlen ist eine Managed Apple ID aus Apple Business/School Manager — eine persönliche Apple-ID kann beim Personalwechsel verloren gehen und die Verwaltung gefährden."}
+  {q:"Welche Art von Apple-ID solltest du für das MDM Push Certificate und Apple Business Manager verwenden?",o:["Eine persönliche Apple-ID eines Admins","Eine Managed Apple ID der Organisation","Gar keine","Die Apple-ID des Geräteherstellers"],a:1,e:"Empfohlen ist eine Managed Apple ID aus Apple Business/School Manager — eine persönliche Apple-ID kann beim Personalwechsel verloren gehen und die Verwaltung gefährden."},
+  {q:"Welches Zertifikatsprofil musst du in Intune zuerst bereitstellen, bevor SCEP- oder PKCS-Profile funktionieren?",o:["Ein VPN-Profil","Ein WLAN-Profil","Ein Trusted-Certificate-Profil (Trusted Root CA)","Eine Compliance-Richtlinie"],a:2,e:"Das Trusted-Certificate-Profil verteilt das Stammzertifikat der CA und stellt die Vertrauenskette her; ohne es schlagen SCEP-/PKCS-Profile fehl."},
+  {q:"Welche Intune-Suite-Funktion ersetzt eine lokale NDES-Infrastruktur, um SCEP-Zertifikate aus der Cloud auszustellen?",o:["Microsoft Tunnel","Microsoft Cloud PKI","Remote Help","Advanced Analytics"],a:1,e:"Microsoft Cloud PKI ist eine verwaltete Cloud-CA und kann SCEP-Zertifikate ohne lokale NDES-/CA-Infrastruktur ausstellen."}
 ],
 [ // Domain 1 — Geräte verwalten und warten
   {q:"Ein neues Gerät wird direkt an den Mitarbeiter geliefert und soll von ihm selbst mit Firmen-Anmeldung eingerichtet werden. Welcher Autopilot-Modus passt?",o:["Self-Deploying mode","User-Driven mode","Existing devices","Autopilot Reset"],a:1,e:"User-Driven richtet das Gerät beim ersten Anmelden des Nutzers mit dessen Entra-Anmeldedaten ein. Es unterstützt sowohl Entra join als auch hybrid join."},
@@ -766,7 +773,12 @@ const POOL = [
   {q:"Szenario: Ein Kunde braucht echte Multi-Session-Hosts mit mehreren gleichzeitigen Nutzern pro VM. Welche Lösung ist richtig?",o:["Windows 365 Enterprise","Windows 365 Frontline","Azure Virtual Desktop (Windows 11 Enterprise multi-session)","Windows 365 Business"],a:2,e:"Multi-Session (mehrere gleichzeitige Nutzer pro VM) gibt es nur in Azure Virtual Desktop; Windows 365 ist immer single-session."},
   {q:"Szenario: Ein OEM soll Geräte vorab mit Apps und Richtlinien bestücken, damit der Nutzer sie nahezu fertig erhält. Welcher Autopilot-Modus?",o:["Self-Deploying mode","User-Driven ohne Vorbereitung","Pre-provisioning (Pre-provisioned deployment)","Autopilot Reset"],a:2,e:"Bei Pre-provisioning führt IT/OEM die Technikerphase vorab aus; der Endnutzer durchläuft danach nur noch eine stark verkürzte Einrichtung."},
   {q:"Welches Profilformat empfiehlt Microsoft heute für neue Windows-Konfigurationsprofile, da es Tausende CSP-/ADMX-Einstellungen durchsuchbar bündelt?",o:["Endpoint protection template","Settings Catalog","Administrative Vorlagen (klassisch)","Custom OMA-URI"],a:1,e:"Microsoft empfiehlt für neue Profile den Settings Catalog, der nahezu alle verfügbaren CSP-/ADMX-Einstellungen in einer durchsuchbaren Oberfläche bereitstellt."},
-  {q:"Szenario: Dieselbe Konfiguration soll für Windows greifen, aber nur auf firmeneigenen Geräten (nicht BYOD), zusätzlich zur Gruppenzuweisung. Was nutzt du?",o:["Einen weiteren Update Ring","Eine zweite Compliance-Richtlinie","Einen Zuweisungsfilter nach Ownership","Ein Provisioning Package"],a:2,e:"Zuweisungsfilter erlauben dynamisches Eingrenzen z. B. nach Ownership (corporate/personal), OS-Version oder Modell — ergänzend zur Gruppenzuweisung."}
+  {q:"Szenario: Dieselbe Konfiguration soll für Windows greifen, aber nur auf firmeneigenen Geräten (nicht BYOD), zusätzlich zur Gruppenzuweisung. Was nutzt du?",o:["Einen weiteren Update Ring","Eine zweite Compliance-Richtlinie","Einen Zuweisungsfilter nach Ownership","Ein Provisioning Package"],a:2,e:"Zuweisungsfilter erlauben dynamisches Eingrenzen z. B. nach Ownership (corporate/personal), OS-Version oder Modell — ergänzend zur Gruppenzuweisung."},
+  {q:"Worin unterscheiden sich SCEP- und PKCS-Zertifikatsprofile?",o:["SCEP liefert für jede Anforderung ein eindeutiges Zertifikat; PKCS stellt pro Gerät ein eindeutiges Zertifikat über den Connector aus","Beide liefern dasselbe Zertifikat an alle","SCEP funktioniert nur auf iOS","PKCS braucht keine CA"],a:0,e:"SCEP erzeugt je Anforderung ein eindeutiges Zertifikat; PKCS stellt pro Gerät ein eindeutiges Zertifikat aus und benötigt den Intune Certificate Connector mit Enterprise-CA."},
+  {q:"Szenario: Mehrere Nutzer sollen dasselbe Zertifikat erhalten, um verschlüsselte S/MIME-Mails entschlüsseln zu können. Welcher Profiltyp?",o:["SCEP-Zertifikatsprofil","Imported PKCS (PFX)-Zertifikatsprofil","Trusted-Root-Profil","WLAN-Profil"],a:1,e:"Mit importierten PKCS/PFX-Zertifikaten lässt sich dasselbe Zertifikat an mehrere Empfänger verteilen — z. B. damit alle E-Mails entschlüsseln können."},
+  {q:"Welche EAP-Methode und Sicherheitsstufe konfigurierst du für ein zertifikatsbasiertes Firmen-WLAN?",o:["PEAP mit WPA2-Personal","Offenes Netz ohne Auth","EAP-TLS mit WPA2/WPA3-Enterprise","WEP mit Pre-Shared Key"],a:2,e:"Zertifikatsbasiertes WLAN nutzt EAP-TLS zusammen mit WPA2- bzw. WPA3-Enterprise und authentifiziert gegen einen RADIUS-Server."},
+  {q:"In welcher Reihenfolge bzw. an welche Gruppen müssen Trusted-Root-, SCEP- und WLAN-Profil zugewiesen werden?",o:["An beliebige unterschiedliche Gruppen","An dieselben Gruppen (Geräte oder Nutzer), damit die Vertrauenskette greift","Nur das WLAN-Profil muss zugewiesen werden","Reihenfolge und Gruppen sind egal"],a:1,e:"Trusted Root, SCEP/PKCS und das WLAN-/VPN-Profil müssen an dieselben Gruppen, sonst fehlt die Vertrauenskette und die Zertifikatsausstellung schlägt fehl."},
+  {q:"Welcher Zertifikatstyp wird NICHT für die VPN-Authentifizierung unterstützt?",o:["SCEP-Zertifikat","PKCS-Zertifikat","Imported PKCS (PFX)-Zertifikat","Geräte-Zertifikat per SCEP"],a:2,e:"Importierte PKCS/PFX-Zertifikate werden nicht für die VPN-Authentifizierung unterstützt; dafür eignen sich SCEP- oder PKCS-Zertifikatsprofile."}
 ],
 [ // Domain 2 — Anwendungen verwalten
   {q:"Wie stellst du Microsoft 365 Apps im Rahmen eines Autopilot-Deployments bereit und steuerst Sprache, Architektur und Kanal?",o:["Über ODT/OCT-Konfiguration","Über BitLocker","Über LAPS","Über Update Rings"],a:0,e:"Das Office Deployment Tool (ODT) bzw. der Office Customization Tool (OCT) erzeugt die Konfiguration für Sprache, Bit-Version und Updatekanal."},
@@ -827,7 +839,12 @@ const POOL = [
   {q:"Wohin werden BitLocker-Wiederherstellungsschlüssel bei Intune-verwalteten, Entra-joined Geräten gesichert?",o:["Lokal auf dem Gerät","Auf einen USB-Stick","Nach Microsoft Entra ID","In ein Provisioning Package"],a:2,e:"Intune escrowt den BitLocker-Recovery-Key automatisch nach Entra ID; die Verschlüsselung startet erst, wenn das Escrow erfolgreich war."},
   {q:"Welche Standard-Verschlüsselung nutzt BitLocker, und welche stärkere Stufe lässt sich in Intune wählen?",o:["Standard XTS-AES 256, optional 128","Standard XTS-AES 128, optional XTS-AES 256","Immer AES-CBC 128","Nur 256-bit möglich"],a:1,e:"BitLocker nutzt standardmäßig XTS-AES 128-bit; über die Richtlinie lässt sich für stärkere Sicherheit XTS-AES 256-bit wählen."},
   {q:"Welche Verschlüsselung verwendet FileVault auf macOS, gesteuert über Intune?",o:["Frei wählbar 128 oder 256","XTS-AES 128-bit (fix, nicht änderbar)","AES-CBC 256","BitLocker"],a:1,e:"FileVault nutzt XTS-AES 128-bit; diese Stärke ist von Apple fest vorgegeben und über Intune nicht auf 256-bit umstellbar. Es gibt nur einen Personal Recovery Key."},
-  {q:"Welche Einstellung in einer Compliance-Richtlinie blockiert per Conditional Access veraltete Betriebssysteme?",o:["Delivery Optimization","Minimale OS-Version","Update Ring","Scope Tag"],a:1,e:"Über die Regel 'minimale OS-Version' werden Geräte unterhalb der geforderten Version als nicht konform markiert; CA kann ihnen dann den Zugriff verwehren."}
+  {q:"Welche Einstellung in einer Compliance-Richtlinie blockiert per Conditional Access veraltete Betriebssysteme?",o:["Delivery Optimization","Minimale OS-Version","Update Ring","Scope Tag"],a:1,e:"Über die Regel 'minimale OS-Version' werden Geräte unterhalb der geforderten Version als nicht konform markiert; CA kann ihnen dann den Zugriff verwehren."},
+  {q:"Mit welcher Richtlinie steuerst du, auf welche Windows-Version Geräte aktualisiert werden bzw. welche Version gehalten wird?",o:["Update Ring","Feature-Update-Richtlinie","Quality-Update-Expedite","Driver-Update-Richtlinie"],a:1,e:"Feature-Update-Richtlinien legen die Ziel-Windows-Version fest und halten Geräte auf dieser Version, bis du eine neuere freigibst."},
+  {q:"Szenario: Eine kritische Sicherheitslücke muss sofort gepatcht werden, ohne auf deine üblichen Aufschubfristen zu warten. Was nutzt du?",o:["Eine Feature-Update-Richtlinie","Einen normalen Update Ring","Eine Expedite-(Quality-Update-)Richtlinie","Ein Provisioning Package"],a:2,e:"Expedite-Richtlinien installieren ein bestimmtes Quality-Update schnellstmöglich und umgehen dabei Aufschub- und Timing-Einstellungen der regulären Ringe."},
+  {q:"Wie lassen sich Treiber-Updates über die Driver-Update-Richtlinie freigeben?",o:["Nur automatisch","Nur manuell","Automatisch oder manuell genehmigen","Gar nicht steuerbar"],a:2,e:"Driver-Update-Richtlinien erlauben automatische Genehmigung der empfohlenen Treiber oder manuelle Freigabe einzelner Treiberversionen; installiert wird stets nur die neueste genehmigte."},
+  {q:"Welche Geräte werden von Feature-, Quality- und Driver-Update-Richtlinien (Autopatch-Backend) NICHT unterstützt?",o:["Entra joined Geräte","Hybrid joined Geräte","Entra registered Geräte","Intune-verwaltete Geräte"],a:2,e:"Entra registered Geräte werden für diese Autopatch-basierten Richtlinien nicht unterstützt; dort bleibt das Update-Management auf Update Rings / Windows-Update-Client-Richtlinien beschränkt."},
+  {q:"Wo findest du in Intune den Status von Windows-Update-Bereitstellungen je Richtlinie?",o:["Unter Apps > Monitor","Unter Reports > Windows Updates","Unter Tenant administration > Audit","Im Company Portal"],a:1,e:"Die Windows-Update-Berichte (z. B. Feature Update Report) findest du unter Reports > Windows Updates im Intune Admin Center."}
 ]
 ];
 
@@ -968,7 +985,7 @@ renderDomains();renderRes();renderCL();
 /* erstes Domain offen */
 document.querySelector(".domain")?.classList.add("open");
 document.querySelector(".dh")?.setAttribute("aria-expanded","true");
-$("#examHint").textContent='118 geprüfte Fragen, viele mit Praxis-Szenarien, komplett offline.';
+$("#examHint").textContent='130 geprüfte Fragen, viele mit Praxis-Szenarien, komplett offline.';
 </script>
 </body>
 </html>
