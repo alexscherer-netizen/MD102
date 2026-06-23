@@ -210,6 +210,24 @@ section{padding:40px 0;border-bottom:1px solid var(--line)}
 .qopt.wrong{border-color:var(--fix);background:rgba(255,157,84,.10)}
 .qopt.wrong .key{background:var(--fix);color:#1a0d02;border-color:var(--fix)}
 .qopt.locked{cursor:default}
+.qopt.selected{border-color:var(--accent2);background:rgba(27,154,255,.12)}
+.qopt.selected .key{background:var(--accent2);color:#04130f;border-color:var(--accent2)}
+/* Reihenfolge-Fragen */
+.order-list{display:grid;gap:9px}
+.order-item{display:flex;align-items:center;gap:12px;background:var(--bg2);border:1.5px solid var(--line2);
+  border-radius:11px;padding:11px 13px;font-size:14.5px}
+.order-item.ok{border-color:var(--new);background:rgba(63,209,122,.10)}
+.order-item.no{border-color:var(--fix);background:rgba(255,157,84,.10)}
+.order-num{width:26px;height:26px;flex:0 0 auto;border-radius:7px;background:var(--panel);border:1px solid var(--line2);
+  display:grid;place-items:center;font-weight:800;font-size:13px;color:var(--accent)}
+.order-txt{flex:1;line-height:1.4}
+.order-ctrl{display:flex;flex-direction:column;gap:3px;flex:0 0 auto}
+.ord-btn{width:30px;height:22px;border-radius:6px;border:1px solid var(--line2);background:var(--panel);
+  color:var(--text);cursor:pointer;font-size:11px;line-height:1;padding:0}
+.ord-btn:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.ord-btn:disabled{opacity:.3;cursor:default}
+#examFlag.flagged{color:var(--warn);border-color:var(--warn)}
+
 .qexpl{display:none;text-align:left;margin-top:16px;padding:14px 16px;background:var(--panel);
   border:1px solid var(--line2);border-left:3px solid var(--accent2);border-radius:10px;font-size:13.5px;color:var(--muted)}
 .qexpl.show{display:block;animation:fade .25s ease}
@@ -232,6 +250,23 @@ section{padding:40px 0;border-bottom:1px solid var(--line)}
 .rv .rvline{font-size:13.5px;margin:3px 0;display:flex;gap:8px}
 .rv .ok{color:var(--new)}.rv .no{color:var(--fix)}
 .rv .rve{font-size:12.5px;color:var(--muted);margin-top:7px;padding-top:7px;border-top:1px dashed var(--line2)}
+
+/* timer option */
+.ex-timer-row{margin-top:14px;align-items:flex-end}
+.ex-toggle{display:flex;align-items:center;gap:11px;cursor:pointer;flex:1 1 260px;user-select:none}
+.ex-toggle input{position:absolute;opacity:0;width:0;height:0}
+.tog-track{width:42px;height:24px;border-radius:13px;background:var(--line2);position:relative;flex:0 0 auto;transition:background .18s}
+.tog-knob{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#cbd5e1;transition:transform .18s,background .18s}
+.ex-toggle input:checked + .tog-track{background:var(--accent)}
+.ex-toggle input:checked + .tog-track .tog-knob{transform:translateX(18px);background:#04130f}
+.ex-toggle input:focus-visible + .tog-track{outline:2px solid var(--accent2);outline-offset:2px}
+.tog-lbl{font-size:13px;color:var(--muted);line-height:1.35}
+.ex-field-sec{flex:0 0 150px}
+.qtimer{font-size:13.5px;font-weight:800;color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums;
+  background:var(--panel);border:1px solid var(--line2);padding:3px 10px;border-radius:7px}
+.qtimer.warn{color:var(--warn);border-color:var(--warn)}
+.qtimer.danger{color:var(--fix);border-color:var(--fix);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
 
 /* footer / impressum / paypal */
 footer{padding:36px 0 60px}
@@ -314,7 +349,7 @@ footer{padding:36px 0 60px}
 <section id="pruefung">
   <div class="wrap">
     <div class="sec-head"><h2>Prüfungsmodus</h2></div>
-    <p class="sec-sub">Übe im Multiple-Choice-Format mit 130 geprüften Fragen, komplett offline.</p>
+    <p class="sec-sub">184 geprüfte Fragen (inkl. Reihenfolge-Aufgaben). Üben mit Sofort-Feedback oder Prüfungssimulation auf Zeit.</p>
 
     <!-- Setup -->
     <div id="examSetup" class="exam-card">
@@ -336,8 +371,25 @@ footer{padding:36px 0 60px}
           </select>
         </label>
       </div>
+      <div class="ex-row ex-timer-row">
+        <label class="ex-toggle">
+          <input type="checkbox" id="examTimer">
+          <span class="tog-track"><span class="tog-knob"></span></span>
+          <span class="tog-lbl">Timer (auf Zeit) — bei Ablauf gilt die Prüfung als nicht bestanden</span>
+        </label>
+        <label class="ex-field ex-field-sec" id="examSecWrap" style="display:none">
+          <span>Sekunden pro Frage</span>
+          <select id="examSecPerQ">
+            <option value="30">30 s</option>
+            <option value="45">45 s</option>
+            <option value="60" selected>60 s</option>
+            <option value="90">90 s</option>
+          </select>
+        </label>
+      </div>
       <div class="ex-actions">
-        <button class="btn-primary" id="examStart">Prüfung starten</button>
+        <button class="btn-primary" id="examStart">Üben starten</button>
+        <button class="btn-ghost" id="examSimStart">🎓 Prüfungssimulation (45 Fragen, auf Zeit)</button>
         <span class="ex-hint" id="examHint"></span>
       </div>
     </div>
@@ -346,6 +398,7 @@ footer{padding:36px 0 60px}
     <div id="examQuiz" class="exam-card" style="display:none">
       <div class="quiz-bar">
         <span id="qpos">Frage 1</span>
+        <span id="qtimer" class="qtimer" style="display:none">--:--</span>
         <div class="qprog"><div id="qprogfill"></div></div>
         <span id="qscore">0 ✓</span>
       </div>
@@ -353,6 +406,8 @@ footer{padding:36px 0 60px}
       <div class="qexpl" id="qexpl"></div>
       <div class="ex-actions">
         <button class="btn-ghost" id="examQuit">Abbrechen</button>
+        <button class="btn-ghost" id="examFlag" style="display:none">☆ Markieren</button>
+        <button class="btn-ghost" id="examPrev" style="display:none">Zurück</button>
         <button class="btn-primary" id="examNext" disabled>Weiter</button>
       </div>
     </div>
@@ -542,6 +597,36 @@ const RESOURCES = [
 
 /* CHANGELOG — bei jeder Änderung neuen Eintrag OBEN einfügen */
 const CHANGELOG = [
+  { date:"Jun 2026", badge:"new", title:"Prüfungssimulation & Reihenfolge-Aufgaben", items:[
+    "Neuer Simulationsmodus: 45 Fragen, fester Timer (~60 min), Vor/Zurück-Navigation, Markieren-Funktion, keine Sofort-Auflösung — Auswertung erst am Ende, Bestehen ab 70 %",
+    "Neuer Fragetyp Reihenfolge: Schritte per ▲/▼ in die richtige Reihenfolge bringen (6 geprüfte Prozess-Aufgaben, z. B. Autopilot-OOBE, Zertifikats-Rollout)",
+    "Jetzt 184 Fragen; alle gegen Microsoft-Learn-Quellen verifiziert"
+  ]},
+  { date:"Jun 2026", badge:"update", title:"178 Fragen — Schwerpunkt App-Bereitstellung", items:[
+    "11 neue geprüfte Fragen ergänzt (jetzt 178 gesamt, 44 Praxis-Szenarien); Bereich 3 'Anwendungen' aufgefüllt für ausgewogenere Verteilung",
+    "Neue Themen: Win32 vs. LOB, Dependencies, Supersedence (Update/Replace), Requirement Rules, Exit-Codes, 30-GB-Limit, Autopilot Win32+LOB-Mix",
+    "Alle neuen Fragen gegen Microsoft-Learn-Quellen verifiziert; Antwortpositionen weiterhin gleichmäßig gemischt"
+  ]},
+  { date:"Jun 2026", badge:"new", title:"Optionaler Timer im Prüfungsmodus", items:[
+    "Zuschaltbarer Countdown, der sich automatisch an die Fragenanzahl anpasst (Sekunden pro Frage wählbar: 30–90 s)",
+    "Live-Anzeige in der Quiz-Leiste mit Warn- (gelb) und Gefahr-Phase (rot, pulsierend)",
+    "Bei Zeitablauf gilt die Prüfung als nicht bestanden; ohne Timer läuft alles wie gewohnt"
+  ]},
+  { date:"Jun 2026", badge:"update", title:"167 Fragen — Defender, Tamper Protection & macOS", items:[
+    "10 neue geprüfte Fragen ergänzt (jetzt 167 gesamt, 39 Praxis-Szenarien)",
+    "Neue Themen: Tamper Protection, Defender-AV-Enforcement-Level (macOS), Troubleshooting Mode, DisableLocalAdminMerge, macOS Shell-Skripte & Platform SSO, Win32-Exit-Codes",
+    "Alle neuen Fragen gegen Microsoft-Learn-Quellen verifiziert; Antwortpositionen weiterhin gleichmäßig gemischt"
+  ]},
+  { date:"Jun 2026", badge:"update", title:"157 Fragen — Apple-Enrollment & Kiosk-Szenarien", items:[
+    "14 neue geprüfte Fragen ergänzt (jetzt 157 gesamt, 33 Praxis-Szenarien)",
+    "Neue Themen: Apple ADE & Supervised Mode, User Enrollment (BYOD), Shared iPad, Apple Configurator, VPP-Gerätelizenzen, Windows-Kiosk, selektives Wipe",
+    "Alle neuen Fragen gegen Microsoft-Learn-Quellen verifiziert; Antwortpositionen weiterhin gleichmäßig gemischt"
+  ]},
+  { date:"Jun 2026", badge:"update", title:"143 Fragen — Android & mehr Szenarien", items:[
+    "13 neue geprüfte Fragen ergänzt (jetzt 143 gesamt), Schwerpunkt Praxis-Szenarien (26 insgesamt)",
+    "Neue Themen: Android-Enterprise-Modi (BYOD/COBO/COSU/COPE), Managed Google Play, Enrollment-Methoden, Co-Management-Workloads, Troubleshooting",
+    "Alle neuen Fragen gegen Microsoft-Learn-Quellen verifiziert; Antwortpositionen weiterhin gleichmäßig gemischt"
+  ]},
   { date:"Jun 2026", badge:"update", title:"130 Fragen — Zertifikate, WLAN/VPN & Updates", items:[
     "12 neue geprüfte Fragen ergänzt (jetzt 130 gesamt), weiterhin viele Praxis-Szenarien",
     "Neue Themen: SCEP/PKCS/Imported-Zertifikate, Trusted Root, EAP-TLS-WLAN, VPN-Identitätszertifikate, Feature-/Quality-/Driver-Updates, Expedite",
@@ -739,7 +824,20 @@ const POOL = [
   {q:"Womit kaufst und verteilst du Apps und Bücher firmenweit über Apple Business Manager in Intune?",o:["Mit einem Provisioning Package","Mit einem ADE-Profil","Mit einem Apple VPP-Token (Apps und Bücher)","Mit Delivery Optimization"],a:2,e:"Der Apple VPP-Token (Volume Purchase Program) verbindet Apple Business Manager mit Intune und synchronisiert eingekaufte Apps/Bücher zur Verteilung."},
   {q:"Welche Art von Apple-ID solltest du für das MDM Push Certificate und Apple Business Manager verwenden?",o:["Eine persönliche Apple-ID eines Admins","Eine Managed Apple ID der Organisation","Gar keine","Die Apple-ID des Geräteherstellers"],a:1,e:"Empfohlen ist eine Managed Apple ID aus Apple Business/School Manager — eine persönliche Apple-ID kann beim Personalwechsel verloren gehen und die Verwaltung gefährden."},
   {q:"Welches Zertifikatsprofil musst du in Intune zuerst bereitstellen, bevor SCEP- oder PKCS-Profile funktionieren?",o:["Ein VPN-Profil","Ein WLAN-Profil","Ein Trusted-Certificate-Profil (Trusted Root CA)","Eine Compliance-Richtlinie"],a:2,e:"Das Trusted-Certificate-Profil verteilt das Stammzertifikat der CA und stellt die Vertrauenskette her; ohne es schlagen SCEP-/PKCS-Profile fehl."},
-  {q:"Welche Intune-Suite-Funktion ersetzt eine lokale NDES-Infrastruktur, um SCEP-Zertifikate aus der Cloud auszustellen?",o:["Microsoft Tunnel","Microsoft Cloud PKI","Remote Help","Advanced Analytics"],a:1,e:"Microsoft Cloud PKI ist eine verwaltete Cloud-CA und kann SCEP-Zertifikate ohne lokale NDES-/CA-Infrastruktur ausstellen."}
+  {q:"Welche Intune-Suite-Funktion ersetzt eine lokale NDES-Infrastruktur, um SCEP-Zertifikate aus der Cloud auszustellen?",o:["Microsoft Tunnel","Microsoft Cloud PKI","Remote Help","Advanced Analytics"],a:1,e:"Microsoft Cloud PKI ist eine verwaltete Cloud-CA und kann SCEP-Zertifikate ohne lokale NDES-/CA-Infrastruktur ausstellen."},
+  {q:"Was ist die zwingende Voraussetzung, um Android-Enterprise-Geräte in Intune zu verwalten und Apps zu verteilen?",o:["Ein lokaler Exchange-Server","Eine Verbindung zu Managed Google Play","Ein Apple VPP-Token","Ein NDES-Server"],a:1,e:"Die Anbindung des Intune-Tenants an ein Managed-Google-Play-Konto ist Pflicht für Android-Enterprise-Verwaltung und App-Verteilung."},
+  {q:"Szenario: Mitarbeiter sollen ihre privaten Android-Handys nutzen, Firmen- und Privatdaten aber strikt getrennt. Welcher Android-Modus?",o:["Fully managed (COBO)","Dedicated (COSU)","Personally-owned work profile (BYOD)","AOSP userless"],a:2,e:"Das persönliche Arbeitsprofil (BYOD work profile) erstellt eine getrennte Partition für Arbeitsdaten; private Apps und Daten bleiben unberührt."},
+  {q:"Szenario: Firmeneigene Android-Geräte sollen einem festen Nutzer gehören und vollständig verwaltet werden (auch Sperren von App-Installationen). Welcher Modus?",o:["Personally-owned work profile","Fully managed (COBO)","Device administrator","Apple User Enrollment"],a:1,e:"Fully managed (COBO) bindet das firmeneigene Gerät an einen Nutzer und gibt dem Admin volle Kontrolle, z. B. nur Managed-Google-Play-Installationen."},
+  {q:"Welche Android-Verwaltungsart ist veraltet (deprecated) und sollte für neue Geräte nicht mehr verwendet werden?",o:["Work profile","Fully managed","Android device administrator","Dedicated"],a:2,e:"Android device administrator ist veraltet; Google und Intune empfehlen die Migration zu Android-Enterprise-Methoden oder App-Protection-Richtlinien."},
+  {q:"Welche Enrollment-Methoden gibt es für firmeneigene Android-Enterprise-Geräte? (beste Antwort)",o:["Nur manuell per Company Portal","QR-Code, Zero Touch, Knox Mobile Enrollment, NFC oder Token","Nur per Apple Configurator","Nur per E-Mail-Link"],a:1,e:"Firmeneigene Android-Geräte lassen sich u. a. per QR-Code, Google Zero Touch, Samsung Knox Mobile Enrollment, NFC oder Token-Eingabe einschreiben."},
+  {q:"Szenario: Eine Firma kauft 200 iPads über Apple Business Manager und will sie ohne Anfassen automatisch einschreiben. Welche Methode?",o:["Apple User Enrollment","Automated Device Enrollment (ADE)","Company-Portal-Enrollment","BYOD-Registrierung"],a:1,e:"ADE schreibt firmeneigene, über Apple Business/School Manager gekaufte Geräte over-the-air per Setup Assistant ein, ohne dass IT sie physisch anfassen muss."},
+  {q:"Welche Authentifizierungsmethode empfiehlt Microsoft heute für ADE mit User Affinity?",o:["Setup Assistant (legacy)","Company Portal","Setup Assistant mit moderner Authentifizierung","Direct Enrollment"],a:2,e:"Setup Assistant mit moderner Authentifizierung wird empfohlen: unterstützt MFA und JIT-Registrierung und macht die Company-Portal-App für die Registrierung überflüssig."},
+  {q:"Was gilt für iOS/iPadOS-Geräte ab Version 13, die über ADE eingeschrieben werden, bezüglich Supervised Mode?",o:["Sie sind nie supervised","Sie werden automatisch supervised","Supervised muss manuell pro Gerät aktiviert werden","Supervised gibt es nur auf macOS"],a:1,e:"Ab iOS/iPadOS 13 werden ADE-Geräte automatisch in den Supervised Mode versetzt; das is_supervised-Flag wird ignoriert."},
+  {q:"Szenario: Mitarbeiter wollen ihre privaten iPhones nutzen, die Firma will aber nur Arbeits-Apps/-Daten verwalten und Privates nicht anrühren. Welche Methode?",o:["Automated Device Enrollment","Apple User Enrollment (BYOD)","Apple Configurator Direct Enrollment","Shared iPad"],a:1,e:"Apple User Enrollment trennt verwaltete Arbeits-Apps/-Daten auf einem eigenen Volume von den privaten Daten — ideal für BYOD-iPhones."},
+  {q:"Was bewirkt 'Locked enrollment' bei einem ADE-Profil?",o:["Es verschlüsselt das Gerät","Der Nutzer kann die Verwaltung (MDM-Profil) nicht entfernen","Es sperrt den App Store","Es deaktiviert das WLAN"],a:1,e:"Locked enrollment verhindert, dass Nutzer das Management-Profil von ihrem firmeneigenen Gerät entfernen können."},
+  {q:"Welche zusätzlichen Steuerungsmöglichkeiten bietet der Supervised Mode auf iOS/iPadOS?",o:["Keine zusätzlichen","Erweiterte Restriktionen wie AirDrop-Sperre, Screenshot-Verbot, Single App Mode","Nur längere Akkulaufzeit","Nur schnellere Updates"],a:1,e:"Supervised Mode erlaubt erweiterte Restriktionen (z. B. AirDrop blockieren, Screenshots verhindern, Single App Mode) und deaktiviert standardmäßig Activation Lock."},
+  {type:"order", q:"Bringe die Schritte zum sauberen Entfernen eines Geräts aus Windows Autopilot in die richtige Reihenfolge.", steps:["Gerät aus Intune löschen (Devices > Windows)","Gerät aus Windows Autopilot deregistrieren (Enrollment > Windows Autopilot > Devices)","Zugehöriges Microsoft-Entra-Geräteobjekt prüfen/bereinigen"], e:"Reihenfolge ist wichtig: Erst aus Intune löschen, dann aus Autopilot deregistrieren; danach das Entra-Objekt prüfen. Schritte auszulassen oder zu vertauschen kann zu verwaisten/unbrauchbaren Datensätzen führen."},
+  {type:"order", q:"Ordne die Schritte zur Einrichtung von Windows Autopilot (User-driven, Entra join) in der typischen Reihenfolge.", steps:["Geräte bei Windows Autopilot registrieren (Hardware-Hash hochladen)","Ein Autopilot-Deployment-Profil erstellen","Das Profil einer Entra-Gerätegruppe zuweisen","Gerät einschalten – OOBE startet den Autopilot-Vorgang"], e:"Erst registrieren (Hardware-Hash), dann Deployment-Profil erstellen, dieses einer Gruppe zuweisen; anschließend durchläuft das Gerät beim Einschalten die OOBE."}
 ],
 [ // Domain 1 — Geräte verwalten und warten
   {q:"Ein neues Gerät wird direkt an den Mitarbeiter geliefert und soll von ihm selbst mit Firmen-Anmeldung eingerichtet werden. Welcher Autopilot-Modus passt?",o:["Self-Deploying mode","User-Driven mode","Existing devices","Autopilot Reset"],a:1,e:"User-Driven richtet das Gerät beim ersten Anmelden des Nutzers mit dessen Entra-Anmeldedaten ein. Es unterstützt sowohl Entra join als auch hybrid join."},
@@ -778,7 +876,18 @@ const POOL = [
   {q:"Szenario: Mehrere Nutzer sollen dasselbe Zertifikat erhalten, um verschlüsselte S/MIME-Mails entschlüsseln zu können. Welcher Profiltyp?",o:["SCEP-Zertifikatsprofil","Imported PKCS (PFX)-Zertifikatsprofil","Trusted-Root-Profil","WLAN-Profil"],a:1,e:"Mit importierten PKCS/PFX-Zertifikaten lässt sich dasselbe Zertifikat an mehrere Empfänger verteilen — z. B. damit alle E-Mails entschlüsseln können."},
   {q:"Welche EAP-Methode und Sicherheitsstufe konfigurierst du für ein zertifikatsbasiertes Firmen-WLAN?",o:["PEAP mit WPA2-Personal","Offenes Netz ohne Auth","EAP-TLS mit WPA2/WPA3-Enterprise","WEP mit Pre-Shared Key"],a:2,e:"Zertifikatsbasiertes WLAN nutzt EAP-TLS zusammen mit WPA2- bzw. WPA3-Enterprise und authentifiziert gegen einen RADIUS-Server."},
   {q:"In welcher Reihenfolge bzw. an welche Gruppen müssen Trusted-Root-, SCEP- und WLAN-Profil zugewiesen werden?",o:["An beliebige unterschiedliche Gruppen","An dieselben Gruppen (Geräte oder Nutzer), damit die Vertrauenskette greift","Nur das WLAN-Profil muss zugewiesen werden","Reihenfolge und Gruppen sind egal"],a:1,e:"Trusted Root, SCEP/PKCS und das WLAN-/VPN-Profil müssen an dieselben Gruppen, sonst fehlt die Vertrauenskette und die Zertifikatsausstellung schlägt fehl."},
-  {q:"Welcher Zertifikatstyp wird NICHT für die VPN-Authentifizierung unterstützt?",o:["SCEP-Zertifikat","PKCS-Zertifikat","Imported PKCS (PFX)-Zertifikat","Geräte-Zertifikat per SCEP"],a:2,e:"Importierte PKCS/PFX-Zertifikate werden nicht für die VPN-Authentifizierung unterstützt; dafür eignen sich SCEP- oder PKCS-Zertifikatsprofile."}
+  {q:"Welcher Zertifikatstyp wird NICHT für die VPN-Authentifizierung unterstützt?",o:["SCEP-Zertifikat","PKCS-Zertifikat","Imported PKCS (PFX)-Zertifikat","Geräte-Zertifikat per SCEP"],a:2,e:"Importierte PKCS/PFX-Zertifikate werden nicht für die VPN-Authentifizierung unterstützt; dafür eignen sich SCEP- oder PKCS-Zertifikatsprofile."},
+  {q:"Szenario: In einem Co-Management-Setup soll die Compliance-Bewertung von Configuration Manager zu Intune wechseln. Wie?",o:["Per Autopilot-Reset","Über den Workload-Slider für Compliance auf 'Intune' bzw. 'Pilot Intune'","Per Provisioning Package","Über eine Security Baseline"],a:1,e:"Im Co-Management verschiebt man einzelne Workloads (z. B. Compliance Policies) über die Slider von Configuration Manager nach Intune oder Pilot Intune."},
+  {q:"Szenario: Beim Autopilot bricht die Einrichtung in der Enrollment Status Page wiederholt ab. Was ist ein typischer sinnvoller Ansatz?",o:["Das Gerät sofort wipen und neu kaufen","Prüfen, welche blockierende App/Profil in der ESP fehlschlägt, und Timeout/Apps anpassen","Conditional Access deaktivieren","Den Nutzer zum lokalen Admin machen"],a:1,e:"Die ESP blockiert bis zum Abschluss zugewiesener Apps/Profile; man prüft, welche Komponente fehlschlägt, und korrigiert App-Zuweisung, Reihenfolge oder Timeout."},
+  {q:"Szenario: Ein gemeinsam genutzter Kiosk-PC soll ganz ohne Nutzeranmeldung vollautomatisch eingerichtet werden. Welcher Autopilot-Modus passt und was wird vorausgesetzt?",o:["User-Driven, kein TPM nötig","Pre-provisioning mit Nutzeranmeldung","Self-Deploying mode mit TPM 2.0 und Entra join","Autopilot Reset ohne Netzwerk"],a:2,e:"Self-Deploying mode richtet das Gerät ohne Nutzeranmeldung ein, nutzt TPM-2.0-Attestation und unterstützt ausschließlich Entra join."},
+  {q:"Szenario: In einer Schule soll ein iPad von mehreren Schülern mit eigenen Managed Apple IDs nacheinander genutzt werden. Welche Funktion?",o:["Apple User Enrollment","Shared iPad (ADE ohne User Affinity)","Apple Configurator Direct Enrollment","BYOD-Arbeitsprofil"],a:1,e:"Shared iPad (über ADE ohne User Affinity, supervised) erlaubt mehreren Nutzern, sich mit ihren Managed Apple IDs an einem gemeinsamen iPad anzumelden."},
+  {q:"Womit richtest du auf einem Windows-Gerät einen Kiosk ein, der nur eine einzige App im Vollbild ausführt?",o:["Update Ring","Compliance-Richtlinie","Kiosk-Konfigurationsprofil (assigned access)","Security Baseline"],a:2,e:"Ein Kiosk-Konfigurationsprofil (Assigned Access) beschränkt ein Windows-Gerät auf eine oder mehrere festgelegte Apps, z. B. für Single-App-Vollbild."},
+  {q:"Welche der beiden Apple-Configurator-Methoden setzt das Gerät zurück und richtet es über den Setup Assistant neu ein?",o:["Direct Enrollment","Setup Assistant enrollment","User Enrollment","Web-based enrollment"],a:1,e:"Setup-Assistant-Enrollment wischt das Gerät und bereitet es für die Einrichtung über den Setup Assistant vor; Direct Enrollment wischt nicht und ist für userlose/Kiosk-Geräte."},
+  {q:"Szenario: Auf macOS sollen wiederkehrende Konfigurationsschritte automatisiert werden, die kein Konfigurationsprofil abdeckt. Was nutzt du?",o:["PowerShell-Skripte","Shell-Skripte (per Intune auf macOS)","Update Rings","Provisioning Packages"],a:1,e:"Intune kann Shell-Skripte auf verwalteten macOS-Geräten ausführen, um Aufgaben zu automatisieren, die nicht über Konfigurationsprofile abgedeckt sind."},
+  {q:"Szenario: Mac-Nutzer sollen sich einmal anmelden und damit nahtlos auf Entra-geschützte Apps zugreifen. Welche Funktion konfigurierst du?",o:["BitLocker","Platform SSO / Enterprise SSO-Plug-in (Extensible SSO)","Delivery Optimization","Update Ring"],a:1,e:"Über das Extensible-SSO-Profil mit dem Microsoft-Enterprise-SSO-Plug-in (Platform SSO) erhalten macOS-Nutzer nahtloses Single Sign-on zu Entra-geschützten Ressourcen."},
+  {q:"Welche Verschlüsselung verwendet FileVault auf macOS und wie viele Recovery-Key-Typen gibt es?",o:["XTS-AES 256, zwei Schlüssel","XTS-AES 128, nur ein Personal Recovery Key","AES-CBC 128, drei Schlüssel","Frei wählbar"],a:1,e:"FileVault nutzt XTS-AES 128-bit (von Apple fix) und kennt nur den Personal Recovery Key, der in Intune hinterlegt werden kann."},
+  {type:"order", q:"Bringe die Phasen der Autopilot-OOBE (User-driven, Entra join) in die richtige Reihenfolge.", steps:["Mit dem Netzwerk verbinden (WLAN/Ethernet)","Erforderliche Updates anwenden","Autopilot-Profil wird erkannt; Gerät ggf. umbenannt + Neustart","Anmeldung an Microsoft Entra ID mit dem Arbeitskonto","Entra join + Intune-Enrollment, Einstellungen & Apps werden angewendet"], e:"Typischer Ablauf laut Microsoft: Netzwerk → Updates → Profilerkennung/Umbenennung → Entra-Authentifizierung → Join, Enrollment und Konfiguration. Einzelne Schritte können je nach Profil/Verbindung übersprungen werden."},
+  {type:"order", q:"Ordne die Schritte zur Bereitstellung eines zertifikatsbasierten WLANs per Intune in der richtigen Reihenfolge.", steps:["Trusted-Certificate-Profil (Stamm-CA) bereitstellen","SCEP- oder PKCS-Zertifikatsprofil zuweisen","WLAN-Profil (EAP-TLS) zuweisen"], e:"Zuerst die Vertrauenskette (Trusted Root), dann das Client-Zertifikat (SCEP/PKCS), zuletzt das WLAN-Profil — alle an dieselben Gruppen, sonst schlägt die Authentifizierung fehl."}
 ],
 [ // Domain 2 — Anwendungen verwalten
   {q:"Wie stellst du Microsoft 365 Apps im Rahmen eines Autopilot-Deployments bereit und steuerst Sprache, Architektur und Kanal?",o:["Über ODT/OCT-Konfiguration","Über BitLocker","Über LAPS","Über Update Rings"],a:0,e:"Das Office Deployment Tool (ODT) bzw. der Office Customization Tool (OCT) erzeugt die Konfiguration für Sprache, Bit-Version und Updatekanal."},
@@ -804,7 +913,25 @@ const POOL = [
   {q:"Szenario: Auf einem privaten, nicht eingeschriebenen Android-Telefon sollen Firmendaten in Outlook geschützt sein, ohne das Gerät zu verwalten. Was setzt du ein?",o:["Geräte-Compliance-Richtlinie","App-Protection-Richtlinie (MAM ohne Enrollment)","Security Baseline","Disk-Encryption-Richtlinie"],a:1,e:"App-Protection-Richtlinien (MAM-WE) schützen Firmendaten innerhalb der App, ohne dass das Gerät voll in Intune eingeschrieben werden muss."},
   {q:"Wie konfigurierst du, dass Intune eine Win32-App zuverlässig als installiert oder nicht installiert erkennt?",o:["Über die Zuweisungsgruppe","Über den Updatekanal","Über Erkennungsregeln (Datei/Registry/MSI-Code)","Über einen Filter"],a:2,e:"Erkennungsregeln (detection rules) prüfen z. B. Dateiexistenz, Registry-Werte oder den MSI-Produktcode, um den Installationsstatus festzustellen."},
   {q:"Womit verteilst du ein benutzerdefiniertes Skript zur Erstkonfiguration auf eingeschriebene Windows-Geräte?",o:["Über eine Compliance-Richtlinie","Über einen Update Ring","Über ein PowerShell-Skript (per Intune Management Extension)","Über BitLocker"],a:2,e:"Intune kann PowerShell-Skripte über die Intune Management Extension (IME) auf Windows-Geräte ausrollen, z. B. für Erstkonfigurationen."},
-  {q:"Szenario: Eine App soll während des Autopilot-ESP installiert sein, bevor der Nutzer den Desktop erreicht. Wie stellst du das sicher?",o:["App als 'Available' zuweisen","App im ESP als blockierende App festlegen (Required, Geräte-Kontext)","Per Compliance-Richtlinie","Per Delivery Optimization"],a:1,e:"Im Enrollment Status Page kann die App als erforderlich (Required, Gerätekontext) konfiguriert werden, sodass der Zugriff erst nach erfolgreicher Installation freigegeben wird."}
+  {q:"Szenario: Eine App soll während des Autopilot-ESP installiert sein, bevor der Nutzer den Desktop erreicht. Wie stellst du das sicher?",o:["App als 'Available' zuweisen","App im ESP als blockierende App festlegen (Required, Geräte-Kontext)","Per Compliance-Richtlinie","Per Delivery Optimization"],a:1,e:"Im Enrollment Status Page kann die App als erforderlich (Required, Gerätekontext) konfiguriert werden, sodass der Zugriff erst nach erfolgreicher Installation freigegeben wird."},
+  {q:"Aus welchem Store werden Apps für Android-Enterprise-Arbeitsprofile bereitgestellt?",o:["Direkt als APK-Sideload","Aus dem Apple App Store","Aus Managed Google Play","Aus dem Microsoft Store"],a:2,e:"Alle Apps für Android-Enterprise-Geräte (Arbeitsprofil und firmeneigen) werden über Managed Google Play verteilt und in Intune zugewiesen."},
+  {q:"Szenario: Auf einem Android-dedicated-Gerät (Kiosk) erscheint eine zugewiesene 'Available'-App nicht. Warum?",o:["Der Store ist deaktiviert","Dedicated devices installieren nur 'Required'-Apps","Die App ist zu groß","Es fehlt ein VPP-Token"],a:1,e:"Auf Android-dedicated-Geräten lassen sich nur Apps mit der Zuweisung 'Required' installieren, da kein Nutzerkonto/Store-Browsing vorgesehen ist."},
+  {q:"Szenario: Du willst gekaufte iOS-Apps gerätebasiert (ohne Apple-ID des Nutzers) auf firmeneigene iPads verteilen. Was nutzt du?",o:["App-Protection-Richtlinie","Sideloading per IPA","VPP mit gerätelizenzierten Apps (Apple Business Manager)","Einen Update Ring"],a:2,e:"Über VPP (Apps und Bücher in Apple Business Manager) lassen sich Apps gerätebasiert lizenzieren und ohne persönliche Apple-ID auf firmeneigene iPads verteilen."},
+  {q:"Wie stellst du einen Verweis (Web-Link/Icon) auf eine interne Webanwendung auf den Homescreens bereit?",o:["Als Win32-App","Als Web-Link-/Web-App (Web Clip)","Als Compliance-Richtlinie","Als Security Baseline"],a:1,e:"Web-Links (auf iOS als Web Clips) lassen sich als App-Typ in Intune zuweisen und erscheinen als Icon auf dem Homescreen, das die Web-App öffnet."},
+  {q:"Szenario: Du willst sehen, auf wie vielen Geräten eine zugewiesene App erfolgreich installiert wurde bzw. fehlschlug. Wo schaust du?",o:["Tenant administration > Audit logs","Apps > (App auswählen) > Monitor / Geräte- und Benutzer-Installationsstatus","Reports > Windows Updates","Endpoint security > Antivirus"],a:1,e:"Im App-Bereich zeigt der Installationsstatus (Device install status / User install status) je App, wo die Installation erfolgreich war oder fehlschlug."},
+  {q:"Szenario: Eine Win32-App schlägt mit Exit-Code 3010 fehl. Was bedeutet das typischerweise und wie behandelst du es?",o:["Harter Fehler, App entfernen","Erfolg mit erforderlichem Neustart — als 'soft reboot' Rückgabecode konfigurieren","Lizenzfehler","Netzwerkfehler"],a:1,e:"Exit-Code 3010 bedeutet 'Erfolg, Neustart erforderlich'; in den Rückgabecodes der Win32-App lässt er sich als 'Soft reboot' abbilden, damit Intune die Installation als erfolgreich wertet."},
+  {q:"Welche Bedingung gilt für eine Win32-App-Dependency?",o:["Sie darf eine LOB-MSI sein","Sie darf eine Store-App sein","Die Abhängigkeit muss selbst eine Win32-App sein","Es sind keine Abhängigkeiten möglich"],a:2,e:"Eine Win32-App-Abhängigkeit muss ebenfalls eine Win32-App sein; LOB-MSI oder Store-Apps sind als Dependency nicht möglich (max. 100 Abhängigkeiten)."},
+  {q:"Szenario: Du ersetzt eine alte VPN-Software durch die eines anderen Herstellers und willst die alte automatisch entfernen. Welche Supersedence-Option?",o:["Update (Uninstall previous version = Nein)","Replace (Uninstall previous version = Ja)","Dependency","Exclude"],a:1,e:"Beim Ersetzen aktivierst du 'Uninstall previous version = Ja', damit die alte App vor der Installation der neuen entfernt wird."},
+  {q:"An welche Gruppentypen lässt sich eine Win32-App zuweisen, im Gegensatz zu den meisten anderen App-Typen?",o:["Nur an Nutzergruppen","Nur an Gerätegruppen","An Nutzer- UND Gerätegruppen","Gar nicht zuweisbar"],a:2,e:"Win32-Apps können an Nutzer- oder Gerätegruppen zugewiesen werden; 'Available' bei vielen anderen App-Typen ist dagegen nur für Nutzergruppen gültig."},
+  {q:"Worin unterscheidet sich eine LOB-App von einer Win32-App in Intune grundsätzlich?",o:["LOB unterstützt Dependencies und Supersedence","Win32 nutzt nur die EnterpriseDesktopAppManagement-CSP","LOB (MSI/APPX) läuft über MDM-CSP ohne Dependencies/Supersedence; Win32 nutzt die IME mit mehr Steuerung","Es gibt keinen Unterschied"],a:2,e:"LOB-Apps (MSI/APPX) nutzen die integrierte MDM-CSP und unterstützen keine Dependencies/Supersedence; Win32-Apps laufen über die Intune Management Extension mit Erkennungsregeln, Abhängigkeiten und Supersedence."},
+  {q:"Szenario: Bei einem Autopilot-Deployment schlagen App-Installationen sporadisch fehl. Was ist eine bekannte Ursache?",o:["Zu wenige Gerätegruppen","Mischung von Win32- und LOB-Apps im selben Autopilot-Deployment","Fehlende Compliance-Richtlinie","Falscher Updatekanal"],a:1,e:"Windows Autopilot unterstützt das Mischen von Win32- und LOB-Apps nicht zuverlässig; die Installation kann fehlschlagen. Autopilot Device Preparation unterstützt beide."},
+  {q:"Was passiert standardmäßig mit per Intune installierten Win32-Apps, wenn ein Gerät aus der Verwaltung entfernt (unenrolled) wird?",o:["Sie werden automatisch deinstalliert","Sie bleiben installiert","Das Gerät wird gewiped","Die Apps werden gesperrt"],a:1,e:"Per Intune installierte Win32-Apps werden bei Unenrollment nicht automatisch entfernt; deshalb sollte App-Zuweisung auf verwaltete Firmengeräte beschränkt werden."},
+  {q:"Welches maximale Größenlimit gilt pro Win32-App in Intune?",o:["2 GB","8 GB","30 GB","Unbegrenzt"],a:2,e:"Eine einzelne Win32-Anwendung darf in Intune bis zu 30 GB groß sein."},
+  {q:"Szenario: Eine Win32-App soll nur installiert werden, wenn mindestens 8 GB RAM und Windows 64-bit vorhanden sind. Was konfigurierst du?",o:["Detection rules","Requirement rules (Anforderungsregeln)","Supersedence","Dependencies"],a:1,e:"Requirement rules (Anforderungsregeln) prüfen Voraussetzungen wie Architektur, OS-Version oder freien Speicher, bevor die App-Zuweisung verarbeitet wird."},
+  {q:"Szenario: Ein Nutzer hat eine 'Available'-Win32-App selbst deinstalliert. Installiert Intune sie automatisch erneut?",o:["Ja, sofort","Ja, nach 24 Stunden","Nein, 'Available'-Apps werden nach manueller Deinstallation nicht automatisch neu installiert","Nur nach Neustart"],a:2,e:"Über 'Available' installierte Win32-Apps werden von Intune nicht automatisch erneut installiert, wenn der Nutzer sie entfernt. 'Required'-Apps würden hingegen wieder erzwungen."},
+  {q:"Wie stellst du Microsoft 365 Apps zentral mit gewünschtem Updatekanal über Intune bereit?",o:["Als Win32-App mit .intunewin","Über den App-Typ 'Microsoft 365 Apps' (Windows)","Als LOB-MSI","Per Provisioning Package"],a:1,e:"Der dedizierte App-Typ 'Microsoft 365 Apps' für Windows konfiguriert Architektur, Updatekanal und enthaltene Apps direkt in Intune."},
+  {q:"Szenario: Plugin-App B benötigt zwingend Host-App A. A soll automatisch mitinstalliert werden. Was nutzt du?",o:["Supersedence","App-Dependency mit 'Automatically install = Yes'","Exclude-Zuweisung","Requirement rule"],a:1,e:"Eine App-Dependency mit aktivierter automatischer Installation sorgt dafür, dass die vorausgesetzte App A vor dem Plugin B installiert wird."},
+  {type:"order", q:"Ordne die Schritte zur Bereitstellung einer Win32-App über Intune in die richtige Reihenfolge.", steps:["Installer mit dem Win32 Content Prep Tool zu .intunewin verpacken","App in Intune anlegen und .intunewin hochladen","Install-/Uninstall-Befehle und Erkennungsregeln festlegen","App einer Nutzer- oder Gerätegruppe zuweisen (Required/Available)"], e:"Erst verpacken (.intunewin), dann hochladen, anschließend Befehle und Detection Rules definieren und zuletzt zuweisen."}
 ],
 [ // Domain 3 — Geräte schützen
   {q:"Womit verteilst du eine von Microsoft kuratierte, versionierte Sammlung empfohlener Härtungseinstellungen für Windows?",o:["Security Baseline","Compliance-Richtlinie","Update Ring","Provisioning Package"],a:0,e:"Security Baselines sind von Microsoft vordefinierte, versionierte Einstellungssätze (z. B. >350 Settings) und werden als Einheit zugewiesen."},
@@ -844,7 +971,19 @@ const POOL = [
   {q:"Szenario: Eine kritische Sicherheitslücke muss sofort gepatcht werden, ohne auf deine üblichen Aufschubfristen zu warten. Was nutzt du?",o:["Eine Feature-Update-Richtlinie","Einen normalen Update Ring","Eine Expedite-(Quality-Update-)Richtlinie","Ein Provisioning Package"],a:2,e:"Expedite-Richtlinien installieren ein bestimmtes Quality-Update schnellstmöglich und umgehen dabei Aufschub- und Timing-Einstellungen der regulären Ringe."},
   {q:"Wie lassen sich Treiber-Updates über die Driver-Update-Richtlinie freigeben?",o:["Nur automatisch","Nur manuell","Automatisch oder manuell genehmigen","Gar nicht steuerbar"],a:2,e:"Driver-Update-Richtlinien erlauben automatische Genehmigung der empfohlenen Treiber oder manuelle Freigabe einzelner Treiberversionen; installiert wird stets nur die neueste genehmigte."},
   {q:"Welche Geräte werden von Feature-, Quality- und Driver-Update-Richtlinien (Autopatch-Backend) NICHT unterstützt?",o:["Entra joined Geräte","Hybrid joined Geräte","Entra registered Geräte","Intune-verwaltete Geräte"],a:2,e:"Entra registered Geräte werden für diese Autopatch-basierten Richtlinien nicht unterstützt; dort bleibt das Update-Management auf Update Rings / Windows-Update-Client-Richtlinien beschränkt."},
-  {q:"Wo findest du in Intune den Status von Windows-Update-Bereitstellungen je Richtlinie?",o:["Unter Apps > Monitor","Unter Reports > Windows Updates","Unter Tenant administration > Audit","Im Company Portal"],a:1,e:"Die Windows-Update-Berichte (z. B. Feature Update Report) findest du unter Reports > Windows Updates im Intune Admin Center."}
+  {q:"Wo findest du in Intune den Status von Windows-Update-Bereitstellungen je Richtlinie?",o:["Unter Apps > Monitor","Unter Reports > Windows Updates","Unter Tenant administration > Audit","Im Company Portal"],a:1,e:"Die Windows-Update-Berichte (z. B. Feature Update Report) findest du unter Reports > Windows Updates im Intune Admin Center."},
+  {q:"Szenario: Eine Compliance-Richtlinie meldet ein Gerät als nicht konform, obwohl BitLocker aktiv ist. Was prüfst du sinnvollerweise zuerst?",o:["Ob das Gerät in Entra registered statt joined ist und ob der Recovery-Key escrowed wurde","Ob der Drucker verbunden ist","Ob Delivery Optimization aktiv ist","Ob ein VPP-Token existiert"],a:0,e:"Häufige Ursachen sind fehlendes Key-Escrow oder ein nicht unterstützter Join-Typ; man prüft Join-Status und ob der BitLocker-Schlüssel korrekt nach Entra gesichert wurde."},
+  {q:"Szenario: Du willst verhindern, dass kompromittierte (jailbroken/gerootete) Mobilgeräte auf Firmendaten zugreifen. Was nutzt du?",o:["Einen Update Ring","Delivery Optimization","Eine Compliance-Regel gegen Jailbreak/Root plus Conditional Access","Ein Provisioning Package"],a:2,e:"Compliance-Richtlinien können gerootete/jailbroken Geräte als nicht konform einstufen; Conditional Access sperrt diesen dann den Zugriff."},
+  {q:"Szenario: Ein Helpdesk-Mitarbeiter soll Geräte aus der Ferne unterstützen, aber keine vollen Admin-Rechte im Tenant haben. Was kombinierst du?",o:["Global-Admin-Rolle","Remote Help plus eine eingeschränkte Intune-RBAC-Rolle (z. B. Help Desk Operator)","Nur Conditional Access","Nur eine Compliance-Richtlinie"],a:1,e:"Remote Help bietet rollenbasierten Fernsupport; kombiniert mit einer least-privilege Intune-Rolle wie Help Desk Operator bleibt der Zugriff begrenzt."},
+  {q:"Szenario: Geräte sollen nur als konform gelten, wenn sie sich innerhalb der letzten 30 Tage gemeldet haben. Welche Einstellung hilft?",o:["Delivery Optimization","Compliance-Gültigkeitsdauer / Status-Validität","Update Ring","Scope Tag"],a:1,e:"Über die Gültigkeitsdauer des Compliance-Status (validity period) gelten Geräte, die sich zu lange nicht gemeldet haben, als nicht konform."},
+  {q:"Szenario: Ein gestohlenes, nicht eingeschriebenes BYOD-Telefon mit Firmen-Apps soll nur von Firmendaten bereinigt werden, ohne private Daten zu löschen. Was nutzt du?",o:["Vollständiger Geräte-Wipe","Retire des MDM-Geräts","Selektives Wipe über App-Protection-Richtlinie (MAM)","BitLocker-Rotation"],a:2,e:"Bei MAM-geschützten Apps kann ein selektives Wipe nur die Unternehmensdaten aus den verwalteten Apps entfernen, ohne die privaten Daten anzutasten."},
+  {q:"Szenario: Du willst Sicherheitslücken auf Geräten priorisiert beheben, die Defender for Endpoint meldet. Welcher Intune-Workflow?",o:["Update Rings","Security Tasks (Vulnerability Management) aus Defender in Intune","Provisioning Packages","Delivery Optimization"],a:1,e:"Über Security Tasks fließen von Defender Vulnerability Management erkannte Schwachstellen nach Intune, wo Admins sie gezielt remediieren können."},
+  {q:"Was schützt Tamper Protection von Microsoft Defender Antivirus?",o:["Die Festplattenverschlüsselung","Sicherheitseinstellungen wie Echtzeit-/Cloud-Schutz vor Deaktivierung oder Änderung","Das BIOS-Passwort","Die Netzwerkbandbreite"],a:1,e:"Tamper Protection verhindert, dass Schutzfunktionen wie Echtzeit- oder Cloud-Schutz lokal — auch durch Malware oder Admins — deaktiviert oder verändert werden."},
+  {q:"Szenario: Auf einem Gerät mit aktiver Tamper Protection greift eine geänderte AV-Einstellung aus einer Richtlinie nicht. Warum?",o:["Das Gerät ist offline","Bei aktiver Tamper Protection werden bestimmte AV-Einstellungsänderungen nicht angewendet","Die Lizenz fehlt","Der Update Ring blockiert"],a:1,e:"Tamper Protection schützt zentrale AV-Einstellungen; Änderungen daran werden nicht angewendet, solange Tamper Protection aktiv ist."},
+  {q:"Welche Einstellung empfiehlt Microsoft, damit Intune-verwaltete Defender-Einstellungen lokale Einstellungen überschreiben?",o:["EnableLocalAdminMerge auf true","DisableLocalAdminMerge auf true","Tamper Protection deaktivieren","Real-time protection deaktivieren"],a:1,e:"Mit DisableLocalAdminMerge=true zählen nur die per Management definierten Einstellungen; verwaltete Einstellungen überschreiben lokale Präferenzen."},
+  {q:"Szenario: Du musst auf einem Gerät vorübergehend Defender-Einstellungen zur Fehlersuche ändern, obwohl Tamper Protection aktiv ist. Was nutzt du?",o:["Tamper Protection dauerhaft abschalten","Troubleshooting Mode (temporär)","Gerät wipen","Einen Update Ring"],a:1,e:"Der Troubleshooting Mode versetzt Defender for Endpoint temporär in einen Diagnosezustand, in dem u. a. Tamper Protection und Policy-Enforcement kurzzeitig ausgesetzt sind."},
+  {q:"Welche Enforcement-Level kennt Microsoft Defender Antivirus auf macOS?",o:["Nur ein/aus","real_time, on_demand und passive","schnell/langsam","audit/block"],a:1,e:"Auf macOS steuert der Enforcement Level den AV-Modus: real_time (Echtzeit), on_demand (nur bei Bedarf) und passive (nur Erkennung ohne Eingriff)."},
+  {type:"order", q:"Ordne die Schritte, um Geräte über Intune in Microsoft Defender for Endpoint zu onboarden und Risiko für Compliance zu nutzen.", steps:["Connector zwischen Intune und Defender for Endpoint einrichten","Geräte per EDR-/Onboarding-Profil in Defender for Endpoint onboarden","Erlaubte Risikostufe in der Compliance-Richtlinie festlegen","Conditional Access blockiert nicht-konforme (zu riskante) Geräte"], e:"Zuerst die Connector-Integration, dann das Onboarding der Geräte, danach die Risikoschwelle in der Compliance-Richtlinie, schließlich erzwingt Conditional Access den Zugriff anhand des Compliance-Status."}
 ]
 ];
 
@@ -854,64 +993,144 @@ let EXAM=null; // {questions:[{q,o,a,e,domain}], idx, answers:[], score}
 
 function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
 
-/* Mischt die Antwortoptionen jeder Frage und führt den korrekten Index mit,
-   damit die richtige Antwort nicht immer an derselben Position steht. */
+/* Mischt MC-Antwortoptionen bzw. Reihenfolge-Schritte; führt Korrektheit mit. */
 function shuffleOptions(questions){
   return questions.map(q=>{
+    if(q.type==="order"){
+      const correct=[...q.steps];
+      let order=shuffle([...q.steps]);
+      // sicherstellen, dass nicht zufällig schon korrekt sortiert
+      if(correct.length>1 && order.every((s,i)=>s===correct[i])) order=shuffle([...q.steps]);
+      return {...q, correct, current:order};
+    }
     const correctText=q.o[q.a];
     const opts=shuffle([...q.o]);
     return {...q, o:opts, a:opts.indexOf(correctText)};
   });
 }
 
-function buildPoolQuestions(scope,count){
+function buildPoolQuestions(scope,count,opts={}){
   let bank=[];
   const domains = scope==="all"?[0,1,2,3]:[parseInt(scope)];
   domains.forEach(di=>POOL[di].forEach(q=>bank.push({...q,domain:di})));
+  if(opts.mcOnly) bank=bank.filter(q=>q.type!=="order");
   bank=shuffle(bank);
-  // Keine Wiederholungen: höchstens so viele wie verfügbar
   return bank.slice(0,Math.min(count,bank.length));
 }
 
 const show=(el,on)=>{document.getElementById(el).style.display=on?"":"none";};
 
+/* ===== Übungsmodus (mit Sofort-Feedback) ===== */
 function startExam(){
   const scope=$("#examScope").value;
   const count=parseInt($("#examCount").value);
   show("examSetup",false);
-
   const questions=buildPoolQuestions(scope,count);
-
-  EXAM={questions:shuffleOptions(questions),idx:0,answers:new Array(questions.length).fill(null),score:0};
+  EXAM={mode:"practice",questions:shuffleOptions(questions),idx:0,
+        answers:new Array(questions.length).fill(null),score:0};
+  const useTimer=$("#examTimer").checked;
+  if(useTimer){
+    const secPerQ=parseInt($("#examSecPerQ").value);
+    EXAM.totalTime=secPerQ*EXAM.questions.length;
+    EXAM.timeLeft=EXAM.totalTime;EXAM.timedOut=false;
+  }
   show("examQuiz",true);
+  startTimer();
   renderQuestion();
 }
 
+/* ===== Prüfungssimulation (45 Fragen, fester Timer, keine Sofort-Auflösung) ===== */
+const SIM_COUNT=45, SIM_SECPERQ=80, SIM_PASS=70;
+function startSimulation(){
+  show("examSetup",false);
+  const questions=buildPoolQuestions("all",SIM_COUNT);
+  EXAM={mode:"sim",questions:shuffleOptions(questions),idx:0,
+        answers:new Array(questions.length).fill(null),flags:new Array(questions.length).fill(false),score:0};
+  EXAM.totalTime=SIM_SECPERQ*EXAM.questions.length;
+  EXAM.timeLeft=EXAM.totalTime;EXAM.timedOut=false;
+  show("examQuiz",true);
+  startTimer();
+  renderQuestion();
+}
+
+let TIMER_ID=null;
+function fmtTime(s){const m=Math.floor(s/60);const r=s%60;return `${m}:${String(r).padStart(2,"0")}`;}
+function startTimer(){
+  stopTimer();
+  const el=$("#qtimer");
+  if(!EXAM || !EXAM.totalTime){ el.style.display="none"; return; }
+  el.style.display="";
+  updateTimerDisplay();
+  TIMER_ID=setInterval(()=>{
+    EXAM.timeLeft--;updateTimerDisplay();
+    if(EXAM.timeLeft<=0){stopTimer();EXAM.timedOut=true;finishExam();}
+  },1000);
+}
+function stopTimer(){ if(TIMER_ID){clearInterval(TIMER_ID);TIMER_ID=null;} }
+function updateTimerDisplay(){
+  const el=$("#qtimer");
+  el.textContent="⏱ "+fmtTime(Math.max(0,EXAM.timeLeft));
+  el.classList.toggle("warn", EXAM.timeLeft<=Math.max(20,EXAM.totalTime*0.25) && EXAM.timeLeft>Math.max(10,EXAM.totalTime*0.1));
+  el.classList.toggle("danger", EXAM.timeLeft<=Math.max(10,EXAM.totalTime*0.1));
+}
+
+/* Korrektheit einer Frage prüfen (beide Typen) */
+function isAnswered(i){
+  const q=EXAM.questions[i];
+  if(q.type==="order") return true; // Reihenfolge hat immer einen Zustand
+  return EXAM.answers[i]!==null;
+}
+function isCorrect(i){
+  const q=EXAM.questions[i];
+  if(q.type==="order") return q.current.every((s,k)=>s===q.correct[k]);
+  return EXAM.answers[i]===q.a;
+}
+
 function renderQuestion(){
-  const {questions,idx}=EXAM;
+  const {questions,idx,mode}=EXAM;
   const q=questions[idx];
+  const sim=mode==="sim";
   $("#qpos").textContent=`Frage ${idx+1} / ${questions.length}`;
-  $("#qscore").textContent=`${EXAM.score} ✓`;
+  $("#qscore").textContent = sim ? `${EXAM.answers.filter(a=>a!==null).length}/${questions.length} bearb.` : `${EXAM.score} ✓`;
   $("#qprogfill").style.width=((idx)/questions.length*100)+"%";
   $("#qtext").textContent=q.q;
   $("#qexpl").className="qexpl";$("#qexpl").innerHTML="";
-  $("#examNext").disabled=true;
-  $("#examNext").textContent = idx===questions.length-1?"Auswerten":"Weiter";
+
+  if(q.type==="order") renderOrder(q,sim); else renderMC(q,sim);
+
+  // Buttons / Navigation
+  const answered = q.type==="order" ? true : EXAM.answers[idx]!==null;
+  if(sim){
+    $("#examNext").textContent = idx===questions.length-1?"Abgeben":"Weiter";
+    $("#examNext").disabled=false;
+    $("#examPrev").style.display = idx>0 ? "" : "none";
+    $("#examFlag").style.display="";
+    $("#examFlag").classList.toggle("flagged", !!EXAM.flags[idx]);
+    $("#examFlag").textContent = EXAM.flags[idx] ? "★ Markiert" : "☆ Markieren";
+  }else{
+    $("#examNext").textContent = idx===questions.length-1?"Auswerten":"Weiter";
+    $("#examNext").disabled = !answered;
+    $("#examPrev").style.display="none";
+    $("#examFlag").style.display="none";
+    // im Übungsmodus bereits beantwortete Frage wieder aufgelöst zeigen
+    if(answered && q.type!=="order") lockMC(q, EXAM.answers[idx]);
+    if(answered && q.type==="order") $("#examNext").disabled=false;
+  }
+}
+
+/* ---- Multiple-Choice ---- */
+function renderMC(q,sim){
   const keys=["A","B","C","D"];
   $("#qopts").innerHTML=q.o.map((opt,i)=>
     `<button class="qopt" data-i="${i}"><span class="key">${keys[i]}</span><span>${opt}</span></button>`).join("");
   $("#qopts").querySelectorAll(".qopt").forEach(b=>{
-    b.addEventListener("click",()=>answer(parseInt(b.dataset.i)));
+    const i=parseInt(b.dataset.i);
+    if(sim && EXAM.answers[EXAM.idx]===i) b.classList.add("selected");
+    b.addEventListener("click",()=>sim?selectMC(i):answer(i));
   });
 }
-
-function answer(choice){
-  const {questions,idx}=EXAM;
-  if(EXAM.answers[idx]!==null) return;
-  const q=questions[idx];
-  EXAM.answers[idx]=choice;
+function lockMC(q,choice){
   const correct=q.a;
-  if(choice===correct)EXAM.score++;
   $("#qopts").querySelectorAll(".qopt").forEach(b=>{
     const i=parseInt(b.dataset.i);b.classList.add("locked");
     if(i===correct)b.classList.add("correct");
@@ -920,59 +1139,155 @@ function answer(choice){
   const exp=$("#qexpl");
   exp.innerHTML=`<b>${choice===correct?"Richtig":"Falsch"}.</b> ${q.e||""}`;
   exp.className="qexpl show";
+}
+// Übungsmodus: sofort auflösen
+function answer(choice){
+  const {questions,idx}=EXAM;
+  if(EXAM.answers[idx]!==null) return;
+  const q=questions[idx];
+  EXAM.answers[idx]=choice;
+  if(choice===q.a)EXAM.score++;
+  lockMC(q,choice);
   $("#qscore").textContent=`${EXAM.score} ✓`;
   $("#examNext").disabled=false;
 }
+// Simulation: nur auswählen, keine Auflösung
+function selectMC(choice){
+  EXAM.answers[EXAM.idx]=choice;
+  $("#qopts").querySelectorAll(".qopt").forEach(b=>{
+    b.classList.toggle("selected", parseInt(b.dataset.i)===choice);
+  });
+  $("#qscore").textContent=`${EXAM.answers.filter(a=>a!==null).length}/${EXAM.questions.length} bearb.`;
+}
+
+/* ---- Reihenfolge (Drag-frei: Hoch/Runter) ---- */
+function renderOrder(q,sim){
+  const exp=$("#qexpl");
+  drawOrderList(q,sim);
+  if(!sim && EXAM.answers[EXAM.idx]==="checked"){
+    // im Übungsmodus nach Prüfen auflösen
+    showOrderSolution(q);
+  }
+}
+function drawOrderList(q,sim){
+  const locked = (!sim && EXAM.answers[EXAM.idx]==="checked");
+  $("#qopts").innerHTML=`<div class="order-list">`+q.current.map((step,i)=>
+    `<div class="order-item${locked?(q.current[i]===q.correct[i]?' ok':' no'):''}">
+       <span class="order-num">${i+1}</span>
+       <span class="order-txt">${step}</span>
+       <span class="order-ctrl">
+         <button class="ord-btn" data-dir="up" data-i="${i}" ${i===0||locked?'disabled':''}>▲</button>
+         <button class="ord-btn" data-dir="down" data-i="${i}" ${i===q.current.length-1||locked?'disabled':''}>▼</button>
+       </span>
+     </div>`).join("")+`</div>`;
+  $("#qopts").querySelectorAll(".ord-btn").forEach(b=>{
+    b.addEventListener("click",()=>{
+      const i=parseInt(b.dataset.i);const dir=b.dataset.dir;
+      const arr=q.current;const j=dir==="up"?i-1:i+1;
+      if(j<0||j>=arr.length) return;
+      [arr[i],arr[j]]=[arr[j],arr[i]];
+      if(EXAM.mode!=="sim" && EXAM.answers[EXAM.idx]!=="checked"){/* noch nicht geprüft */}
+      drawOrderList(q,sim);
+    });
+  });
+}
+function showOrderSolution(q){
+  const exp=$("#qexpl");
+  const ok=q.current.every((s,k)=>s===q.correct[k]);
+  exp.innerHTML=`<b>${ok?"Richtig":"Noch nicht korrekt"}.</b> ${q.e||""}`+
+    (ok?"":`<div style="margin-top:8px">Richtige Reihenfolge:<ol style="margin:6px 0 0 18px">${q.correct.map(s=>`<li>${s}</li>`).join("")}</ol></div>`);
+  exp.className="qexpl show";
+}
 
 function nextQuestion(){
-  if(EXAM.idx<EXAM.questions.length-1){EXAM.idx++;renderQuestion();}
+  const {mode,idx,questions}=EXAM;
+  const q=questions[idx];
+  if(mode!=="sim" && q.type==="order" && EXAM.answers[idx]!=="checked"){
+    // erst prüfen, dann weiter
+    EXAM.answers[idx]="checked";
+    if(isCorrect(idx))EXAM.score++;
+    $("#qscore").textContent=`${EXAM.score} ✓`;
+    drawOrderList(q,false);showOrderSolution(q);
+    $("#examNext").textContent = idx===questions.length-1?"Auswerten":"Weiter";
+    return;
+  }
+  if(idx<questions.length-1){EXAM.idx++;renderQuestion();}
   else finishExam();
+}
+function prevQuestion(){ if(EXAM.idx>0){EXAM.idx--;renderQuestion();} }
+function toggleFlag(){
+  EXAM.flags[EXAM.idx]=!EXAM.flags[EXAM.idx];
+  $("#examFlag").classList.toggle("flagged",EXAM.flags[EXAM.idx]);
+  $("#examFlag").textContent = EXAM.flags[EXAM.idx] ? "★ Markiert" : "☆ Markieren";
 }
 
 function finishExam(){
+  stopTimer();
+  $("#qtimer").style.display="none";
   show("examQuiz",false);
-  const {questions,score}=EXAM;
+  const {questions,mode}=EXAM;
+  // Score frisch berechnen (Simulation wertet erst am Ende)
+  let score=0;questions.forEach((q,i)=>{ if(isCorrect(i) && (q.type==="order"||EXAM.answers[i]!==null||mode==="sim")){ if(isCorrect(i)) {} } });
+  score=questions.reduce((acc,q,i)=>acc+(isCorrect(i)?1:0),0);
+  EXAM.score=score;
   const pct=Math.round(score/questions.length*100);
   show("examResult",true);
   $("#resRing").style.setProperty("--p",pct);
   $("#resPct").textContent=pct+"%";
-  const pass=pct>=70;
-  $("#resHead").textContent=pass?"Bestanden 🎉":"Noch nicht bestanden";
-  $("#resHead").style.color=pass?"var(--new)":"var(--warn)";
-  $("#resSub").textContent=`${score} von ${questions.length} richtig · Richtwert zum Bestehen: 70 %`;
+  const timedOut=!!EXAM.timedOut;
+  const passMark = mode==="sim"?SIM_PASS:70;
+  const pass = pct>=passMark && !timedOut;
+  if(timedOut){
+    $("#resHead").textContent="Zeit abgelaufen – nicht bestanden";
+    $("#resHead").style.color="var(--fix)";
+    const answered=questions.filter((q,i)=>q.type==="order"||EXAM.answers[i]!==null).length;
+    $("#resSub").textContent=`Die Zeit ist abgelaufen. ${answered} von ${questions.length} Fragen bearbeitet, ${score} richtig. Bei Zeitablauf gilt die Prüfung als nicht bestanden.`;
+  }else{
+    $("#resHead").textContent=pass?"Bestanden 🎉":"Noch nicht bestanden";
+    $("#resHead").style.color=pass?"var(--new)":"var(--warn)";
+    const flagInfo = (mode==="sim" && EXAM.flags) ? ` · ${EXAM.flags.filter(Boolean).length} markiert` : "";
+    $("#resSub").textContent=`${score} von ${questions.length} richtig${mode==="sim"?" (Prüfungssimulation)":""} · Bestehen ab ${passMark} %${flagInfo}`;
+  }
   // Aufschlüsselung nach Domain
   const byDom={};
-  questions.forEach((q,i)=>{
-    const d=q.domain??0;
-    byDom[d]=byDom[d]||{c:0,t:0};
-    byDom[d].t++;
-    if(EXAM.answers[i]===q.a)byDom[d].c++;
-  });
+  questions.forEach((q,i)=>{const d=q.domain??0;byDom[d]=byDom[d]||{c:0,t:0};byDom[d].t++;if(isCorrect(i))byDom[d].c++;});
   $("#resBreak").innerHTML=Object.keys(byDom).map(d=>{
     const o=byDom[d];const p=Math.round(o.c/o.t*100);
     return `<div class="rb-item"><span style="flex:0 0 150px">${DOMAIN_NAMES[d]}</span>
-      <div class="rb-bar"><i style="width:${p}%"></i></div>
-      <span class="rb-n">${o.c}/${o.t}</span></div>`;
+      <div class="rb-bar"><i style="width:${p}%"></i></div><span class="rb-n">${o.c}/${o.t}</span></div>`;
   }).join("");
   // Review
   $("#reviewBox").style.display="none";
+  $("#examReview").textContent="Antworten ansehen";
   $("#reviewBox").innerHTML=questions.map((q,i)=>{
+    const ok=isCorrect(i);
+    if(q.type==="order"){
+      return `<div class="rv"><div class="rvq">${i+1}. ${q.q}</div>
+        <div class="rvline ${ok?'ok':'no'}">${ok?'✓ Richtige Reihenfolge':'✗ Reihenfolge nicht korrekt'}</div>
+        ${ok?"":`<div class="rvline ok">Richtig: <ol style="margin:4px 0 0 18px">${q.correct.map(s=>`<li>${s}</li>`).join("")}</ol></div>`}
+        <div class="rve">${q.e||""}</div></div>`;
+    }
     const keys=["A","B","C","D"];const ua=EXAM.answers[i];
     return `<div class="rv"><div class="rvq">${i+1}. ${q.q}</div>
-      <div class="rvline ${ua===q.a?'ok':'no'}">${ua===q.a?'✓':'✗'} Deine Antwort: ${ua!=null?keys[ua]+") "+q.o[ua]:"—"}</div>
+      <div class="rvline ${ua===q.a?'ok':'no'}">${ua===q.a?'✓':'✗'} Deine Antwort: ${typeof ua==='number'?keys[ua]+") "+q.o[ua]:"—"}</div>
       ${ua!==q.a?`<div class="rvline ok">✓ Richtig: ${keys[q.a]}) ${q.o[q.a]}</div>`:""}
       <div class="rve">${q.e||""}</div></div>`;
   }).join("");
 }
 
 function resetExam(){
+  stopTimer();
+  $("#qtimer").style.display="none";
   show("examResult",false);show("examQuiz",false);
   show("examSetup",true);EXAM=null;
   document.getElementById("pruefung").scrollIntoView({behavior:"smooth",block:"start"});
 }
 
 $("#examStart").addEventListener("click",startExam);
+$("#examSimStart")?.addEventListener("click",startSimulation);
 $("#examNext").addEventListener("click",nextQuestion);
+$("#examPrev")?.addEventListener("click",prevQuestion);
+$("#examFlag")?.addEventListener("click",toggleFlag);
 $("#examQuit").addEventListener("click",()=>{if(confirm("Prüfung abbrechen?"))resetExam();});
 $("#examAgain").addEventListener("click",resetExam);
 $("#examReview").addEventListener("click",()=>{
@@ -981,11 +1296,30 @@ $("#examReview").addEventListener("click",()=>{
   $("#examReview").textContent=open?"Antworten ansehen":"Antworten ausblenden";
 });
 
+/* Timer-Option: Sekunden-Auswahl ein-/ausblenden + Hinweis mit Gesamtzeit */
+function updateTimerHint(){
+  const on=$("#examTimer").checked;
+  $("#examSecWrap").style.display=on?"":"none";
+  if(on){
+    const secPerQ=parseInt($("#examSecPerQ").value);
+    const count=parseInt($("#examCount").value);
+    const total=secPerQ*count;
+    const m=Math.floor(total/60), s=total%60;
+    const tstr=s?`${m}:${String(s).padStart(2,"0")} min`:`${m} min`;
+    $("#examHint").textContent=`Timer aktiv: ${secPerQ}s × ${count} Fragen = ${tstr} gesamt. Bei Ablauf nicht bestanden.`;
+  }else{
+    $("#examHint").textContent=DEFAULT_HINT;
+  }
+}
+$("#examTimer").addEventListener("change",updateTimerHint);
+$("#examSecPerQ").addEventListener("change",updateTimerHint);
+$("#examCount").addEventListener("change",updateTimerHint);
+
+const DEFAULT_HINT='184 geprüfte Fragen inkl. Reihenfolge-Aufgaben, viele Praxis-Szenarien, komplett offline.';
 renderDomains();renderRes();renderCL();
-/* erstes Domain offen */
 document.querySelector(".domain")?.classList.add("open");
 document.querySelector(".dh")?.setAttribute("aria-expanded","true");
-$("#examHint").textContent='130 geprüfte Fragen, viele mit Praxis-Szenarien, komplett offline.';
+$("#examHint").textContent=DEFAULT_HINT;
 </script>
 </body>
 </html>
