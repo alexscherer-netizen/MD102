@@ -17,6 +17,14 @@
   --accent:#00d4aa; --accent2:#1b9aff; --warn:#ffb454;
   --new:#3fd17a; --update:#a87ee8; --fix:#ff9d54;
 }
+[data-theme="light"]{
+  --bg:#f4f7fb; --bg2:#ffffff; --panel:#ffffff; --panel2:#eef3f9;
+  --line:#dde6f0; --line2:#c3d2e2;
+  --text:#13202e; --muted:#52677d; --dim:#7d8fa0;
+  --accent:#0a9d82; --accent2:#1374e0; --warn:#c77b13;
+  --new:#1f9d57; --update:#7d4fd1; --fix:#d6711f;
+  --header-bg:rgba(255,255,255,.9);
+}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
@@ -31,7 +39,7 @@ a:hover{text-decoration:underline}
 /* Header */
 header.top{
   position:sticky;top:0;z-index:50;
-  background:rgba(10,14,20,.88);backdrop-filter:blur(12px);
+  background:var(--header-bg,rgba(10,14,20,.88));backdrop-filter:blur(12px);
   border-bottom:1px solid var(--line);
 }
 .topbar{display:flex;align-items:center;gap:14px;padding:12px 18px;max-width:1060px;margin:0 auto;flex-wrap:wrap}
@@ -52,6 +60,13 @@ header.top{
 }
 .search input:focus{border-color:var(--accent)}
 .search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:15px;height:15px;fill:var(--muted)}
+.theme-toggle{flex:0 0 auto;width:40px;height:40px;border-radius:10px;border:1px solid var(--line2);
+  background:var(--panel);cursor:pointer;display:grid;place-items:center;transition:.15s;padding:0}
+.theme-toggle:hover{border-color:var(--accent)}
+.theme-toggle svg{width:19px;height:19px;fill:var(--accent)}
+.theme-toggle .ic-moon{display:none}
+[data-theme="light"] .theme-toggle .ic-sun{display:none}
+[data-theme="light"] .theme-toggle .ic-moon{display:block}
 
 /* Hero */
 .hero{padding:54px 0 30px;border-bottom:1px solid var(--line);
@@ -232,6 +247,9 @@ section{padding:40px 0;border-bottom:1px solid var(--line)}
   border:1px solid var(--line2);border-left:3px solid var(--accent2);border-radius:10px;font-size:13.5px;color:var(--muted)}
 .qexpl.show{display:block;animation:fade .25s ease}
 .qexpl b{color:var(--accent2)}
+.more-link{margin-top:10px;padding-top:9px;border-top:1px dashed var(--line2)}
+.more-link a{font-size:12.5px;font-weight:600;color:var(--accent);display:inline-flex;align-items:center;gap:5px}
+.more-link a:hover{text-decoration:underline}
 .res-ring{--p:0;width:96px;height:96px;border-radius:50%;margin:4px auto 16px;
   background:conic-gradient(var(--accent) calc(var(--p)*1%),var(--line) 0);display:grid;place-items:center;position:relative}
 .res-ring::after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--bg2)}
@@ -268,6 +286,32 @@ section{padding:40px 0;border-bottom:1px solid var(--line)}
 .qtimer.danger{color:var(--fix);border-color:var(--fix);animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
 
+/* willkommens-modal */
+.modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(4,8,14,.72);backdrop-filter:blur(6px);
+  display:grid;place-items:center;padding:18px;animation:fade .25s ease}
+.modal-card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line2);
+  border-radius:18px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;padding:26px 26px 22px;
+  box-shadow:0 24px 60px rgba(0,0,0,.5);animation:pop .28s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.97)}to{opacity:1;transform:none}}
+.modal-logo{width:52px;height:52px;border-radius:13px;display:grid;place-items:center;font-weight:800;font-size:19px;
+  color:var(--accent);background:linear-gradient(135deg,#062a26,#0a3d35);border:1px solid var(--line2);margin-bottom:14px}
+[data-theme="light"] .modal-logo{background:linear-gradient(135deg,#d8f5ee,#b9ece1)}
+.modal-card h2{font-size:22px;font-weight:800;letter-spacing:-.4px;margin-bottom:8px}
+.modal-lead{color:var(--muted);font-size:14.5px;margin-bottom:18px}
+.modal-section{border-top:1px solid var(--line);padding-top:14px;margin-bottom:14px}
+.modal-section h3{font-size:13px;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.modal-section p{font-size:13.5px;color:var(--muted);line-height:1.6}
+.modal-section.legal ul{list-style:none;display:grid;gap:8px;margin-bottom:10px}
+.modal-section.legal li{font-size:13px;color:var(--muted);line-height:1.55;padding-left:16px;position:relative}
+.modal-section.legal li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:2px;background:var(--accent2)}
+.modal-section.legal li b{color:var(--text)}
+.modal-imp{font-size:12px;color:var(--dim);line-height:1.6;padding-top:8px;border-top:1px dashed var(--line2)}
+.modal-check{display:flex;align-items:center;gap:9px;cursor:pointer;user-select:none;margin:6px 0 16px;font-size:13px;color:var(--muted)}
+.modal-check input{width:17px;height:17px;accent-color:var(--accent);cursor:pointer}
+.modal-btn{width:100%;justify-content:center;font-size:15px;padding:13px}
+.modal-reopen{background:none;border:none;color:var(--muted);font-size:12.5px;cursor:pointer;text-decoration:underline;padding:0}
+.modal-reopen:hover{color:var(--accent)}
+
 /* footer / impressum / paypal */
 footer{padding:36px 0 60px}
 .foot-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px}
@@ -280,8 +324,40 @@ footer{padding:36px 0 60px}
 .disc{margin-top:26px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--dim,#5f7185);line-height:1.7}
 @media(max-width:680px){.foot-grid{grid-template-columns:1fr}.topbar{padding:10px 14px}}
 </style>
+<script>try{if((localStorage.getItem('md102_theme')||'dark')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
 </head>
 <body>
+
+<div id="welcomeOverlay" class="modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+  <div class="modal-card">
+    <div class="modal-logo">MD</div>
+    <h2 id="welcomeTitle">Willkommen zur MD-102 Lernzentrale</h2>
+    <p class="modal-lead">Eine kostenlose, werbefreie Lern-App zur Vorbereitung auf die IT-Prüfung MD-102 (Endpoint Administrator) — mit über 195 geprüften Fragen, Praxis-Szenarien, Reihenfolge-Aufgaben, Prüfungssimulation und einem Wiederhol-Modus für falsch beantwortete Fragen.</p>
+
+    <div class="modal-section">
+      <h3>So funktioniert's</h3>
+      <p>Wähle einen Themenbereich und übe mit Sofort-Feedback, oder starte die Prüfungssimulation auf Zeit. Bei jeder Frage gibt es eine Erklärung und einen Link zur passenden Microsoft-Learn-Seite. Dein Fortschritt wird nur lokal in deinem Browser gespeichert.</p>
+    </div>
+
+    <div class="modal-section legal">
+      <h3>Rechtliche Hinweise</h3>
+      <ul>
+        <li><b>Privates Projekt:</b> Diese App ist ein privates, nicht-kommerzielles Lernprojekt und steht in <b>keiner Verbindung zur Microsoft Corporation</b>.</li>
+        <li><b>Marken:</b> „Microsoft", „MD-102", „Intune", „Entra", „Windows", „Defender" und weitere sind Marken der Microsoft-Unternehmensgruppe und werden hier nur zu beschreibenden Zwecken genannt.</li>
+        <li><b>Keine Gewähr:</b> Die Inhalte wurden sorgfältig anhand offizieller Microsoft-Learn-Quellen erstellt, dennoch ohne Gewähr auf Vollständigkeit, Aktualität oder Richtigkeit. Maßgeblich ist stets der offizielle <a href="https://learn.microsoft.com/de-de/credentials/certifications/resources/study-guides/md-102" target="_blank" rel="noopener">MD-102 Study Guide</a>.</li>
+        <li><b>Kein Ersatz:</b> Diese App ersetzt keine offizielle Schulung, kein Microsoft-Lernmaterial und keine Garantie für das Bestehen der Prüfung.</li>
+        <li><b>Datenschutz:</b> Es werden keine personenbezogenen Daten an Server übertragen. Lernfortschritt und Einstellungen liegen ausschließlich lokal in deinem Browser (localStorage) und können dort jederzeit gelöscht werden.</li>
+      </ul>
+      <p class="modal-imp">Anbieter (Impressum): Alexander Scherer, Mertensstraße 18, 13587 Berlin · <a href="mailto:info@alexander-scherer.com">info@alexander-scherer.com</a> · Kleingewerbe Fotograf, Kleinunternehmer gem. §19 UStG. Vollständiges Impressum am Seitenende.</p>
+    </div>
+
+    <label class="modal-check">
+      <input type="checkbox" id="welcomeDontShow">
+      <span>Beim nächsten Start nicht mehr anzeigen</span>
+    </label>
+    <button class="btn-primary modal-btn" id="welcomeOk">Verstanden – los geht's</button>
+  </div>
+</div>
 
 <header class="top">
   <div class="topbar">
@@ -293,6 +369,10 @@ footer{padding:36px 0 60px}
       <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 10-.7.7l.27.28v.79l5 5 1.5-1.5-5-5zm-6 0A4.5 4.5 0 1114 9.5 4.5 4.5 0 019.5 14z"/></svg>
       <input id="q" type="search" placeholder="Lernziel suchen…" autocomplete="off">
     </div>
+    <button id="themeToggle" class="theme-toggle" aria-label="Hell-/Dunkelmodus umschalten" title="Hell/Dunkel umschalten">
+      <svg class="ic-sun" viewBox="0 0 24 24"><path d="M12 7a5 5 0 100 10 5 5 0 000-10zm0-5a1 1 0 011 1v2a1 1 0 11-2 0V3a1 1 0 011-1zm0 16a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zM4.2 4.2a1 1 0 011.4 0l1.5 1.5A1 1 0 015.6 7.1L4.2 5.6a1 1 0 010-1.4zm12.7 12.7a1 1 0 011.4 0l1.5 1.5a1 1 0 01-1.4 1.4l-1.5-1.5a1 1 0 010-1.4zM2 12a1 1 0 011-1h2a1 1 0 110 2H3a1 1 0 01-1-1zm16 0a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1zM4.2 19.8a1 1 0 010-1.4l1.5-1.5a1 1 0 011.4 1.4l-1.5 1.5a1 1 0 01-1.4 0zM16.9 7.1a1 1 0 010-1.4l1.5-1.5a1 1 0 011.4 1.4l-1.5 1.5a1 1 0 01-1.4 0z"/></svg>
+      <svg class="ic-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 109.8 9.8z"/></svg>
+    </button>
   </div>
 </header>
 
@@ -349,7 +429,7 @@ footer{padding:36px 0 60px}
 <section id="pruefung">
   <div class="wrap">
     <div class="sec-head"><h2>Prüfungsmodus</h2></div>
-    <p class="sec-sub">184 geprüfte Fragen (inkl. Reihenfolge-Aufgaben). Üben mit Sofort-Feedback oder Prüfungssimulation auf Zeit.</p>
+    <p class="sec-sub">195 geprüfte Fragen (inkl. Reihenfolge-Aufgaben). Üben mit Sofort-Feedback oder Prüfungssimulation auf Zeit.</p>
 
     <!-- Setup -->
     <div id="examSetup" class="exam-card">
@@ -390,6 +470,7 @@ footer{padding:36px 0 60px}
       <div class="ex-actions">
         <button class="btn-primary" id="examStart">Üben starten</button>
         <button class="btn-ghost" id="examSimStart">🎓 Prüfungssimulation (45 Fragen, auf Zeit)</button>
+        <button class="btn-ghost" id="examWrongStart">🔁 Falsch beantwortete üben (<span id="wrongCnt">0</span>)</button>
         <span class="ex-hint" id="examHint"></span>
       </div>
     </div>
@@ -467,6 +548,7 @@ footer{padding:36px 0 60px}
     <p class="disc">
       Hinweis: Diese Seite ist ein privates, nicht-kommerzielles Lernprojekt und steht in keiner Verbindung zur Microsoft Corporation. „Microsoft", „MD-102", „Intune", „Entra", „Windows" und „Defender" sind Marken der Microsoft-Unternehmensgruppe. Die Lernziele sind dem offiziellen Microsoft-Study-Guide entnommen (Stand 28.04.2026); maßgeblich für die Prüfung ist stets die aktuelle Version auf
       <a href="https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/md-102" target="_blank" rel="noopener">learn.microsoft.com</a>. Ohne Gewähr auf Vollständigkeit oder Aktualität.
+      <br><button class="modal-reopen" id="reopenWelcome">Willkommen &amp; rechtliche Hinweise erneut anzeigen</button>
     </p>
   </div>
 </footer>
@@ -597,6 +679,25 @@ const RESOURCES = [
 
 /* CHANGELOG — bei jeder Änderung neuen Eintrag OBEN einfügen */
 const CHANGELOG = [
+  { date:"Jun 2026", badge:"new", title:"Willkommens-Popup mit rechtlichen Hinweisen", items:[
+    "Beim ersten Start erscheint ein Begrüßungsfenster mit Kurzanleitung und rechtlichen Hinweisen (privates Projekt, Markenhinweis, keine Gewähr, Datenschutz, Impressum)",
+    "Option 'nicht mehr anzeigen'; jederzeit über einen Link im Footer erneut aufrufbar"
+  ]},
+  { date:"Jun 2026", badge:"new", title:"Hell-/Dunkelmodus", items:[
+    "Umschalter oben rechts (Sonne/Mond); die Auswahl wird lokal gespeichert",
+    "Helles Theme mit warmem Weiß und angepassten Akzentfarben für gute Lesbarkeit",
+    "Standard bleibt der dunkle Modus"
+  ]},
+  { date:"Jun 2026", badge:"new", title:"Falsch-Fragen-Modus & Quellen-Links", items:[
+    "Neuer Button 'Falsch beantwortete üben': falsch beantwortete Fragen werden lokal gemerkt und können gezielt wiederholt werden; richtig beantwortete fallen automatisch wieder raus",
+    "Jede Frage zeigt bei der Auflösung einen 'Mehr dazu'-Link zur passenden Microsoft-Learn-Seite",
+    "Links auch in der Antwort-Übersicht am Ende jeder Runde"
+  ]},
+  { date:"Jun 2026", badge:"update", title:"195 Fragen — Conditional Access & Identität", items:[
+    "11 neue geprüfte Fragen ergänzt (jetzt 195 gesamt, 49 Praxis-Szenarien)",
+    "Neue Themen: CA-Session-Controls (Sign-in frequency, Persistent Browser), Authentication Strengths, Filter for devices, Break-Glass-Konten, Report-only, Endpoint Analytics",
+    "Alle neuen Fragen gegen Microsoft-Learn-Quellen verifiziert; Antwortpositionen weiterhin gleichmäßig gemischt"
+  ]},
   { date:"Jun 2026", badge:"new", title:"Prüfungssimulation & Reihenfolge-Aufgaben", items:[
     "Neuer Simulationsmodus: 45 Fragen, fester Timer (~60 min), Vor/Zurück-Navigation, Markieren-Funktion, keine Sofort-Auflösung — Auswertung erst am Ende, Bestehen ab 70 %",
     "Neuer Fragetyp Reihenfolge: Schritte per ▲/▼ in die richtige Reihenfolge bringen (6 geprüfte Prozess-Aufgaben, z. B. Autopilot-OOBE, Zertifikats-Rollout)",
@@ -678,6 +779,38 @@ const CHANGELOG = [
 
 /* ====== Render ====== */
 const $=s=>document.querySelector(s);
+
+/* ===== Hell-/Dunkelmodus ===== */
+const THEME_KEY="md102_theme";
+function applyTheme(t){
+  if(t==="light") document.documentElement.setAttribute("data-theme","light");
+  else document.documentElement.removeAttribute("data-theme");
+  const meta=document.querySelector('meta[name="theme-color"]');
+  if(meta) meta.setAttribute("content", t==="light" ? "#f4f7fb" : "#0a0e14");
+}
+function initTheme(){
+  let t="dark";
+  try{ t=localStorage.getItem(THEME_KEY)||"dark"; }catch(e){}
+  applyTheme(t);
+}
+function toggleTheme(){
+  const isLight=document.documentElement.getAttribute("data-theme")==="light";
+  const next=isLight?"dark":"light";
+  applyTheme(next);
+  try{ localStorage.setItem(THEME_KEY,next); }catch(e){}
+}
+initTheme();
+
+/* ===== Willkommens-Popup ===== */
+const WELCOME_KEY="md102_welcome_seen";
+function openWelcome(){ const o=$("#welcomeOverlay"); if(o){o.style.display="grid"; document.body.style.overflow="hidden";} }
+function closeWelcome(){ const o=$("#welcomeOverlay"); if(o){o.style.display="none"; document.body.style.overflow="";} }
+function initWelcome(){
+  let seen=false;
+  try{ seen=localStorage.getItem(WELCOME_KEY)==="1"; }catch(e){}
+  if(!seen) openWelcome();
+}
+
 const KEY="md102_done_v1";
 let done = JSON.parse(localStorage.getItem(KEY)||"{}");
 let total=0;
@@ -837,7 +970,10 @@ const POOL = [
   {q:"Was bewirkt 'Locked enrollment' bei einem ADE-Profil?",o:["Es verschlüsselt das Gerät","Der Nutzer kann die Verwaltung (MDM-Profil) nicht entfernen","Es sperrt den App Store","Es deaktiviert das WLAN"],a:1,e:"Locked enrollment verhindert, dass Nutzer das Management-Profil von ihrem firmeneigenen Gerät entfernen können."},
   {q:"Welche zusätzlichen Steuerungsmöglichkeiten bietet der Supervised Mode auf iOS/iPadOS?",o:["Keine zusätzlichen","Erweiterte Restriktionen wie AirDrop-Sperre, Screenshot-Verbot, Single App Mode","Nur längere Akkulaufzeit","Nur schnellere Updates"],a:1,e:"Supervised Mode erlaubt erweiterte Restriktionen (z. B. AirDrop blockieren, Screenshots verhindern, Single App Mode) und deaktiviert standardmäßig Activation Lock."},
   {type:"order", q:"Bringe die Schritte zum sauberen Entfernen eines Geräts aus Windows Autopilot in die richtige Reihenfolge.", steps:["Gerät aus Intune löschen (Devices > Windows)","Gerät aus Windows Autopilot deregistrieren (Enrollment > Windows Autopilot > Devices)","Zugehöriges Microsoft-Entra-Geräteobjekt prüfen/bereinigen"], e:"Reihenfolge ist wichtig: Erst aus Intune löschen, dann aus Autopilot deregistrieren; danach das Entra-Objekt prüfen. Schritte auszulassen oder zu vertauschen kann zu verwaisten/unbrauchbaren Datensätzen führen."},
-  {type:"order", q:"Ordne die Schritte zur Einrichtung von Windows Autopilot (User-driven, Entra join) in der typischen Reihenfolge.", steps:["Geräte bei Windows Autopilot registrieren (Hardware-Hash hochladen)","Ein Autopilot-Deployment-Profil erstellen","Das Profil einer Entra-Gerätegruppe zuweisen","Gerät einschalten – OOBE startet den Autopilot-Vorgang"], e:"Erst registrieren (Hardware-Hash), dann Deployment-Profil erstellen, dieses einer Gruppe zuweisen; anschließend durchläuft das Gerät beim Einschalten die OOBE."}
+  {type:"order", q:"Ordne die Schritte zur Einrichtung von Windows Autopilot (User-driven, Entra join) in der typischen Reihenfolge.", steps:["Geräte bei Windows Autopilot registrieren (Hardware-Hash hochladen)","Ein Autopilot-Deployment-Profil erstellen","Das Profil einer Entra-Gerätegruppe zuweisen","Gerät einschalten – OOBE startet den Autopilot-Vorgang"], e:"Erst registrieren (Hardware-Hash), dann Deployment-Profil erstellen, dieses einer Gruppe zuweisen; anschließend durchläuft das Gerät beim Einschalten die OOBE."},
+  {q:"Welche Konten solltest du grundsätzlich von Conditional-Access-Richtlinien ausschließen?",o:["Alle Helpdesk-Konten","Notfall-/Break-Glass-Konten","Alle Standardnutzer","Gastkonten"],a:1,e:"Emergency-/Break-Glass-Konten werden ausgeschlossen, damit man sich bei einer fehlerhaften CA-Richtlinie nicht komplett aussperrt."},
+  {q:"Szenario: Du erstellst eine neue Conditional-Access-Richtlinie und willst Aussperrungen vermeiden. Wie gehst du vor?",o:["Sofort aktivieren","Zuerst im Report-only-Modus testen (Microsoft empfiehlt ca. 1 Woche)","Nur am Wochenende aktivieren","Alle Nutzer ausschließen"],a:1,e:"Microsoft empfiehlt, jede CA-Richtlinie zunächst im Report-only-Modus zu betreiben (etwa eine Woche) und die Anmeldeprotokolle zu prüfen, bevor sie scharf geschaltet wird."},
+  {q:"Welche drei integrierten Authentication Strengths bietet Conditional Access?",o:["Schwach, Mittel, Stark","MFA, Passwordless MFA und Phishing-resistant MFA","Nur MFA","Bronze, Silber, Gold"],a:1,e:"Es gibt drei eingebaute Authentication Strengths: Multifactor authentication, Passwordless MFA und Phishing-resistant MFA; zusätzlich sind eigene (custom) Strengths möglich."}
 ],
 [ // Domain 1 — Geräte verwalten und warten
   {q:"Ein neues Gerät wird direkt an den Mitarbeiter geliefert und soll von ihm selbst mit Firmen-Anmeldung eingerichtet werden. Welcher Autopilot-Modus passt?",o:["Self-Deploying mode","User-Driven mode","Existing devices","Autopilot Reset"],a:1,e:"User-Driven richtet das Gerät beim ersten Anmelden des Nutzers mit dessen Entra-Anmeldedaten ein. Es unterstützt sowohl Entra join als auch hybrid join."},
@@ -887,7 +1023,9 @@ const POOL = [
   {q:"Szenario: Mac-Nutzer sollen sich einmal anmelden und damit nahtlos auf Entra-geschützte Apps zugreifen. Welche Funktion konfigurierst du?",o:["BitLocker","Platform SSO / Enterprise SSO-Plug-in (Extensible SSO)","Delivery Optimization","Update Ring"],a:1,e:"Über das Extensible-SSO-Profil mit dem Microsoft-Enterprise-SSO-Plug-in (Platform SSO) erhalten macOS-Nutzer nahtloses Single Sign-on zu Entra-geschützten Ressourcen."},
   {q:"Welche Verschlüsselung verwendet FileVault auf macOS und wie viele Recovery-Key-Typen gibt es?",o:["XTS-AES 256, zwei Schlüssel","XTS-AES 128, nur ein Personal Recovery Key","AES-CBC 128, drei Schlüssel","Frei wählbar"],a:1,e:"FileVault nutzt XTS-AES 128-bit (von Apple fix) und kennt nur den Personal Recovery Key, der in Intune hinterlegt werden kann."},
   {type:"order", q:"Bringe die Phasen der Autopilot-OOBE (User-driven, Entra join) in die richtige Reihenfolge.", steps:["Mit dem Netzwerk verbinden (WLAN/Ethernet)","Erforderliche Updates anwenden","Autopilot-Profil wird erkannt; Gerät ggf. umbenannt + Neustart","Anmeldung an Microsoft Entra ID mit dem Arbeitskonto","Entra join + Intune-Enrollment, Einstellungen & Apps werden angewendet"], e:"Typischer Ablauf laut Microsoft: Netzwerk → Updates → Profilerkennung/Umbenennung → Entra-Authentifizierung → Join, Enrollment und Konfiguration. Einzelne Schritte können je nach Profil/Verbindung übersprungen werden."},
-  {type:"order", q:"Ordne die Schritte zur Bereitstellung eines zertifikatsbasierten WLANs per Intune in der richtigen Reihenfolge.", steps:["Trusted-Certificate-Profil (Stamm-CA) bereitstellen","SCEP- oder PKCS-Zertifikatsprofil zuweisen","WLAN-Profil (EAP-TLS) zuweisen"], e:"Zuerst die Vertrauenskette (Trusted Root), dann das Client-Zertifikat (SCEP/PKCS), zuletzt das WLAN-Profil — alle an dieselben Gruppen, sonst schlägt die Authentifizierung fehl."}
+  {type:"order", q:"Ordne die Schritte zur Bereitstellung eines zertifikatsbasierten WLANs per Intune in der richtigen Reihenfolge.", steps:["Trusted-Certificate-Profil (Stamm-CA) bereitstellen","SCEP- oder PKCS-Zertifikatsprofil zuweisen","WLAN-Profil (EAP-TLS) zuweisen"], e:"Zuerst die Vertrauenskette (Trusted Root), dann das Client-Zertifikat (SCEP/PKCS), zuletzt das WLAN-Profil — alle an dieselben Gruppen, sonst schlägt die Authentifizierung fehl."},
+  {q:"Worin unterscheiden sich Gruppenzuweisung und Zuweisungsfilter in Intune?",o:["Filter ersetzen Gruppen komplett","Gruppen bestimmen die grundsätzliche Zielmenge, Filter grenzen sie dynamisch nach Geräteeigenschaften ein","Beide sind identisch","Filter gelten nur für Nutzer"],a:1,e:"Gruppen legen fest, wer/was grundsätzlich Ziel ist; Filter verfeinern die Zuweisung dynamisch anhand von Eigenschaften wie OS-Version, Modell oder Ownership."},
+  {q:"Welche Funktion liefert in Intune Kennzahlen wie Startup-Performance und Anwendungszuverlässigkeit zur Nutzererfahrung?",o:["Conditional Access","Endpoint Analytics","BitLocker","Delivery Optimization"],a:1,e:"Endpoint Analytics liefert Scores und Kennzahlen u. a. zu Startup-Zeit, App-Zuverlässigkeit und proaktiver Wartung, um die digitale Nutzererfahrung zu verbessern."}
 ],
 [ // Domain 2 — Anwendungen verwalten
   {q:"Wie stellst du Microsoft 365 Apps im Rahmen eines Autopilot-Deployments bereit und steuerst Sprache, Architektur und Kanal?",o:["Über ODT/OCT-Konfiguration","Über BitLocker","Über LAPS","Über Update Rings"],a:0,e:"Das Office Deployment Tool (ODT) bzw. der Office Customization Tool (OCT) erzeugt die Konfiguration für Sprache, Bit-Version und Updatekanal."},
@@ -931,7 +1069,9 @@ const POOL = [
   {q:"Szenario: Ein Nutzer hat eine 'Available'-Win32-App selbst deinstalliert. Installiert Intune sie automatisch erneut?",o:["Ja, sofort","Ja, nach 24 Stunden","Nein, 'Available'-Apps werden nach manueller Deinstallation nicht automatisch neu installiert","Nur nach Neustart"],a:2,e:"Über 'Available' installierte Win32-Apps werden von Intune nicht automatisch erneut installiert, wenn der Nutzer sie entfernt. 'Required'-Apps würden hingegen wieder erzwungen."},
   {q:"Wie stellst du Microsoft 365 Apps zentral mit gewünschtem Updatekanal über Intune bereit?",o:["Als Win32-App mit .intunewin","Über den App-Typ 'Microsoft 365 Apps' (Windows)","Als LOB-MSI","Per Provisioning Package"],a:1,e:"Der dedizierte App-Typ 'Microsoft 365 Apps' für Windows konfiguriert Architektur, Updatekanal und enthaltene Apps direkt in Intune."},
   {q:"Szenario: Plugin-App B benötigt zwingend Host-App A. A soll automatisch mitinstalliert werden. Was nutzt du?",o:["Supersedence","App-Dependency mit 'Automatically install = Yes'","Exclude-Zuweisung","Requirement rule"],a:1,e:"Eine App-Dependency mit aktivierter automatischer Installation sorgt dafür, dass die vorausgesetzte App A vor dem Plugin B installiert wird."},
-  {type:"order", q:"Ordne die Schritte zur Bereitstellung einer Win32-App über Intune in die richtige Reihenfolge.", steps:["Installer mit dem Win32 Content Prep Tool zu .intunewin verpacken","App in Intune anlegen und .intunewin hochladen","Install-/Uninstall-Befehle und Erkennungsregeln festlegen","App einer Nutzer- oder Gerätegruppe zuweisen (Required/Available)"], e:"Erst verpacken (.intunewin), dann hochladen, anschließend Befehle und Detection Rules definieren und zuletzt zuweisen."}
+  {type:"order", q:"Ordne die Schritte zur Bereitstellung einer Win32-App über Intune in die richtige Reihenfolge.", steps:["Installer mit dem Win32 Content Prep Tool zu .intunewin verpacken","App in Intune anlegen und .intunewin hochladen","Install-/Uninstall-Befehle und Erkennungsregeln festlegen","App einer Nutzer- oder Gerätegruppe zuweisen (Required/Available)"], e:"Erst verpacken (.intunewin), dann hochladen, anschließend Befehle und Detection Rules definieren und zuletzt zuweisen."},
+  {q:"Szenario: In einer App-Protection-Richtlinie willst du verhindern, dass Firmendaten per Copy/Paste in private Apps gelangen. Welche Einstellung?",o:["PIN-Anforderung","Datentransfer 'Cut/Copy/Paste zwischen Apps' einschränken","Jailbreak-Erkennung","Mindest-OS-Version"],a:1,e:"Über die Datenübertragungseinstellungen (z. B. 'Restrict cut, copy, and paste with other apps') verhinderst du den Abfluss von Firmendaten in nicht verwaltete Apps."},
+  {q:"Welche Rolle spielt die Company-Portal-App auf verwalteten Geräten?",o:["Sie verschlüsselt das Laufwerk","Sie dient zum Self-Service: verfügbare Apps installieren, Geräte einschreiben, Status sehen","Sie ersetzt Conditional Access","Sie rotiert BitLocker-Schlüssel"],a:1,e:"Über das Company Portal können Nutzer 'Available'-Apps selbst installieren, Geräte einschreiben und ihren Compliance-Status einsehen."}
 ],
 [ // Domain 3 — Geräte schützen
   {q:"Womit verteilst du eine von Microsoft kuratierte, versionierte Sammlung empfohlener Härtungseinstellungen für Windows?",o:["Security Baseline","Compliance-Richtlinie","Update Ring","Provisioning Package"],a:0,e:"Security Baselines sind von Microsoft vordefinierte, versionierte Einstellungssätze (z. B. >350 Settings) und werden als Einheit zugewiesen."},
@@ -983,13 +1123,71 @@ const POOL = [
   {q:"Welche Einstellung empfiehlt Microsoft, damit Intune-verwaltete Defender-Einstellungen lokale Einstellungen überschreiben?",o:["EnableLocalAdminMerge auf true","DisableLocalAdminMerge auf true","Tamper Protection deaktivieren","Real-time protection deaktivieren"],a:1,e:"Mit DisableLocalAdminMerge=true zählen nur die per Management definierten Einstellungen; verwaltete Einstellungen überschreiben lokale Präferenzen."},
   {q:"Szenario: Du musst auf einem Gerät vorübergehend Defender-Einstellungen zur Fehlersuche ändern, obwohl Tamper Protection aktiv ist. Was nutzt du?",o:["Tamper Protection dauerhaft abschalten","Troubleshooting Mode (temporär)","Gerät wipen","Einen Update Ring"],a:1,e:"Der Troubleshooting Mode versetzt Defender for Endpoint temporär in einen Diagnosezustand, in dem u. a. Tamper Protection und Policy-Enforcement kurzzeitig ausgesetzt sind."},
   {q:"Welche Enforcement-Level kennt Microsoft Defender Antivirus auf macOS?",o:["Nur ein/aus","real_time, on_demand und passive","schnell/langsam","audit/block"],a:1,e:"Auf macOS steuert der Enforcement Level den AV-Modus: real_time (Echtzeit), on_demand (nur bei Bedarf) und passive (nur Erkennung ohne Eingriff)."},
-  {type:"order", q:"Ordne die Schritte, um Geräte über Intune in Microsoft Defender for Endpoint zu onboarden und Risiko für Compliance zu nutzen.", steps:["Connector zwischen Intune und Defender for Endpoint einrichten","Geräte per EDR-/Onboarding-Profil in Defender for Endpoint onboarden","Erlaubte Risikostufe in der Compliance-Richtlinie festlegen","Conditional Access blockiert nicht-konforme (zu riskante) Geräte"], e:"Zuerst die Connector-Integration, dann das Onboarding der Geräte, danach die Risikoschwelle in der Compliance-Richtlinie, schließlich erzwingt Conditional Access den Zugriff anhand des Compliance-Status."}
+  {type:"order", q:"Ordne die Schritte, um Geräte über Intune in Microsoft Defender for Endpoint zu onboarden und Risiko für Compliance zu nutzen.", steps:["Connector zwischen Intune und Defender for Endpoint einrichten","Geräte per EDR-/Onboarding-Profil in Defender for Endpoint onboarden","Erlaubte Risikostufe in der Compliance-Richtlinie festlegen","Conditional Access blockiert nicht-konforme (zu riskante) Geräte"], e:"Zuerst die Connector-Integration, dann das Onboarding der Geräte, danach die Risikoschwelle in der Compliance-Richtlinie, schließlich erzwingt Conditional Access den Zugriff anhand des Compliance-Status."},
+  {q:"Szenario: Auf nicht verwalteten Geräten sollen Browser-Sitzungen nach dem Schließen des Browsers nicht angemeldet bleiben. Welche CA-Session-Control nutzt du?",o:["Sign-in frequency","Persistent browser session = Never persistent","Continuous access evaluation","App enforced restrictions"],a:1,e:"Mit 'Persistent browser session = Never persistent' bleibt der Nutzer nach dem Schließen des Browsers nicht angemeldet — sinnvoll auf gemeinsam genutzten/nicht verwalteten Geräten."},
+  {q:"Szenario: Beim Zugriff auf eine besonders sensible App soll der Nutzer sich jedes Mal neu authentifizieren. Welche Session-Control?",o:["Persistent browser session","Continuous access evaluation","Sign-in frequency = Every time","Sign-in frequency = 90 Tage"],a:2,e:"'Sign-in frequency = Every time' erzwingt bei jeder Sitzungsauswertung eine vollständige Neuauthentifizierung — passend für sehr sensible Apps oder Aktionen."},
+  {q:"Was ist die Standard-Sign-in-frequency in Microsoft Entra ID, wenn nichts konfiguriert ist?",o:["Jede Stunde","Ein rollendes 90-Tage-Fenster","Bei jeder Anmeldung","24 Stunden"],a:1,e:"Die Standardkonfiguration der User-Sign-in-frequency ist ein rollendes 90-Tage-Fenster; kürzere Intervalle setzt man gezielt über CA-Session-Controls."},
+  {q:"Szenario: Eine CA-Richtlinie soll gezielt nur Privileged-Access-Workstations adressieren. Welche Bedingung nutzt du?",o:["Sign-in risk","Filter for devices (nach Geräteattributen)","Persistent browser session","User risk"],a:1,e:"Mit 'Filter for devices' lassen sich Richtlinien anhand von Geräteattributen (z. B. einem Attribut für PAWs) gezielt auf bestimmte Geräte anwenden oder ausschließen."}
 ]
 ];
 
 const DOMAIN_NAMES=["Infrastruktur vorbereiten","Geräte verwalten & warten","Anwendungen verwalten","Geräte schützen"];
 
-let EXAM=null; // {questions:[{q,o,a,e,domain}], idx, answers:[], score}
+/* "Mehr dazu"-Links: verifizierte Microsoft-Learn-Seiten je Thema.
+   Jede Frage bekommt anhand von Schlüsselwörtern den am besten passenden Link. */
+const LINK_TOPICS=[
+  {kw:["autopilot","oobe","esp","enrollment status","self-deploying","user-driven","pre-provision","white glove","provisioning package","ppkg"], url:"https://learn.microsoft.com/de-de/autopilot/overview", t:"Windows Autopilot"},
+  {kw:["lab ps","laps","local administrator password"], url:"https://learn.microsoft.com/de-de/windows-server/identity/laps/laps-overview", t:"Windows LAPS"},
+  {kw:["windows hello","whfb","cloud kerberos","key trust","certificate trust","passwortlos"], url:"https://learn.microsoft.com/de-de/windows/security/identity-protection/hello-for-business/", t:"Windows Hello for Business"},
+  {kw:["compliance","konform","grace period","nichtkonform","mark noncompliant","gültigkeitsdauer","minimale os","jailbreak","root"], url:"https://learn.microsoft.com/de-de/intune/intune-service/protect/device-compliance-get-started", t:"Gerätecompliance"},
+  {kw:["conditional access","conditionalaccess","ca-","grant control","session","sign-in frequency","persistent browser","authentication strength","break-glass","report-only","filter for devices"], url:"https://learn.microsoft.com/de-de/entra/identity/conditional-access/overview", t:"Conditional Access"},
+  {kw:["bitlocker","disk-encryption","laufwerksverschlüsselung","recovery key","xts-aes","silent encryption"], url:"https://learn.microsoft.com/de-de/intune/intune-service/protect/encrypt-devices", t:"BitLocker-Verschlüsselung"},
+  {kw:["filevault"], url:"https://learn.microsoft.com/de-de/intune/intune-service/protect/encrypt-devices-filevault", t:"FileVault (macOS)"},
+  {kw:["defender","tamper protection","asr","attack surface","antivirus","security intelligence","edr","risikostufe","onboarden","security task","enforcement level"], url:"https://learn.microsoft.com/de-de/intune/intune-service/protect/endpoint-security", t:"Endpunktsicherheit / Defender"},
+  {kw:["security baseline","baseline"], url:"https://learn.microsoft.com/de-de/intune/intune-service/protect/security-baselines", t:"Security Baselines"},
+  {kw:["update ring","feature update","quality update","expedite","driver update","delivery optimization","windows update","firmware","fota"], url:"https://learn.microsoft.com/de-de/intune/intune-service/protect/windows-update-for-business-configure", t:"Update-Verwaltung"},
+  {kw:["win32","intunewin","content prep","detection","supersedence","dependency","dependencies","requirement rule","exit-code","3010","line-of-business","lob","ime","intune management extension"], url:"https://learn.microsoft.com/de-de/intune/intune-service/apps/apps-win32-app-management", t:"Win32-App-Verwaltung"},
+  {kw:["app-protection","app protection","mam","datentransfer","copy/paste","selektives wipe","managed app"], url:"https://learn.microsoft.com/de-de/intune/intune-service/apps/app-protection-policy", t:"App-Schutzrichtlinien"},
+  {kw:["app-configuration","app configuration","configuration policy"], url:"https://learn.microsoft.com/de-de/intune/intune-service/apps/app-configuration-policies-overview", t:"App-Konfigurationsrichtlinien"},
+  {kw:["microsoft 365 apps","m365 apps","office","odt","oct","apps admin center","servicing"], url:"https://learn.microsoft.com/de-de/microsoft-365-apps/deploy/deploy-microsoft-365-apps-intune", t:"Microsoft 365 Apps"},
+  {kw:["company portal","available","required","store-app","web-link","web clip","zuweisung","exclude"], url:"https://learn.microsoft.com/de-de/intune/intune-service/apps/apps-deploy", t:"Apps bereitstellen & zuweisen"},
+  {kw:["android","work profile","fully managed","dedicated","cosu","cobo","cope","managed google play","zero touch","knox"], url:"https://learn.microsoft.com/de-de/intune/intune-service/enrollment/android-enroll", t:"Android-Enrollment"},
+  {kw:["apple","ios","ipad","macos","ade","dep","supervised","user enrollment","vpp","apple business manager","managed apple id","push certificate","apns","shared ipad","apple configurator","setup assistant","platform sso"], url:"https://learn.microsoft.com/de-de/intune/intune-service/enrollment/ios-enroll", t:"Apple-Enrollment"},
+  {kw:["enrollment restriction","plattform-restriction","device limit","dem","device enrollment manager","mdm-scope","mam-scope","scope"], url:"https://learn.microsoft.com/de-de/intune/intune-service/enrollment/enrollment-restrictions-set", t:"Enrollment-Einschränkungen"},
+  {kw:["co-management","configuration manager","configmgr","sccm","tenant attach","workload"], url:"https://learn.microsoft.com/de-de/intune/configmgr/comanage/overview", t:"Co-Management"},
+  {kw:["windows 365","cloud pc","frontline","azure virtual desktop","avd","multi-session"], url:"https://learn.microsoft.com/de-de/windows-365/overview", t:"Windows 365 / Cloud PC"},
+  {kw:["zertifikat","scep","pkcs","trusted root","ndes","cloud pki","wlan","vpn","eap-tls"], url:"https://learn.microsoft.com/de-de/intune/intune-service/protect/certificates-configure", t:"Zertifikate, WLAN & VPN"},
+  {kw:["endpoint privilege","epm","privilege management","elevation"], url:"https://learn.microsoft.com/de-de/intune/intune-service/protect/epm-overview", t:"Endpoint Privilege Management"},
+  {kw:["remote help"], url:"https://learn.microsoft.com/de-de/intune/intune-service/fundamentals/remote-help", t:"Remote Help"},
+  {kw:["tunnel"], url:"https://learn.microsoft.com/de-de/intune/intune-service/protect/microsoft-tunnel-overview", t:"Microsoft Tunnel"},
+  {kw:["advanced analytics","endpoint analytics","analytics"], url:"https://learn.microsoft.com/de-de/intune/intune-service/fundamentals/intune-add-ons", t:"Intune-Suite & Analytics"},
+  {kw:["enterprise app catalog","intune suite"], url:"https://learn.microsoft.com/de-de/intune/intune-service/fundamentals/intune-add-ons", t:"Intune Suite"},
+  {kw:["konfigurationsprofil","settings catalog","admx","kiosk","assigned access","filter","scope tag","shell-skript","powershell-skript","gerätename"], url:"https://learn.microsoft.com/de-de/intune/intune-service/configuration/device-profiles", t:"Konfigurationsprofile"},
+  {kw:["entra","join","hybrid","registered","gruppe","rolle","rbac","device query","remote-aktion","wipe","retire","sync"], url:"https://learn.microsoft.com/de-de/intune/intune-service/enrollment/device-enrollment", t:"Geräte & Entra ID"}
+];
+const LINK_DEFAULT={url:"https://learn.microsoft.com/de-de/credentials/certifications/resources/study-guides/md-102", t:"MD-102 Study Guide"};
+
+function pickLink(q){
+  const hay=((q.q||"")+" "+((q.o||[]).join(" "))+" "+((q.steps||[]).join(" "))+" "+(q.e||"")).toLowerCase();
+  let best=null,bestScore=0;
+  for(const topic of LINK_TOPICS){
+    let s=0;
+    for(const k of topic.kw){ if(hay.includes(k)) s++; }
+    if(s>bestScore){bestScore=s;best=topic;}
+  }
+  return best||LINK_DEFAULT;
+}
+
+/* ===== Falsch-Fragen-Speicher (lokal) ===== */
+const WRONG_KEY="md102_wrong_v1";
+function loadWrong(){ try{return JSON.parse(localStorage.getItem(WRONG_KEY)||"[]");}catch(e){return [];} }
+function saveWrong(arr){ try{localStorage.setItem(WRONG_KEY,JSON.stringify(arr));}catch(e){} }
+function qKey(q){ return (q.q||"").slice(0,120); } // stabiler Schlüssel je Frage
+function markWrong(q){ const w=loadWrong(); const k=qKey(q); if(!w.includes(k)){w.push(k);saveWrong(w);} }
+function clearWrong(q){ const w=loadWrong(); const k=qKey(q); const i=w.indexOf(k); if(i>=0){w.splice(i,1);saveWrong(w);} }
+function wrongCount(){ return loadWrong().length; }
+
+let EXAM=null; // {mode, questions, idx, answers, score, ...}
 
 function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
 
@@ -1034,6 +1232,24 @@ function startExam(){
     EXAM.totalTime=secPerQ*EXAM.questions.length;
     EXAM.timeLeft=EXAM.totalTime;EXAM.timedOut=false;
   }
+  show("examQuiz",true);
+  startTimer();
+  renderQuestion();
+}
+
+/* ===== Falsch-Fragen-Modus ===== */
+function buildWrongQuestions(){
+  const keys=loadWrong();
+  let bank=[];
+  POOL.forEach((dom,di)=>dom.forEach(q=>{ if(keys.includes(qKey(q))) bank.push({...q,domain:di}); }));
+  return shuffle(bank);
+}
+function startWrongMode(){
+  const questions=buildWrongQuestions();
+  if(!questions.length){ alert("Aktuell sind keine falsch beantworteten Fragen gespeichert. Übe zuerst ein paar Runden — falsch beantwortete Fragen sammeln sich hier automatisch."); return; }
+  show("examSetup",false);
+  EXAM={mode:"practice",wrongMode:true,questions:shuffleOptions(questions),idx:0,
+        answers:new Array(questions.length).fill(null),score:0};
   show("examQuiz",true);
   startTimer();
   renderQuestion();
@@ -1137,7 +1353,9 @@ function lockMC(q,choice){
     else if(i===choice)b.classList.add("wrong");
   });
   const exp=$("#qexpl");
-  exp.innerHTML=`<b>${choice===correct?"Richtig":"Falsch"}.</b> ${q.e||""}`;
+  const lnk=pickLink(q);
+  exp.innerHTML=`<b>${choice===correct?"Richtig":"Falsch"}.</b> ${q.e||""}`+
+    `<div class="more-link"><a href="${lnk.url}" target="_blank" rel="noopener">📖 Mehr dazu: ${lnk.t} ↗</a></div>`;
   exp.className="qexpl show";
 }
 // Übungsmodus: sofort auflösen
@@ -1146,7 +1364,7 @@ function answer(choice){
   if(EXAM.answers[idx]!==null) return;
   const q=questions[idx];
   EXAM.answers[idx]=choice;
-  if(choice===q.a)EXAM.score++;
+  if(choice===q.a){EXAM.score++;clearWrong(q);} else {markWrong(q);}
   lockMC(q,choice);
   $("#qscore").textContent=`${EXAM.score} ✓`;
   $("#examNext").disabled=false;
@@ -1194,8 +1412,10 @@ function drawOrderList(q,sim){
 function showOrderSolution(q){
   const exp=$("#qexpl");
   const ok=q.current.every((s,k)=>s===q.correct[k]);
+  const lnk=pickLink(q);
   exp.innerHTML=`<b>${ok?"Richtig":"Noch nicht korrekt"}.</b> ${q.e||""}`+
-    (ok?"":`<div style="margin-top:8px">Richtige Reihenfolge:<ol style="margin:6px 0 0 18px">${q.correct.map(s=>`<li>${s}</li>`).join("")}</ol></div>`);
+    (ok?"":`<div style="margin-top:8px">Richtige Reihenfolge:<ol style="margin:6px 0 0 18px">${q.correct.map(s=>`<li>${s}</li>`).join("")}</ol></div>`)+
+    `<div class="more-link"><a href="${lnk.url}" target="_blank" rel="noopener">📖 Mehr dazu: ${lnk.t} ↗</a></div>`;
   exp.className="qexpl show";
 }
 
@@ -1205,7 +1425,7 @@ function nextQuestion(){
   if(mode!=="sim" && q.type==="order" && EXAM.answers[idx]!=="checked"){
     // erst prüfen, dann weiter
     EXAM.answers[idx]="checked";
-    if(isCorrect(idx))EXAM.score++;
+    if(isCorrect(idx)){EXAM.score++;clearWrong(q);} else {markWrong(q);}
     $("#qscore").textContent=`${EXAM.score} ✓`;
     drawOrderList(q,false);showOrderSolution(q);
     $("#examNext").textContent = idx===questions.length-1?"Auswerten":"Weiter";
@@ -1230,6 +1450,12 @@ function finishExam(){
   let score=0;questions.forEach((q,i)=>{ if(isCorrect(i) && (q.type==="order"||EXAM.answers[i]!==null||mode==="sim")){ if(isCorrect(i)) {} } });
   score=questions.reduce((acc,q,i)=>acc+(isCorrect(i)?1:0),0);
   EXAM.score=score;
+  // Falsch-Speicher aktualisieren: bearbeitete Fragen je nach Ergebnis merken/entfernen
+  questions.forEach((q,i)=>{
+    const handled = q.type==="order" ? (EXAM.answers[i]==="checked"||mode==="sim") : (EXAM.answers[i]!==null);
+    if(!handled) return;
+    if(isCorrect(i)) clearWrong(q); else markWrong(q);
+  });
   const pct=Math.round(score/questions.length*100);
   show("examResult",true);
   $("#resRing").style.setProperty("--p",pct);
@@ -1261,17 +1487,19 @@ function finishExam(){
   $("#examReview").textContent="Antworten ansehen";
   $("#reviewBox").innerHTML=questions.map((q,i)=>{
     const ok=isCorrect(i);
+    const lnk=pickLink(q);
+    const moreLink=`<div class="more-link"><a href="${lnk.url}" target="_blank" rel="noopener">📖 ${lnk.t} ↗</a></div>`;
     if(q.type==="order"){
       return `<div class="rv"><div class="rvq">${i+1}. ${q.q}</div>
         <div class="rvline ${ok?'ok':'no'}">${ok?'✓ Richtige Reihenfolge':'✗ Reihenfolge nicht korrekt'}</div>
         ${ok?"":`<div class="rvline ok">Richtig: <ol style="margin:4px 0 0 18px">${q.correct.map(s=>`<li>${s}</li>`).join("")}</ol></div>`}
-        <div class="rve">${q.e||""}</div></div>`;
+        <div class="rve">${q.e||""}</div>${moreLink}</div>`;
     }
     const keys=["A","B","C","D"];const ua=EXAM.answers[i];
     return `<div class="rv"><div class="rvq">${i+1}. ${q.q}</div>
       <div class="rvline ${ua===q.a?'ok':'no'}">${ua===q.a?'✓':'✗'} Deine Antwort: ${typeof ua==='number'?keys[ua]+") "+q.o[ua]:"—"}</div>
       ${ua!==q.a?`<div class="rvline ok">✓ Richtig: ${keys[q.a]}) ${q.o[q.a]}</div>`:""}
-      <div class="rve">${q.e||""}</div></div>`;
+      <div class="rve">${q.e||""}</div>${moreLink}</div>`;
   }).join("");
 }
 
@@ -1280,11 +1508,26 @@ function resetExam(){
   $("#qtimer").style.display="none";
   show("examResult",false);show("examQuiz",false);
   show("examSetup",true);EXAM=null;
+  updateWrongCount();
   document.getElementById("pruefung").scrollIntoView({behavior:"smooth",block:"start"});
 }
+function updateWrongCount(){
+  const n=wrongCount();
+  const el=$("#wrongCnt"); if(el) el.textContent=n;
+  const btn=$("#examWrongStart");
+  if(btn){ btn.disabled=n===0; btn.style.opacity=n===0?"0.5":"1"; btn.title=n===0?"Noch keine falsch beantworteten Fragen":"Nur falsch beantwortete Fragen üben"; }
+}
 
+$("#themeToggle")?.addEventListener("click",toggleTheme);
+$("#welcomeOk")?.addEventListener("click",()=>{
+  if($("#welcomeDontShow")?.checked){ try{localStorage.setItem(WELCOME_KEY,"1");}catch(e){} }
+  closeWelcome();
+});
+$("#reopenWelcome")?.addEventListener("click",()=>{ if($("#welcomeDontShow")) $("#welcomeDontShow").checked=false; openWelcome(); });
+$("#welcomeOverlay")?.addEventListener("click",e=>{ if(e.target.id==="welcomeOverlay") closeWelcome(); });
 $("#examStart").addEventListener("click",startExam);
 $("#examSimStart")?.addEventListener("click",startSimulation);
+$("#examWrongStart")?.addEventListener("click",startWrongMode);
 $("#examNext").addEventListener("click",nextQuestion);
 $("#examPrev")?.addEventListener("click",prevQuestion);
 $("#examFlag")?.addEventListener("click",toggleFlag);
@@ -1315,8 +1558,10 @@ $("#examTimer").addEventListener("change",updateTimerHint);
 $("#examSecPerQ").addEventListener("change",updateTimerHint);
 $("#examCount").addEventListener("change",updateTimerHint);
 
-const DEFAULT_HINT='184 geprüfte Fragen inkl. Reihenfolge-Aufgaben, viele Praxis-Szenarien, komplett offline.';
+const DEFAULT_HINT='195 geprüfte Fragen inkl. Reihenfolge-Aufgaben, viele Praxis-Szenarien, komplett offline.';
 renderDomains();renderRes();renderCL();
+updateWrongCount();
+initWelcome();
 document.querySelector(".domain")?.classList.add("open");
 document.querySelector(".dh")?.setAttribute("aria-expanded","true");
 $("#examHint").textContent=DEFAULT_HINT;
